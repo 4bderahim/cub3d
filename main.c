@@ -347,10 +347,10 @@ char  **set_fc(int fd, t_cu *cu)
             news[3] = strdup(str+i);
             nb[3] = '1';
         }
-        else if (str[i] == '1' && str[i+1] == '1')
+        else if (str[i] == '1')
             {
-                if (str[i+2] != '1')
-                    return (NULL);
+                // if (str[i+2] != '1')
+                //     return (NULL);
                 break;
             }
         else
@@ -457,6 +457,22 @@ char *fill_( char *s, int index,int map_index)
     }
     return (new);
 }
+
+int map_beg(char *s, int i)
+{
+   
+    // printf("%s\n\n\n", s+i);
+    while (s[i] != '\n')
+    {
+        // printf("%c|\n\n\n\n\n", s[i]);
+        if (s[i] != ' ')
+            return (0);
+        if (i == 0)
+            break;
+        i--;
+    }
+    return (1);
+}
 char **alloc_map(char *str)
 {
     int     i;
@@ -469,7 +485,7 @@ char **alloc_map(char *str)
     x = 0;
     while (str[i])
     {
-        if (str[i] == '1' && str[i+1] == '1' && str[i+2] == '1')
+        if (str[i] == '1' && map_beg(str, i-1))
             {
                 while(str[i] != '\n')
                     i--
@@ -481,7 +497,7 @@ char **alloc_map(char *str)
     }
     str = str+i;
     cnt = count_len(str);
-    if (cnt < 3 || cnt == -1)
+    if (cnt == -1)
         return (NULL);
     map = (char **) malloc(sizeof(char *) * (cnt+1));
     map[cnt] = NULL;
