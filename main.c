@@ -591,13 +591,18 @@ int not_walled(char **map)
         while (map[i][j] == ' ')
             j++
             ;
-        if (map[i][j] != '1')
+        if (!map[i][j])
+            {
+                i++;
+                continue;
+            }
+        if (map[i][j] != '1' && map[i][j] != ' ')
             return (1);
         line_len = ft_strlen(map[i])-1;
         while (map[i][line_len] == ' ')
             line_len--
             ;
-        if (map[i][line_len] != '1')
+        if (map[i][line_len] != '1' )
             return (1);
         j = 0;
         if (i == 0 || i == map_len-1)
@@ -613,6 +618,33 @@ int not_walled(char **map)
     }
     return (0);
 }
+int check_map(char **map)
+{
+    int i;
+    int j;
+
+    i = 0;
+    while (map[i])
+    {
+        j = 0;
+        while (map[i][j])
+        {
+            if (map[i][j] == '0')
+            {
+                if (!map[i][j+1] || map[i][j+1] == ' ' || j == 0 || map[i][j-1] ==  ' ')
+                    return (0);
+                if (j >= ft_strlen(map[i+1]) ||  map[i+1][j] == ' ')
+                    return (0);
+                if (j >= ft_strlen(map[i-1]) ||  map[i-1][j] == ' ')
+                    return (0); 
+            }
+            j++;
+        }
+        i++;
+    }
+    return (1);
+}
+
 int main(int argc , char **argv)
 {
     char **str;
@@ -648,7 +680,7 @@ int main(int argc , char **argv)
     }
     
     i = 0;
-    if (not_walled(cu->map))
+    if (not_walled(cu->map) || !check_map(cu->map))
     {
         printf("!!!!!error\n");
         exit(1);
