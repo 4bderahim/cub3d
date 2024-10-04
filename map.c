@@ -348,11 +348,7 @@ char  **set_fc(int fd, t_cu *cu)
             nb[3] = '1';
         }
         else if (str[i] == '1')
-            {
-                // if (str[i+2] != '1')
-                //     return (NULL);
-                break;
-            }
+            break;
         else
             {
                 if (*(str+i) != '\0')
@@ -394,30 +390,6 @@ int player_char(char c, char *s, int i)
     }
     if (!x)
         return (0);
-    return (1);
-}
-
-int line_checks(char *s)
-{
-    int i;
-    int x;
-    int j;
-    
-
-    j = 0;
-    i = 0;
-    x = 0;
-
-    while (s[i])
-    {
-        if (s[i] != ' ' && s[i] != '\n' && s[i] != '1' && s[i] != '0')// and != isspace()
-            {
-                if (!player_char(s[i], s, i))
-                    return (0);
-            }
-        i++;
-    }
-    
     return (1);
 }
   
@@ -519,9 +491,6 @@ char **alloc_map(char *str)
             }
         i++;
     }
-    
-    if (!map)
-        printf("error\n\n\n");
     return (map);
 }
 
@@ -542,13 +511,8 @@ char **get_map__(char *str)
     len = ft_strlen(str);
     while (str[i])
     {
-
-        if (str[i] == '1' && str[i+1] == '1')
+        if (str[i] == '1')
             {
-                if (str[i+2] != '1')
-                    return (NULL);
-                if (!line_checks(str+i))
-                    return (NULL);
                 map = alloc_map(str);
                 if (!map)
                     return (NULL);
@@ -557,7 +521,6 @@ char **get_map__(char *str)
             }
         i++;
     }
-    
     return (map);
 }
 
@@ -573,6 +536,33 @@ char **get_map(int fd)
         return (NULL);// exit / error.
     
     return (map);
+}
+
+int check_map(char **map)
+{
+    int i;
+    int j;
+
+    i = 0;
+    while (map[i])
+    {
+        j = 0;
+        while (map[i][j])
+        {
+            if (map[i][j] == '0')
+            {
+                if (!map[i][j+1] || map[i][j+1] == ' ' || j == 0 || map[i][j-1] ==  ' ')
+                    return (0);
+                if (j >= ft_strlen(map[i+1]) ||  map[i+1][j] == ' ')
+                    return (0);
+                if (j >= ft_strlen(map[i-1]) ||  map[i-1][j] == ' ')
+                    return (0); 
+            }
+            j++;
+        }
+        i++;
+    }
+    return (1);
 }
 int not_walled(char **map)
 {
@@ -616,36 +606,17 @@ int not_walled(char **map)
         }
         i++;
     }
+    if (!check_map(map))
+        {
+            //free all
+            return (1);
+        }
+
     return (0);
 }
-int check_map(char **map)
-{
-    int i;
-    int j;
 
-    i = 0;
-    while (map[i])
-    {
-        j = 0;
-        while (map[i][j])
-        {
-            if (map[i][j] == '0')
-            {
-                if (!map[i][j+1] || map[i][j+1] == ' ' || j == 0 || map[i][j-1] ==  ' ')
-                    return (0);
-                if (j >= ft_strlen(map[i+1]) ||  map[i+1][j] == ' ')
-                    return (0);
-                if (j >= ft_strlen(map[i-1]) ||  map[i-1][j] == ' ')
-                    return (0); 
-            }
-            j++;
-        }
-        i++;
-    }
-    return (1);
-}
 
-int main(int argc , char **argv)
+t_cu *fetch__()
 {
     char **str;
     char *s;
@@ -669,7 +640,7 @@ int main(int argc , char **argv)
     cu->map = get_map(fd);
     if (!cu->map)
         {
-            printf("error\n");
+            printf("!!0!!error\n");
             exit(1);
         }
     int i = 0;
@@ -678,14 +649,11 @@ int main(int argc , char **argv)
         printf("[%s]\n", cu->map[i]);
         i++;
     }
-    
     i = 0;
-    if (not_walled(cu->map) || !check_map(cu->map))
+    if (not_walled(cu->map))
     {
         printf("!!!!!error\n");
         exit(1);
     }
-  
-  
-
+    return (cu);
 }

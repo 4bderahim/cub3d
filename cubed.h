@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h> 
-
+#include "./MLX42.h"
 typedef struct cu
 {
     char **news;
@@ -16,4 +16,7 @@ typedef struct cu
     int cg;
     int cb;
     char ** map;
+    int map_height;
+    int map_width;
 } t_cu;
+t_cu        *fetch__(void);
