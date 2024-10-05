@@ -11,8 +11,8 @@
 # **************************************************************************** #
 
 FRAMEWORKS=-lmlx -framework OpenGL -framework AppKit
-FLAGS=-Wall -Wextra -Werror
-SRC=map.c cube.c fff.c
+FLAGS=-Wall -Wextra -fsanitize=address -g
+SRC=map.c cube.c
 OBJS=${SRC:.c=.o}
 LIBFT=libft/libft.a
 NAME=three_dee
