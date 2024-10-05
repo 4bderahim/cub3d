@@ -1,28 +1,36 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: recherra <recherra@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/10/05 17:42:36 by recherra          #+#    #+#              #
+#    Updated: 2024/10/05 17:42:48 by recherra         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-NAME	:= three_dee
-CFLAGS	:=  -Wunreachable-code -Ofast 
-LIBMLX	:= ~/MLX42
+FRAMEWORKS=-lmlx -framework OpenGL -framework AppKit
+FLAGS=-Wall -Wextra -Werror
+SRC=map.c cube.c fff.c
+OBJS=${SRC:.c=.o}
+LIBFT=libft/libft.a
+NAME=three_dee
 
-HEADERS	:= -I ./include -I $(LIBMLX)/include
-LIBS	:= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
-SRCS	:= cube.c map.c
-OBJS	:= ${SRCS:.c=.o}
-MLX_FLAGS    = ~/MLX42/build/libmlx42.a -Iinclude -lm -framework Cocoa -framework OpenGL -framework IOKit	
-all: libmlx $(NAME)
+all: ${NAME}
 
-libmlx:
-	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C  $(LIBMLX)/build -j4
+${NAME}: ${LIBFT} ${OBJS} cubed.h
+	cc ${OBJS} -o ${NAME} ${FLAGS} ${LIBFT} ${FRAMEWORKS}
 
-
-$(NAME): $(OBJS)
-	@$(CC) $(OBJS) $(MLX_FLAGS) $(LIBS) $(HEADERS) -o $(NAME)
-	
-%.o: %.c so_long.h
-	@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS) && printf "Compiling: $(notdir $<)"
+${LIBFT}:
+	make -C libft/
 
 clean:
-	@rm -rf $(OBJS)
-	@rm -rf $(LIBMLX)/build
+	make -C libft/ clean
+	rm -rf ${OBJS}
+
 fclean: clean
-	@rm -rf $(NAME)
-re: clean all
+	make -C libft/ fclean
+	rm ${NAME}
+
+re: fclean all

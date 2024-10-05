@@ -1,4 +1,6 @@
- #include "cubed.h"
+#include "cubed.h"
+
+
 size_t	ft_strlen(char *s)
 {
 	int	i;
