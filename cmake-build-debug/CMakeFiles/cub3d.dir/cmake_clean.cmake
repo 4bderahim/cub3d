@@ -1,6 +1,5 @@
 file(REMOVE_RECURSE
   "CMakeFiles/cub3d.dir/cube.c.o"
-  "CMakeFiles/cub3d.dir/fff.c.o"
   "CMakeFiles/cub3d.dir/libft/ft_atoi.c.o"
   "CMakeFiles/cub3d.dir/libft/ft_bzero.c.o"
   "CMakeFiles/cub3d.dir/libft/ft_calloc.c.o"

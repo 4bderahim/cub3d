@@ -150,33 +150,6 @@ cube.c.s:
 	$(MAKE) -f CMakeFiles/cub3d.dir/build.make CMakeFiles/cub3d.dir/cube.c.s
 .PHONY : cube.c.s
 
-fff.o: fff.c.o
-
-.PHONY : fff.o
-
-# target to build an object file
-fff.c.o:
-	$(MAKE) -f CMakeFiles/cub3d.dir/build.make CMakeFiles/cub3d.dir/fff.c.o
-.PHONY : fff.c.o
-
-fff.i: fff.c.i
-
-.PHONY : fff.i
-
-# target to preprocess a source file
-fff.c.i:
-	$(MAKE) -f CMakeFiles/cub3d.dir/build.make CMakeFiles/cub3d.dir/fff.c.i
-.PHONY : fff.c.i
-
-fff.s: fff.c.s
-
-.PHONY : fff.s
-
-# target to generate assembly for a file
-fff.c.s:
-	$(MAKE) -f CMakeFiles/cub3d.dir/build.make CMakeFiles/cub3d.dir/fff.c.s
-.PHONY : fff.c.s
-
 libft/ft_atoi.o: libft/ft_atoi.c.o
 
 .PHONY : libft/ft_atoi.o
@@ -1377,9 +1350,6 @@ help:
 	@echo "... cube.o"
 	@echo "... cube.i"
 	@echo "... cube.s"
-	@echo "... fff.o"
-	@echo "... fff.i"
-	@echo "... fff.s"
 	@echo "... libft/ft_atoi.o"
 	@echo "... libft/ft_atoi.i"
 	@echo "... libft/ft_atoi.s"

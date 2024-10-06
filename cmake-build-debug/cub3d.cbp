@@ -88,9 +88,6 @@
 		<Unit filename="/Users/recherra/Desktop/cub3d/cubed.h">
 			<Option target="cub3d"/>
 		</Unit>
-		<Unit filename="/Users/recherra/Desktop/cub3d/fff.c">
-			<Option target="cub3d"/>
-		</Unit>
 		<Unit filename="/Users/recherra/Desktop/cub3d/libft/ft_atoi.c">
 			<Option target="cub3d"/>
 		</Unit>

@@ -54,5 +54,4 @@ add_executable(cub3d
         libft/libft.h
         cube.c
         cubed.h
-        fff.c
         map.c)

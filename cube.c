@@ -85,35 +85,59 @@ void	init_error(void *ptr)
     }
 }
 
-void	mlx_initial(t_mlx *mlx, t_data *img)
+
+//minimap image
+void initial_minimap(t_mlx mlx, t_data *imgs)
+{
+    imgs->img = mlx_new_image(mlx.connection, WIDTH / 2, HEIGHT / 3);
+    init_error(imgs->img);
+    imgs->addr = mlx_get_data_addr(imgs->img, &imgs->bits_per_pixel, &imgs->line_length, &imgs->endian);
+}
+
+////game image
+void initial_game(t_mlx mlx, t_data *imgs)
+{
+    imgs->img = mlx_new_image(mlx.connection, WIDTH, HEIGHT);
+    init_error(imgs->img);
+    imgs->addr = mlx_get_data_addr(imgs->img, &imgs->bits_per_pixel, &imgs->line_length, &imgs->endian);
+}
+
+
+
+void	mlx_initial(t_mlx *mlx, t_data *minimap, t_data *game_img)
 {
     mlx->connection = mlx_init();
     init_error(mlx->connection);
     mlx->window = mlx_new_window(mlx->connection, WIDTH, HEIGHT, "trwadi");
     init_error(mlx->window);
-    img->img = mlx_new_image(mlx->connection, WIDTH, HEIGHT);
-    init_error(img->img);
-    img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel,
-                                  &img->line_length, &img->endian);
+    initial_minimap(*mlx, minimap);
+    initial_game(*mlx, game_img);
 }
 
 int main()
 {
     t_cu *cu_map;
     t_mlx mlx;
-    t_data		img;
+    t_data minimap_img;
+    t_data game_img;
 
     cu_map = fetch__();
     if (!cu_map)
         return (0);
     height_width(cu_map);
-    mlx_initial(&mlx, &img);
+    mlx_initial(&mlx, &minimap_img, &game_img);
+    for (int i = 0; i < WIDTH / 2; i++)
+    {
+        for (int j = 0; j < HEIGHT / 3; j++)
+            custom_mlx_pixel_put(&minimap_img, i, j, 0x455445);
+    }
     for (int i = 0; i < WIDTH; i++)
     {
         for (int j = 0; j < HEIGHT; j++)
-            custom_mlx_pixel_put(&img, i, j, 0x455445);
+            custom_mlx_pixel_put(&game_img, i, j, 0x255);
     }
-    mlx_put_image_to_window(mlx.connection, mlx.window, img.img, 0, 0);
+    mlx_put_image_to_window(mlx.connection, mlx.window, game_img.img, 0, 0);
+    mlx_put_image_to_window(mlx.connection, mlx.window, minimap_img.img, 0, 0);
     mlx_key_hook(mlx.window, events_manager, &mlx);
     mlx_hook(mlx.window, 17, 0, close_btn, &mlx);
     mlx_loop(mlx.connection);
