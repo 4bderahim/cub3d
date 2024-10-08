@@ -55,6 +55,7 @@ typedef struct s_all_data
     t_data minimap_img;
     t_data game_img;
     t_minimap minimap;
+    t_cu *cu_map;
 } t_all_data;
 
 t_cu        *fetch__(void);

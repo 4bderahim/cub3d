@@ -7,7 +7,6 @@ include_directories(.)
 include_directories(libft)
 
 add_executable(cub3d
-        /usr/local/include/mlx.h
         libft/ft_atoi.c
         libft/ft_bzero.c
         libft/ft_calloc.c

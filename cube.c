@@ -118,16 +118,15 @@ void    print_square(t_data *minimap_img, int tile_x, int tile_y, t_minimap mini
 void    mini_map(t_all_data *data, t_cu *cu_map)
 {
     int i = 0;
-    char **map = cu_map->map;
 
-    while (map[i])
+    while (cu_map->map[i])
     {
         int j = 0;
-        while (map[i][j])
+        while (cu_map->map[i][j])
         {
             int tile_x = j * data->minimap.tile;
             int tile_y = i * data->minimap.tile;
-            if (map[i][j] == '1')
+            if (cu_map->map[i][j] == '1')
                 print_square(&data->minimap_img, tile_x, tile_y, data->minimap);
             j++;
         }
@@ -162,7 +161,7 @@ void	rebuild(t_all_data *data)
 {
     mlx_destroy_image(data->mlx.connection, data->minimap_img.img);
     reset_minimap_image(data);
-    reset_game_image(data);
+//    reset_game_image(data);
 }
 
 void put_images_to_window(t_all_data *data)
@@ -171,19 +170,16 @@ void put_images_to_window(t_all_data *data)
     mlx_put_image_to_window(data->mlx.connection, data->mlx.window, data->minimap_img.img, 0, 0);
 }
 
-int	key_hook(int keycode, t_all_data *data, t_cu *cu_map)
+int	key_hook(int keycode, t_all_data *data)
 {
+    if (key_check(keycode))
+        rebuild(data);
     if (keycode == 53)
     {
         mlx_destroy_window(data->mlx.connection, data->mlx.window);
         exit(0);
     }
-    if (key_check(keycode))
-        rebuild(data);
-    mini_map(data, cu_map);
-    //    readjust(keycode, init);
-    //    reproject(keycode, init);
-    //    draw(init->points, init->calcs, &init->img);
+    mini_map(data, data->cu_map);
     put_images_to_window(data);
     return (0);
 }
@@ -206,19 +202,18 @@ void minimap_calcs(t_all_data *data, t_cu *cu_map)
 
 int main()
 {
-    t_cu *cu_map;
     t_all_data data;
 
-    cu_map = fetch__();
-    if (!cu_map)
+    data.cu_map = fetch__();
+    if (!data.cu_map)
         return (0);
-    height_width(cu_map);
-    minimap_calcs(&data, cu_map);
+    height_width(data.cu_map);
+    minimap_calcs(&data, data.cu_map);
     mlx_initial(&data.mlx, &data.minimap_img, &data.game_img, data.minimap);
-    mini_map(&data, cu_map);
+    mini_map(&data, data.cu_map);
     game(&data.game_img);
     put_images_to_window(&data);
-    mlx_hook(data.mlx.window, 2, 0, key_hook, &data);
     mlx_hook(data.mlx.window, 17, 0, close_btn, &data.mlx);
+    mlx_hook(data.mlx.window, 2, 0, key_hook, &data);
     mlx_loop(data.mlx.connection);
 }
