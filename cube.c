@@ -98,6 +98,24 @@ void	mlx_initial(t_mlx *mlx, t_data *minimap, t_data *game_img, t_minimap minim)
     initial_game(*mlx, game_img);
 }
 
+
+void    print_player(t_data *minimap_img, int tile_x, int tile_y, t_minimap minimap)
+{
+    int dot = minimap.tile / 6;
+
+    int i = 0;
+    while (i < dot)
+    {
+        int j = 0;
+        while (j < dot)
+        {
+            custom_mlx_pixel_put(minimap_img, tile_x + i, tile_y + j, 0xFF0000);
+            j++;
+        }
+        i++;
+    }
+
+}
 void    print_square(t_data *minimap_img, int tile_x, int tile_y, t_minimap minimap)
 {
     int tile = minimap.tile;
@@ -115,19 +133,35 @@ void    print_square(t_data *minimap_img, int tile_x, int tile_y, t_minimap mini
     }
 }
 
+int check_player(char c)
+{
+    if (c == 'N' || c == 'S' || c == 'E' ||  c==  'W')
+        return c;
+    return 0;
+}
+
 void    mini_map(t_all_data *data, t_cu *cu_map)
 {
     int i = 0;
+    int direction = 0;
 
     while (cu_map->map[i])
     {
         int j = 0;
+        int tile_y = i * data->minimap.tile;
         while (cu_map->map[i][j])
         {
+            direction = check_player(cu_map->map[i][j]);
             int tile_x = j * data->minimap.tile;
-            int tile_y = i * data->minimap.tile;
             if (cu_map->map[i][j] == '1')
                 print_square(&data->minimap_img, tile_x, tile_y, data->minimap);
+            if (direction)
+            {
+                data->player.direction = direction;
+                data->player.x = tile_x;
+                data->player.y = tile_y;
+                print_player(&data->minimap_img, tile_x, tile_y, data->minimap);
+            }
             j++;
         }
         i++;
@@ -170,6 +204,16 @@ void put_images_to_window(t_all_data *data)
     mlx_put_image_to_window(data->mlx.connection, data->mlx.window, data->minimap_img.img, 0, 0);
 }
 
+void    re_pov(int keycode, t_all_data *data)
+{
+    if (keycode == RA)
+    {
+        data->endpoint.x += 10;
+    }
+    else if (keycode == LA)
+        ;
+}
+
 int	key_hook(int keycode, t_all_data *data)
 {
     if (key_check(keycode))
@@ -179,8 +223,11 @@ int	key_hook(int keycode, t_all_data *data)
         mlx_destroy_window(data->mlx.connection, data->mlx.window);
         exit(0);
     }
+    re_pov(keycode, data);
+    minimap_pov(data);
     mini_map(data, data->cu_map);
     put_images_to_window(data);
+    printf("initial endpoint:\nx: %d\ny: %d\n", data->endpoint.x, data->endpoint.y);
     return (0);
 }
 
@@ -195,9 +242,94 @@ void    game(t_data *game_img)
 
 void minimap_calcs(t_all_data *data, t_cu *cu_map)
 {
-    data->minimap.tile = 32;
+    data->minimap.tile = 25;
     data->minimap.width = cu_map->map_width * data->minimap.tile;
     data->minimap.height = cu_map->map_height * data->minimap.tile;
+}
+
+int north(int c)
+{
+    return c == 'N';
+}
+
+int south(int c)
+{
+    return c == 'S';
+}
+
+int east(int c)
+{
+    return c == 'E';
+}
+
+int west(int c)
+{
+    return c == 'W';
+}
+
+
+void    initial_endpoint(t_all_data *data)
+{
+    int direction = data->player.direction;
+    int player_x = data->player.x;
+    int player_y = data->player.y;
+
+    if (north(direction) || south(direction))
+    {
+        if (north(direction))
+        {
+            data->endpoint.x = player_x + 50;
+            data->endpoint.y = 0;
+        }
+        else if (south(direction))
+        {
+            data->endpoint.x = player_x;
+            data->endpoint.y = data->minimap.height;
+        }
+    }
+    else if (east(direction) || west(direction))
+    {
+        if (east(direction))
+        {
+            data->endpoint.x = data->minimap.width;
+            data->endpoint.y = player_y;
+        }
+        else if (west(direction))
+        {
+            data->endpoint.x = 0;
+            data->endpoint.y = player_y;
+        }
+    }
+}
+
+void dda(t_player player, t_endpoint endpoint, t_data *minimap_img)
+{
+    int i = 0;
+    int steps = 0;
+    int x_factor = 0;
+    int y_factor = 0;
+
+    int dx = endpoint.x - player.x;
+    int dy = endpoint.y - player.y;
+    if (abs(dx) >= abs(dy))
+        steps = abs(dx);
+    else
+        steps = abs(dy);
+    x_factor = dx / steps;
+    y_factor = dy / steps;
+    while (i < steps)
+    {
+        custom_mlx_pixel_put(minimap_img, player.x, player.y, 0x00FF00);
+        player.y += y_factor;
+        player.x += x_factor;
+        i++;
+    }
+
+}
+
+void    minimap_pov(t_all_data *data)
+{
+    dda(data->player, data->endpoint, &data->minimap_img);
 }
 
 int main()
@@ -211,6 +343,12 @@ int main()
     minimap_calcs(&data, data.cu_map);
     mlx_initial(&data.mlx, &data.minimap_img, &data.game_img, data.minimap);
     mini_map(&data, data.cu_map);
+    initial_endpoint(&data);
+    minimap_pov(&data);
+    printf("\n");
+    printf("Player direction %c\nPlayer x: %d\nPlayer y: %d\n", data.player.direction, data.player.x, data.player.y);
+    printf("\n");
+    printf("initial endpoint:\nx: %d\ny: %d\n", data.endpoint.x, data.endpoint.y);
     game(&data.game_img);
     put_images_to_window(&data);
     mlx_hook(data.mlx.window, 17, 0, close_btn, &data.mlx);

@@ -12,6 +12,15 @@
 # define WIDTH 1200
 # define HEIGHT 1200
 
+
+//keys
+#define RA 124
+#define LA 123
+#define WK 13
+#define AK 0
+#define SK 1
+#define DK 2
+
 typedef struct cu
 {
     char **news;
@@ -49,6 +58,19 @@ typedef struct s_minimap
     int height;
 } t_minimap;
 
+typedef struct s_player
+{
+    int x;
+    int y;
+    int direction;
+} t_player;
+
+typedef struct s_endpoint
+{
+    int x;
+    int y;
+} t_endpoint;
+
 typedef struct s_all_data
 {
     t_mlx mlx;
@@ -56,7 +78,11 @@ typedef struct s_all_data
     t_data game_img;
     t_minimap minimap;
     t_cu *cu_map;
+    t_player player;
+    t_endpoint endpoint;
 } t_all_data;
+
+void    minimap_pov(t_all_data *data);
 
 t_cu        *fetch__(void);
 
