@@ -60,15 +60,19 @@ typedef struct s_minimap
 
 typedef struct s_player
 {
-    int x;
-    int y;
+    float x;
+    float y;
+    float factor_x;
+    float factor_y;
     int direction;
 } t_player;
 
 typedef struct s_endpoint
 {
-    int x;
-    int y;
+    float initial_degree;
+    float add_degree;
+    float x;
+    float y;
 } t_endpoint;
 
 typedef struct s_all_data

@@ -204,14 +204,31 @@ void put_images_to_window(t_all_data *data)
     mlx_put_image_to_window(data->mlx.connection, data->mlx.window, data->minimap_img.img, 0, 0);
 }
 
+
+
+void rotate(t_all_data *data, int direction)
+{
+    float	cos_theta;
+    float	sin_theta;
+    float	tmp;
+    float	radian;
+
+    radian = (10 * (M_PI / 180)) * direction;
+    cos_theta = cos(radian);
+    sin_theta = sin(radian);
+
+    float x = ((data->endpoint.x - data->player.x) * cos_theta) - (sin_theta * (data->endpoint.y - data->player.y)) + data->player.x;
+    float y = ((data->endpoint.x - data->player.x) * sin_theta) + (cos_theta * (data->endpoint.y - data->player.y)) + data->player.y;
+    data->endpoint.x = x;
+    data->endpoint.y = y;
+}
+
 void    re_pov(int keycode, t_all_data *data)
 {
     if (keycode == RA)
-    {
-        data->endpoint.x += 10;
-    }
+        rotate(data, 1);
     else if (keycode == LA)
-        ;
+        rotate(data, -1);
 }
 
 int	key_hook(int keycode, t_all_data *data)
@@ -223,11 +240,14 @@ int	key_hook(int keycode, t_all_data *data)
         mlx_destroy_window(data->mlx.connection, data->mlx.window);
         exit(0);
     }
+    //  recalculate endpoint pov line
     re_pov(keycode, data);
-    minimap_pov(data);
+    //  recalculate player position
+    //    redraw line
     mini_map(data, data->cu_map);
+    minimap_pov(data);
+    //redraw monimap
     put_images_to_window(data);
-    printf("initial endpoint:\nx: %d\ny: %d\n", data->endpoint.x, data->endpoint.y);
     return (0);
 }
 
@@ -278,13 +298,15 @@ void    initial_endpoint(t_all_data *data)
     {
         if (north(direction))
         {
-            data->endpoint.x = player_x + 50;
+            data->endpoint.x = player_x;
             data->endpoint.y = 0;
+            data->endpoint.initial_degree = 270;
         }
         else if (south(direction))
         {
             data->endpoint.x = player_x;
             data->endpoint.y = data->minimap.height;
+            data->endpoint.initial_degree = 90;
         }
     }
     else if (east(direction) || west(direction))
@@ -293,32 +315,38 @@ void    initial_endpoint(t_all_data *data)
         {
             data->endpoint.x = data->minimap.width;
             data->endpoint.y = player_y;
+            data->endpoint.initial_degree = 0;
         }
         else if (west(direction))
         {
             data->endpoint.x = 0;
             data->endpoint.y = player_y;
+            data->endpoint.initial_degree = 180;
         }
     }
 }
 
-void dda(t_player player, t_endpoint endpoint, t_data *minimap_img)
+
+
+void dda(t_player player, t_endpoint endpoint, t_data *minimap_img, t_minimap minimap)
 {
     int i = 0;
-    int steps = 0;
-    int x_factor = 0;
-    int y_factor = 0;
+    float steps = 0;
+    float x_factor = 0;
+    float y_factor = 0;
 
-    int dx = endpoint.x - player.x;
-    int dy = endpoint.y - player.y;
-    if (abs(dx) >= abs(dy))
-        steps = abs(dx);
+    float dx = endpoint.x - player.x;
+    float dy = endpoint.y - player.y;
+    if (fabs(dx) >= fabs(dy))
+        steps = fabs(dx);
     else
-        steps = abs(dy);
+        steps = fabs(dy);
     x_factor = dx / steps;
     y_factor = dy / steps;
-    while (i < steps)
+
+    while (i < 50)
     {
+        if (player.y > 0 && player.y < minimap.height && player.x > 0 && player.x < minimap.width)
         custom_mlx_pixel_put(minimap_img, player.x, player.y, 0x00FF00);
         player.y += y_factor;
         player.x += x_factor;
@@ -329,7 +357,7 @@ void dda(t_player player, t_endpoint endpoint, t_data *minimap_img)
 
 void    minimap_pov(t_all_data *data)
 {
-    dda(data->player, data->endpoint, &data->minimap_img);
+    dda(data->player, data->endpoint, &data->minimap_img, data->minimap);
 }
 
 int main()
@@ -345,10 +373,10 @@ int main()
     mini_map(&data, data.cu_map);
     initial_endpoint(&data);
     minimap_pov(&data);
-    printf("\n");
-    printf("Player direction %c\nPlayer x: %d\nPlayer y: %d\n", data.player.direction, data.player.x, data.player.y);
-    printf("\n");
-    printf("initial endpoint:\nx: %d\ny: %d\n", data.endpoint.x, data.endpoint.y);
+//    printf("\n");
+////    printf("Player direction %c\nPlayer x: %d\nPlayer y: %d\n", data.player.direction, data.player.x, data.player.y);
+//    printf("\n");
+//    printf("initial endpoint:\nx: %d\ny: %d\n", data.endpoint.x, data.endpoint.y);
     game(&data.game_img);
     put_images_to_window(&data);
     mlx_hook(data.mlx.window, 17, 0, close_btn, &data.mlx);
