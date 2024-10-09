@@ -7,6 +7,7 @@
 #include <string.h>
 #include <math.h>
 #include "libft/libft.h"
+#include "stdbool.h"
 
 //game res
 # define WIDTH 1200
@@ -64,6 +65,7 @@ typedef struct s_player
     float y;
     float factor_x;
     float factor_y;
+    float steps;
     int direction;
 } t_player;
 

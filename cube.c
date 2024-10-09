@@ -140,7 +140,7 @@ int check_player(char c)
     return 0;
 }
 
-void    mini_map(t_all_data *data, t_cu *cu_map)
+void    mini_map(t_all_data *data, t_cu *cu_map, bool first_time)
 {
     int i = 0;
     int direction = 0;
@@ -158,9 +158,12 @@ void    mini_map(t_all_data *data, t_cu *cu_map)
             if (direction)
             {
                 data->player.direction = direction;
-                data->player.x = tile_x;
-                data->player.y = tile_y;
-                print_player(&data->minimap_img, tile_x, tile_y, data->minimap);
+                if (first_time)
+                {
+                    data->player.x = tile_x;
+                    data->player.y = tile_y;
+                }
+                print_player(&data->minimap_img, data->player.x, data->player.y, data->minimap);
             }
             j++;
         }
@@ -231,6 +234,43 @@ void    re_pov(int keycode, t_all_data *data)
         rotate(data, -1);
 }
 
+void    re_calculate_factors(t_all_data *data)
+{
+    int i = 0;
+
+    float dx = data->endpoint.x - data->player.x;
+    float dy = data->endpoint.y - data->player.y;
+    if (fabs(dx) >= fabs(dy))
+        data->player.steps = fabs(dx);
+    else
+        data->player.steps = fabs(dy);
+    data->player.factor_x = dx / data->player.steps;
+    data->player.factor_y = dy / data->player.steps;
+}
+
+
+void re_position_player(int keycode, t_all_data *data)
+{
+    if (keycode == WK)
+    {
+        data->player.y += data->player.factor_y;
+//        data->player.x += data->player.factor_x;
+    }
+    else if (keycode == AK)
+    {
+        data->player.x += data->player.factor_x;
+    }
+//    else if (keycode == SK)
+//    {
+//
+//    }
+//    else if (keycode == DK)
+//    {
+//
+//    }
+}
+
+
 int	key_hook(int keycode, t_all_data *data)
 {
     if (key_check(keycode))
@@ -242,10 +282,13 @@ int	key_hook(int keycode, t_all_data *data)
     }
     //  recalculate endpoint pov line
     re_pov(keycode, data);
-    //  recalculate player position
+    //  recalculate increment factors
+    re_calculate_factors(data);
+    // re-position player
+    re_position_player(keycode, data);
     //    redraw line
-    mini_map(data, data->cu_map);
-    minimap_pov(data);
+    mini_map(data, data->cu_map, false);
+//    minimap_pov(data);
     //redraw monimap
     put_images_to_window(data);
     return (0);
@@ -328,36 +371,25 @@ void    initial_endpoint(t_all_data *data)
 
 
 
-void dda(t_player player, t_endpoint endpoint, t_data *minimap_img, t_minimap minimap)
+void dda(t_all_data *data)
 {
     int i = 0;
-    float steps = 0;
-    float x_factor = 0;
-    float y_factor = 0;
-
-    float dx = endpoint.x - player.x;
-    float dy = endpoint.y - player.y;
-    if (fabs(dx) >= fabs(dy))
-        steps = fabs(dx);
-    else
-        steps = fabs(dy);
-    x_factor = dx / steps;
-    y_factor = dy / steps;
+    float increment_x = data->player.x;
+    float increment_y = data->player.y;
 
     while (i < 50)
     {
-        if (player.y > 0 && player.y < minimap.height && player.x > 0 && player.x < minimap.width)
-        custom_mlx_pixel_put(minimap_img, player.x, player.y, 0x00FF00);
-        player.y += y_factor;
-        player.x += x_factor;
+        if (increment_y > 0 && increment_y < data->minimap.height && increment_x > 0 && increment_x < data->minimap.width)
+        custom_mlx_pixel_put(&data->minimap_img, increment_x, increment_y, 0x00FF00);
+        increment_y +=  data->player.factor_y;
+        increment_x +=  data->player.factor_x;
         i++;
     }
-
 }
 
 void    minimap_pov(t_all_data *data)
 {
-    dda(data->player, data->endpoint, &data->minimap_img, data->minimap);
+    dda(data);
 }
 
 int main()
@@ -370,8 +402,9 @@ int main()
     height_width(data.cu_map);
     minimap_calcs(&data, data.cu_map);
     mlx_initial(&data.mlx, &data.minimap_img, &data.game_img, data.minimap);
-    mini_map(&data, data.cu_map);
+    mini_map(&data, data.cu_map, true);
     initial_endpoint(&data);
+    re_calculate_factors(&data);
     minimap_pov(&data);
 //    printf("\n");
 ////    printf("Player direction %c\nPlayer x: %d\nPlayer y: %d\n", data.player.direction, data.player.x, data.player.y);
