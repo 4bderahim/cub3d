@@ -63,6 +63,7 @@ typedef struct s_player
 {
     float x;
     float y;
+    float player_angle_rad;
     float factor_x;
     float factor_y;
     float steps;

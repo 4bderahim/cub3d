@@ -216,7 +216,6 @@ void rotate(t_all_data *data, int direction)
 {
     float	cos_theta;
     float	sin_theta;
-    float	tmp;
     float	radian;
 
     radian = (10 * (M_PI / 180)) * direction;
@@ -227,6 +226,7 @@ void rotate(t_all_data *data, int direction)
     float y = ((data->endpoint.x - data->player.x) * sin_theta) + (cos_theta * (data->endpoint.y - data->player.y)) + data->player.y;
     data->endpoint.x = x;
     data->endpoint.y = y;
+    data->player.player_angle_rad += radian;
 }
 
 void    re_pov(int keycode, t_all_data *data)
@@ -252,6 +252,7 @@ void    re_calculate_factors(t_all_data *data)
 }
 
 
+
 void re_position_player(int keycode, t_all_data *data)
 {
     if (keycode == WK)
@@ -263,20 +264,26 @@ void re_position_player(int keycode, t_all_data *data)
     }
     else if (keycode == AK)
     {
-        data->player.x += data->player.factor_x * 5;
-        data->player.y += data->player.factor_y * 5;
-        data->endpoint.x += data->player.factor_x * 5;
-        data->endpoint.y += data->player.factor_y * 5;
-        printf("\nPlayer x: %f\nPlayer y: %f\nfactor x: %f\nfactor y: %f\n", data->player.x, data->player.y, data->player.factor_x, data->player.factor_y);
+        data->player.x -= cos(data->player.player_angle_rad - (90 * (M_PI / 180))) * 5;
+        data->player.y -= sin(data->player.player_angle_rad - (90 * (M_PI / 180))) * 5;
+        data->endpoint.x -= cos(data->player.player_angle_rad - (90 * (M_PI / 180))) * 5;
+        data->endpoint.y -= sin(data->player.player_angle_rad - (90 * (M_PI / 180))) * 5;
     }
-//    else if (keycode == SK)
-//    {
-//
-//    }
-//    else if (keycode == DK)
-//    {
-//
-//    }
+    else if (keycode == SK)
+    {
+        data->player.x -= data->player.factor_x * 5;
+        data->player.y -= data->player.factor_y * 5;
+        data->endpoint.x -= data->player.factor_x * 5;
+        data->endpoint.y -= data->player.factor_y * 5;
+    }
+    else if (keycode == DK)
+    {
+        data->player.x += cos(data->player.player_angle_rad - (90 * (M_PI / 180))) * 5;
+        data->player.y += sin(data->player.player_angle_rad - (90 * (M_PI / 180))) * 5;
+        data->endpoint.x += cos(data->player.player_angle_rad - (90 * (M_PI / 180))) * 5;
+        data->endpoint.y += sin(data->player.player_angle_rad - (90 * (M_PI / 180))) * 5;
+
+    }
 }
 
 
@@ -340,6 +347,7 @@ int west(int c)
 }
 
 
+
 void    initial_endpoint(t_all_data *data)
 {
     int direction = data->player.direction;
@@ -352,13 +360,16 @@ void    initial_endpoint(t_all_data *data)
         {
             data->endpoint.x = player_x;
             data->endpoint.y = 0;
-            data->endpoint.initial_degree = 270;
+            data->endpoint.initial_degree = 90;
+            data->player.player_angle_rad = 90 * (M_PI / 180);
         }
         else if (south(direction))
         {
             data->endpoint.x = player_x;
             data->endpoint.y = data->minimap.height;
-            data->endpoint.initial_degree = 90;
+            data->endpoint.initial_degree = 270;
+            data->player.player_angle_rad = 270 * (M_PI / 180);
+
         }
     }
     else if (east(direction) || west(direction))
@@ -368,12 +379,15 @@ void    initial_endpoint(t_all_data *data)
             data->endpoint.x = data->minimap.width;
             data->endpoint.y = player_y;
             data->endpoint.initial_degree = 0;
+            data->player.player_angle_rad = 0 * (M_PI / 180);
+
         }
         else if (west(direction))
         {
             data->endpoint.x = 0;
             data->endpoint.y = player_y;
             data->endpoint.initial_degree = 180;
+            data->player.player_angle_rad = 180 * (M_PI / 180);
         }
     }
 }
