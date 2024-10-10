@@ -587,3 +587,26 @@ t_cu *fetch__()
     }
     return (cu);
 }
+
+
+void height_width(t_cu *cu)
+{
+    int i;
+    int j = 0;
+    char **map;
+    int pr_max;
+    map = cu->map;
+    i = 0;
+    pr_max = 0;
+    while (map[i])
+    {
+        j = 0;
+        while (map[i][j])
+            j++;
+        if (j > pr_max)
+            pr_max = j;
+        i++;
+    }
+    cu->map_width = pr_max;
+    cu->map_height = i;
+}

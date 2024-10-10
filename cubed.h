@@ -9,10 +9,11 @@
 #include "libft/libft.h"
 #include "stdbool.h"
 
+#define to_deg M_PI / 180
+
 //game res
 # define WIDTH 1200
 # define HEIGHT 1200
-
 
 //keys
 #define RA 124
@@ -63,17 +64,15 @@ typedef struct s_player
 {
     float x;
     float y;
-    float player_angle_rad;
     float factor_x;
     float factor_y;
     float steps;
+    float player_angle_rad;
     int direction;
 } t_player;
 
 typedef struct s_endpoint
 {
-    float initial_degree;
-    float add_degree;
     float x;
     float y;
 } t_endpoint;
@@ -89,9 +88,46 @@ typedef struct s_all_data
     t_endpoint endpoint;
 } t_all_data;
 
-void    minimap_pov(t_all_data *data);
 
 t_cu        *fetch__(void);
+void height_width(t_cu *cu);
+
+//mlx setup
+void	mlx_initial(t_mlx *mlx, t_data *minimap, t_data *game_img, t_minimap minim);
+void initial_minimap(t_mlx mlx, t_data *imgs, t_minimap minim);
+void initial_game(t_mlx mlx, t_data *imgs);
+void	init_error(void *ptr);
+
+//mlx rebuild
+void	rebuild(t_all_data *data);
+void put_images_to_window(t_all_data *data);
+
+//hooks
+void    re_pov(int keycode, t_all_data *data);
+void    re_position_player(int keycode, t_all_data *data);
+
+//initial position
+void    initial_endpoint(t_all_data *data);
+
+//rotate pov
+void rotate(t_all_data *data, int direction);
+
+//re calclulate factors
+void    re_calculate_factors(t_all_data *data);
+
+//minimap
+void    mini_map(t_all_data *data, t_cu *cu_map, bool first_time);
+
+//minimap pov
+void    minimap_pov(t_all_data *data);
+
+//print objects
+void    print_square(t_data *minimap_img, int tile_x, int tile_y, t_minimap minimap);
+void    print_player(t_data *minimap_img, int tile_x, int tile_y, t_minimap minimap);
+
+//custom pixel put
+void	custom_mlx_pixel_put(t_data *data, int x, int y, int color);
+
 
 
 #endif
