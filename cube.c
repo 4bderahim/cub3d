@@ -29,13 +29,11 @@ void minimap_calcs(t_all_data *data, t_cu *cu_map)
     data->minimap.height = cu_map->map_height * data->minimap.tile;
 }
 
-
-
 void dda(t_all_data *data)
 {
     int i = 0;
-    float increment_x = data->player.x;
-    float increment_y = data->player.y;
+    float increment_x = data->player.x+3;
+    float increment_y = data->player.y+2;
 
     while (i < 50)
     {
