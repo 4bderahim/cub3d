@@ -14,6 +14,7 @@
 //game res
 # define WIDTH 1200
 # define HEIGHT 1200
+# define N_RAYS 10
 
 //keys
 #define RA 124
@@ -69,6 +70,7 @@ typedef struct s_player
     float steps;
     float player_angle_rad;
     int direction;
+    float fov_angle;
 } t_player;
 
 typedef struct s_endpoint
@@ -77,6 +79,20 @@ typedef struct s_endpoint
     float y;
 } t_endpoint;
 
+typedef struct s_ray
+{
+    float ray_angle;
+    float wall_x;
+    float wall_y;
+    float  distance;
+    
+    int verical_hit;
+    int ray_up;
+    int ray_down;
+    int ray_left;
+    int ray_right;
+    
+}t_ray;
 typedef struct s_all_data
 {
     t_mlx mlx;
@@ -86,6 +102,7 @@ typedef struct s_all_data
     t_cu *cu_map;
     t_player player;
     t_endpoint endpoint;
+    t_ray **rays;
 } t_all_data;
 
 

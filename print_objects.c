@@ -36,10 +36,10 @@ void    print_square(t_data *minimap_img, int tile_x, int tile_y, t_minimap mini
     int tile = minimap.tile;
 
     int i = 0;
-    while (i < tile - 1)
+    while (i < tile)
     {
         int j = 0;
-        while (j < tile - 1)
+        while (j < tile)
         {
             custom_mlx_pixel_put(minimap_img, tile_x + i, tile_y + j, 0xffffff);
             j++;
