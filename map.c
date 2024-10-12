@@ -486,7 +486,7 @@ int check_map(char **map)
                 if (j >= ft_strlen(map[i+1]) ||  map[i+1][j] == ' ')
                     return (0);
                 if (j >= ft_strlen(map[i-1]) ||  map[i-1][j] == ' ')
-                    return (0); 
+                    return (0);
             }
             j++;
         }
@@ -494,6 +494,7 @@ int check_map(char **map)
     }
     return (1);
 }
+
 int not_walled(char **map)
 {
     int i;
