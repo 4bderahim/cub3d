@@ -87,50 +87,120 @@ int	key_hook(int keycode, t_all_data *data)
     put_images_to_window(data);
     return (0);
 }
-
+float angle_fix(float angle)
+{
+    angle = remainder(angle, M_PI*2);
+    if (angle < 0)
+        angle = (M_PI*2) + angle;
+    return (angle);
+}
 void cast_ray(float ray_angle, int i , t_all_data *data)
 {
+    int ray_up;
+    int ray_down;
+    int ray_right;
+    int ray_left;
+    float x_hit;
+    float y_hit;
+    float x_step;
+    float y_step;
     //
+    int horz_hit = false;
+    float horz_hitx = 0;
+    float horz_hity = 0;
+    int horz_hit_content;
+    float next_horz_x;
+    float next_horz_y;
+
+    float x_check;
+    float y_check;
+
+
+
+    ray_angle = angle_fix(ray_angle);
+    ray_down = 0;
+    if (ray_angle > 0 && ray_angle < M_PI)
+        ray_down = 1;
+    ray_up = !(ray_down); 
+    ray_right = 0;
+    if (ray_angle < (M_PI/2) || ray_angle > (M_PI+(M_PI/2)))
+        ray_right = 1;
+    ray_left = !ray_right;
+    y_hit = floor(data->player.y/ data->minimap.tile) * data->minimap.tile;
+    if (ray_down)
+        y_hit += data->minimap.tile;
+    x_hit = data->player.x + (y_hit - data->player.y) - tan(data->rays[i]->wall_y );
+    y_step = data->minimap.tile;
+    if (ray_up)
+        y_step *= -1;
+    x_step = data->minimap.tile / tan(data->rays[i]->wall_y) ;
+    if (ray_left && x_step > 0)
+        x_step *= -1;
+    if (ray_right && x_step < 0)
+        x_step *= -1;
+    next_horz_x = x_hit;
+    next_horz_y = y_hit;
+    while (next_horz_x >= 0 && next_horz_x <= data->minimap.height && next_horz_y >= 0 && next_horz_y <= data->minimap.height)
+    {
+        x_check = next_horz_x ;
+        y_check = next_horz_x;
+        if (ray_up)
+            y_check -= 1;
+        if (data->cu_map->map[(int)y_check/data->minimap.tile][(int)x_check/data->minimap.tile] ='1')
+        {
+            horz_hitx = next_horz_x;
+            horz_hity = next_horz_y;
+            // 
+            break;
+        }
+        next_horz_x = x_step;
+        next_horz_y = y_step;
+        // ----------------------------------   RWINAA
+    }
+    
+
+
+
+
 }
+
 void cast_rays(t_all_data *data)
 {
     float ray_angle;
     int i;
 
     i = 0;
-    ray_angle = data->player.player_angle_rad  -(data->player.fov_angle / 2);
+    ray_angle = data->player.player_angle_rad - (data->player.fov_angle / 2);
     while (i < N_RAYS )
     {
         cast_ray(ray_angle, i, data);
         ray_angle += data->player.fov_angle / N_RAYS;
         i++;
     }
-    
-
 }
 
-void init_rays(t_all_data *data)
+t_ray ** init_rays(t_all_data *data)
 {
     t_ray **rays;
     int i;
     int r_num;
 
-    data->rays = (t_ray **) malloc(sizeof(t_ray *)*11);
+    rays = (t_ray **) malloc(sizeof(t_ray *)*N_RAYS);
     if (!rays)
         return ;
     i = 0;
-    r_num = 10;
-    while (i < 10)
+    r_num = N_RAYS;
+    while (i < N_RAYS)
     {
-        data->rays[i]->ray_angle = data->player.player_angle_rad / r_num ; 
-        data->rays[i]->distance = 0;
-        data->rays[i]->wall_y = 0;
-        data->rays[i]->wall_x = 0;
-        data->rays[i]->ray_left = 0;
-        data->rays[i]->ray_down = 0;
-        data->rays[i]->ray_right = 0;
-        data->rays[i]->ray_up = 0;
-        data->rays[i]->verical_hit = 0;
+        rays[i]->ray_angle = data->player.player_angle_rad / N_RAYS ; 
+        rays[i]->distance = 0;
+        rays[i]->wall_y = 0;
+        rays[i]->wall_x = 0;
+        rays[i]->ray_left = 0;
+        rays[i]->ray_down = 0;
+        rays[i]->ray_right = 0;
+        rays[i]->ray_up = 0;
+        rays[i]->verical_hit = 0;
         i++;
     }
 
@@ -150,9 +220,9 @@ int main()
     initial_endpoint(&data);
     re_calculate_factors(&data);
     minimap_pov(&data);
-    // init_rays(&data);
+    data.rays = init_rays(&data);
     
-    // rays_(&data);
+     rays_(&data);
     game(&data.game_img);
     put_images_to_window(&data);
     mlx_hook(data.mlx.window, 17, 0, close_btn, &data.mlx);

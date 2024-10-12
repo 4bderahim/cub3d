@@ -85,13 +85,11 @@ typedef struct s_ray
     float wall_x;
     float wall_y;
     float  distance;
-    
     int verical_hit;
     int ray_up;
     int ray_down;
     int ray_left;
     int ray_right;
-    
 }t_ray;
 typedef struct s_all_data
 {
