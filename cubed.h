@@ -1,7 +1,8 @@
 #ifndef CUBED_H
 #define CUBED_H
 
-#include "/Users/ael-krid/minilibx_opengl_20191021/mlx.h"
+// #include "/Users/ael-krid/minilibx_opengl_20191021/mlx.h"
+#include <mlx.h>
 #include <fcntl.h>
 #include <stdio.h>
 #include <string.h>

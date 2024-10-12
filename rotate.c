@@ -12,7 +12,6 @@
 
 #include "cubed.h"
 
-
 void rotate(t_all_data *data, int direction)
 {
     float	cos_theta;
@@ -22,7 +21,7 @@ void rotate(t_all_data *data, int direction)
     float   delta_y = data->endpoint.y - data->player.y;
 
 
-    radian = (5 * to_deg) * direction;
+    radian = (10 * to_deg) * direction;
     cos_theta = cos(radian);
     sin_theta = sin(radian);
     float x = (delta_x * cos_theta) - (delta_y * sin_theta) + data->player.x;
