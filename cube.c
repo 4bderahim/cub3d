@@ -94,6 +94,12 @@ float angle_fix(float angle)
         angle = (M_PI*2) + angle;
     return (angle);
 }
+float calculate__(float px,float py,float px_hit,float py_hit)
+{
+    return sqrt((px_hit - px) * (px_hit -px) * (py_hit -py )* (py_hit -py));
+}
+
+
 void cast_ray(float ray_angle, int i , t_all_data *data)
 {
     int ray_up;
@@ -144,7 +150,7 @@ void cast_ray(float ray_angle, int i , t_all_data *data)
         y_check = next_horz_x;
         if (ray_up)
             y_check -= 1;
-        if (data->cu_map->map[(int)y_check / data->minimap.tile][(int)x_check/data->minimap.tile] ='1')
+        if (data->cu_map->map[(int)y_check / data->minimap.tile][(int)x_check/data->minimap.tile] == '1')
         {
             horz_hitx = next_horz_x;
             horz_hity = next_horz_y;
@@ -163,11 +169,6 @@ void cast_ray(float ray_angle, int i , t_all_data *data)
 
 
 
-
-
-
-
-
     int vert_hit = false;
     float vert_hitx = 0;
     float vert_hity = 0;
@@ -175,9 +176,8 @@ void cast_ray(float ray_angle, int i , t_all_data *data)
     float next_vert_x;
     float next_vert_y;
 
-    float x_check;
-    float y_check;
-
+    // float x_check;
+    // float y_check;
   
     x_hit = floor(data->player.y/ data->minimap.tile) * data->minimap.tile;
     if (ray_down)
@@ -199,7 +199,7 @@ void cast_ray(float ray_angle, int i , t_all_data *data)
         y_check = next_vert_x;
         if (ray_up)
             x_check -= 1;
-        if (data->cu_map->map[(int)y_check / data->minimap.tile][(int)x_check/data->minimap.tile] ='1')
+        if (data->cu_map->map[(int)y_check / data->minimap.tile][(int)x_check/data->minimap.tile] == '1')
         {
             vert_hitx = next_vert_x;
             vert_hity = next_vert_y;
@@ -210,7 +210,34 @@ void cast_ray(float ray_angle, int i , t_all_data *data)
         next_vert_x += x_step;
         next_vert_y += y_step;
     }
+    float  horz_dist ;
+    float  vert_dist ;
 
+    horz_dist = 100000;
+    vert_dist = 100000;
+    if (horz_hit)
+        horz_dist = calculate__(data->player.x, data->player.y, x_hit, y_hit);
+    if (vert_hit)
+        vert_dist = calculate__(data->player.x, data->player.y, x_hit, y_hit);
+    if (vert_dist < horz_dist)
+    {
+        data->rays[i]->distance = vert_dist;
+        data->rays[i]->verical_hit = 1;
+        data->rays[i]->wall_x = vert_hitx;
+        data->rays[i]->wall_y = vert_hity;
+    }
+    else
+    {
+        data->rays[i]->distance = horz_dist;
+        data->rays[i]->verical_hit = 0;
+        data->rays[i]->wall_x = horz_hitx;
+        data->rays[i]->wall_y = horz_hity;
+    }
+    data->rays[i]->ray_left = ray_left; 
+    data->rays[i]->ray_right = ray_right;
+    data->rays[i]->ray_down = ray_down;
+    data->rays[i]->ray_up = ray_up;
+    data->rays[i]->ray_angle = ray_angle;
 }
 
 void cast_rays(t_all_data *data)
@@ -234,13 +261,15 @@ t_ray ** init_rays(t_all_data *data)
     int i;
     int r_num;
 
-    rays = (t_ray **) malloc(sizeof(t_ray *)*N_RAYS);
+    rays = (t_ray **) malloc(sizeof(t_ray *)*N_RAYS+1);
+    rays[N_RAYS] = NULL;
     if (!rays)
-        return ;
-    i = 0;
+        return (NULL);
+    i = 1;
     r_num = N_RAYS;
     while (i < N_RAYS)
     {
+        printf("\t\t\t||%d||\n\n\n", i);
         rays[i]->ray_angle = data->player.player_angle_rad / N_RAYS ; 
         rays[i]->distance = 0;
         rays[i]->wall_y = 0;
@@ -252,7 +281,7 @@ t_ray ** init_rays(t_all_data *data)
         rays[i]->verical_hit = 0;
         i++;
     }
-
+    return (rays);
 }
 int main()
 {
@@ -271,7 +300,6 @@ int main()
     minimap_pov(&data);
     data.rays = init_rays(&data);
     
-     rays_(&data);
     game(&data.game_img);
     put_images_to_window(&data);
     mlx_hook(data.mlx.window, 17, 0, close_btn, &data.mlx);
