@@ -290,8 +290,8 @@ int	key_hook(int keycode, t_all_data *data)
     // redraw line
     minimap_pov(data);
 
+    // cast_rays(data);
     put_images_to_window(data);
-    cast_rays(data);
     render__rays(data);
     return (0);
 }
@@ -340,7 +340,8 @@ int main()
     re_calculate_factors(&data);
     minimap_pov(&data);
     init_rays(&data);
-    
+    cast_rays(&data);
+    render__rays(&data);
     game(&data.game_img);
     put_images_to_window(&data);
     mlx_hook(data.mlx.window, 17, 0, close_btn, &data.mlx);
