@@ -101,7 +101,7 @@ typedef struct s_all_data
     t_cu *cu_map;
     t_player player;
     t_endpoint endpoint;
-    t_ray **rays;
+    t_ray *rays;
 } t_all_data;
 
 

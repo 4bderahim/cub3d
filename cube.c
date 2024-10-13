@@ -21,7 +21,6 @@ void    game(t_data *game_img)
             custom_mlx_pixel_put(game_img, i, j, 0x5135);
 }
 
-
 void minimap_calcs(t_all_data *data, t_cu *cu_map)
 {
     data->minimap.tile = 25;
@@ -50,7 +49,6 @@ void    minimap_pov(t_all_data *data)
     dda(data);
 }
 
-
 int	key_check(int key)
 {
     if (key == 0 || key == 1 || key == 2 || key == 13
@@ -58,33 +56,6 @@ int	key_check(int key)
     {
         return (1);
     }
-    return (0);
-}
-
-int	key_hook(int keycode, t_all_data *data)
-{
-    if (key_check(keycode))
-        rebuild(data);
-    if (keycode == 53)
-    {
-        mlx_destroy_window(data->mlx.connection, data->mlx.window);
-        exit(0);
-    }
-    // recalculate endpoint pov line
-    re_pov(keycode, data);
-
-    // recalculate increment factors
-    re_calculate_factors(data);
-
-    // re-position player
-    re_position_player(keycode, data);
-
-    mini_map(data, data->cu_map, false);
-
-    // redraw line
-    minimap_pov(data);
-
-    put_images_to_window(data);
     return (0);
 }
 float angle_fix(float angle)
@@ -133,11 +104,11 @@ void cast_ray(float ray_angle, int i , t_all_data *data)
     y_hit = floor(data->player.y/ data->minimap.tile) * data->minimap.tile;
     if (ray_down)
         y_hit += data->minimap.tile;
-    x_hit = data->player.x + (y_hit - data->player.y) - tan(data->rays[i]->ray_angle );
+    x_hit = data->player.x + (y_hit - data->player.y) - tan(data->rays[i].ray_angle);
     y_step = data->minimap.tile;
     if (ray_up)
         y_step *= -1;
-    x_step = data->minimap.tile / tan(data->rays[i]->ray_angle) ;
+    x_step = data->minimap.tile / tan(data->rays[i].ray_angle);
     if (ray_left && x_step > 0)
         x_step *= -1;
     if (ray_right && x_step < 0)
@@ -182,11 +153,11 @@ void cast_ray(float ray_angle, int i , t_all_data *data)
     x_hit = floor(data->player.y/ data->minimap.tile) * data->minimap.tile;
     if (ray_down)
         x_hit += data->minimap.tile;
-    y_hit = data->player.y + (x_hit - data->player.x) * tan(data->rays[i]->ray_angle );
+    y_hit = data->player.y + (x_hit - data->player.x) * tan(data->rays[i].ray_angle );
     x_step = data->minimap.tile;
     if (ray_up)
         x_step *= -1;
-    y_step = data->minimap.tile / tan(data->rays[i]->ray_angle) ;
+    y_step = data->minimap.tile / tan(data->rays[i].ray_angle) ;
     if (ray_left && y_step > 0)
         y_step *= -1;
     if (ray_right && y_step < 0)
@@ -221,23 +192,23 @@ void cast_ray(float ray_angle, int i , t_all_data *data)
         vert_dist = calculate__(data->player.x, data->player.y, x_hit, y_hit);
     if (vert_dist < horz_dist)
     {
-        data->rays[i]->distance = vert_dist;
-        data->rays[i]->verical_hit = 1;
-        data->rays[i]->wall_x = vert_hitx;
-        data->rays[i]->wall_y = vert_hity;
+        data->rays[i].distance = vert_dist;
+        data->rays[i].verical_hit = 1;
+        data->rays[i].wall_x = vert_hitx;
+        data->rays[i].wall_y = vert_hity;
     }
     else
     {
-        data->rays[i]->distance = horz_dist;
-        data->rays[i]->verical_hit = 0;
-        data->rays[i]->wall_x = horz_hitx;
-        data->rays[i]->wall_y = horz_hity;
+        data->rays[i].distance = horz_dist;
+        data->rays[i].verical_hit = 0;
+        data->rays[i].wall_x = horz_hitx;
+        data->rays[i].wall_y = horz_hity;
     }
-    data->rays[i]->ray_left = ray_left; 
-    data->rays[i]->ray_right = ray_right;
-    data->rays[i]->ray_down = ray_down;
-    data->rays[i]->ray_up = ray_up;
-    data->rays[i]->ray_angle = ray_angle;
+    data->rays[i].ray_left = ray_left; 
+    data->rays[i].ray_right = ray_right;
+    data->rays[i].ray_down = ray_down;
+    data->rays[i].ray_up = ray_up;
+    data->rays[i].ray_angle = ray_angle;
 }
 
 void cast_rays(t_all_data *data)
@@ -254,35 +225,105 @@ void cast_rays(t_all_data *data)
         i++;
     }
 }
+void put_pixel(t_all_data *data, int x, int y, int color) {
+    // Here you need to define how to put a pixel in your image buffer
+    // This example assumes a function exists that can directly put a pixel.
+    mlx_pixel_put(data->mlx.connection ,data->mlx.window , x, y, color);
+}
 
-t_ray ** init_rays(t_all_data *data)
+void draw_line(t_all_data *data, int x1, int y1, int x2, int y2, int color) {
+    int dx = abs(x2 - x1);
+    int dy = abs(y2 - y1);
+    int sx = (x1 < x2) ? 1 : -1;
+    int sy = (y1 < y2) ? 1 : -1;
+    int err = dx - dy;
+
+    while (1) {
+        put_pixel(data, x1, y1, color); // Draw pixel at (x1, y1)
+
+        if (x1 == x2 && y1 == y2) 
+            break; // Line finished
+
+        int err2 = err * 2;
+        if (err2 > -dy) {
+            err -= dy;
+            x1 += sx;
+        }
+        if (err2 < dx) {
+            err += dx;
+            y1 += sy;
+        }
+    }
+}
+void render__rays(t_all_data *data)
 {
-    t_ray **rays;
+    int i;
+    i = 0;
+    while (i < N_RAYS )
+    {
+        draw_line(data, data->player.x, data->player.y, data->rays[i].wall_x, data->rays[i].wall_y, 0x00FF00);
+        i++;
+    }
+
+
+}
+int	key_hook(int keycode, t_all_data *data)
+{
+    if (key_check(keycode))
+        rebuild(data);
+    if (keycode == 53)
+    {
+        mlx_destroy_window(data->mlx.connection, data->mlx.window);
+        exit(0);
+    }
+    // recalculate endpoint pov line
+    re_pov(keycode, data);
+
+    // recalculate increment factors
+    re_calculate_factors(data);
+
+    // re-position player
+    re_position_player(keycode, data);
+
+    mini_map(data, data->cu_map, false);
+
+    // redraw line
+    minimap_pov(data);
+
+    put_images_to_window(data);
+    cast_rays(data);
+    render__rays(data);
+    return (0);
+}
+
+
+void init_rays(t_all_data *data)
+{
     int i;
     int r_num;
 
-    rays = (t_ray **) malloc(sizeof(t_ray *)*N_RAYS+1);
-    rays[N_RAYS] = NULL;
-    if (!rays)
-        return (NULL);
+    data->rays = malloc(sizeof(t_ray)*N_RAYS+1);
+    if (!data->rays)
+        return ;
+
     i = 1;
     r_num = N_RAYS;
     while (i < N_RAYS)
     {
         printf("\t\t\t||%d||\n\n\n", i);
-        rays[i]->ray_angle = data->player.player_angle_rad / N_RAYS ; 
-        rays[i]->distance = 0;
-        rays[i]->wall_y = 0;
-        rays[i]->wall_x = 0;
-        rays[i]->ray_left = 0;
-        rays[i]->ray_down = 0;
-        rays[i]->ray_right = 0;
-        rays[i]->ray_up = 0;
-        rays[i]->verical_hit = 0;
+        data->rays[i].ray_angle = data->player.player_angle_rad / N_RAYS ; 
+        data->rays[i].distance = 0;
+        data->rays[i].wall_y = 0;
+        data->rays[i].wall_x = 0;
+        data->rays[i].ray_left = 0;
+        data->rays[i].ray_down = 0;
+        data->rays[i].ray_right = 0;
+        data->rays[i].ray_up = 0;
+        data->rays[i].verical_hit = 0;
         i++;
     }
-    return (rays);
 }
+
 int main()
 {
     t_all_data data;
@@ -298,7 +339,7 @@ int main()
     initial_endpoint(&data);
     re_calculate_factors(&data);
     minimap_pov(&data);
-    data.rays = init_rays(&data);
+    init_rays(&data);
     
     game(&data.game_img);
     put_images_to_window(&data);
