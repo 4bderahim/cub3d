@@ -211,8 +211,6 @@ void cast_ray(float ray_angle, int i , t_all_data *data)
         next_vert_y += y_step;
     }
 
-
-
 }
 
 void cast_rays(t_all_data *data)
