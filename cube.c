@@ -127,11 +127,11 @@ void cast_ray(float ray_angle, int i , t_all_data *data)
     y_hit = floor(data->player.y/ data->minimap.tile) * data->minimap.tile;
     if (ray_down)
         y_hit += data->minimap.tile;
-    x_hit = data->player.x + (y_hit - data->player.y) - tan(data->rays[i]->wall_y );
+    x_hit = data->player.x + (y_hit - data->player.y) - tan(data->rays[i]->ray_angle );
     y_step = data->minimap.tile;
     if (ray_up)
         y_step *= -1;
-    x_step = data->minimap.tile / tan(data->rays[i]->wall_y) ;
+    x_step = data->minimap.tile / tan(data->rays[i]->ray_angle) ;
     if (ray_left && x_step > 0)
         x_step *= -1;
     if (ray_right && x_step < 0)
@@ -155,6 +155,63 @@ void cast_ray(float ray_angle, int i , t_all_data *data)
         next_horz_x = x_step;
         next_horz_y = y_step;
     }
+
+
+
+    // VERT
+
+
+
+
+
+
+
+
+
+    int vert_hit = false;
+    float vert_hitx = 0;
+    float vert_hity = 0;
+    int vert_hit_content;
+    float next_vert_x;
+    float next_vert_y;
+
+    float x_check;
+    float y_check;
+
+  
+    x_hit = floor(data->player.y/ data->minimap.tile) * data->minimap.tile;
+    if (ray_down)
+        x_hit += data->minimap.tile;
+    y_hit = data->player.y + (x_hit - data->player.x) * tan(data->rays[i]->ray_angle );
+    x_step = data->minimap.tile;
+    if (ray_up)
+        x_step *= -1;
+    y_step = data->minimap.tile / tan(data->rays[i]->ray_angle) ;
+    if (ray_left && y_step > 0)
+        y_step *= -1;
+    if (ray_right && y_step < 0)
+        y_step *= -1;
+    next_vert_x = x_hit;
+    next_vert_y = y_hit;
+    while (next_vert_x >= 0 && next_vert_x <= data->minimap.height && next_vert_y >= 0 && next_vert_y <= data->minimap.height)
+    {
+        x_check = next_vert_x;
+        y_check = next_vert_x;
+        if (ray_up)
+            x_check -= 1;
+        if (data->cu_map->map[(int)y_check / data->minimap.tile][(int)x_check/data->minimap.tile] ='1')
+        {
+            vert_hitx = next_vert_x;
+            vert_hity = next_vert_y;
+            vert_hit = true;
+            // 
+            break;
+        }
+        next_vert_x += x_step;
+        next_vert_y += y_step;
+    }
+
+
 
 }
 
