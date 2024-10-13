@@ -115,8 +115,6 @@ void cast_ray(float ray_angle, int i , t_all_data *data)
     float x_check;
     float y_check;
 
-
-
     ray_angle = angle_fix(ray_angle);
     ray_down = 0;
     if (ray_angle > 0 && ray_angle < M_PI)
@@ -142,25 +140,21 @@ void cast_ray(float ray_angle, int i , t_all_data *data)
     next_horz_y = y_hit;
     while (next_horz_x >= 0 && next_horz_x <= data->minimap.height && next_horz_y >= 0 && next_horz_y <= data->minimap.height)
     {
-        x_check = next_horz_x ;
+        x_check = next_horz_x;
         y_check = next_horz_x;
         if (ray_up)
             y_check -= 1;
-        if (data->cu_map->map[(int)y_check/data->minimap.tile][(int)x_check/data->minimap.tile] ='1')
+        if (data->cu_map->map[(int)y_check / data->minimap.tile][(int)x_check/data->minimap.tile] ='1')
         {
             horz_hitx = next_horz_x;
             horz_hity = next_horz_y;
+            horz_hit = true;
             // 
             break;
         }
         next_horz_x = x_step;
         next_horz_y = y_step;
-        // ----------------------------------   RWINAA
     }
-    
-
-
-
 
 }
 
