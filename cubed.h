@@ -15,7 +15,7 @@
 //game res
 # define WIDTH 1200
 # define HEIGHT 1200
-# define N_RAYS 10
+# define N_RAYS 1040
 
 //keys
 #define RA 124
@@ -80,7 +80,7 @@ typedef struct s_endpoint
     float y;
 } t_endpoint;
 
-typedef struct s_ray
+typedef struct s_raya
 {
     float   ray_angle;
     float   wall_x;
