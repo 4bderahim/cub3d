@@ -10,7 +10,8 @@
 #include "libft/libft.h"
 #include "stdbool.h"
 
-#define to_deg M_PI / 180
+#define to_rad M_PI / 180
+#define to_deg 180 / M_PI
 
 //game res
 # define WIDTH 1200
@@ -70,6 +71,7 @@ typedef struct s_player
     float factor_y;
     float steps;
     float player_angle_rad;
+    int   player_angle_degree;
     int direction;
     float fov_angle;
 } t_player;

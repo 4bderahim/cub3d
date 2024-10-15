@@ -37,6 +37,7 @@ int	key_check(int key)
     }
     return (0);
 }
+
 float angle_fix(float angle)
 {
     angle = remainder(angle, M_PI*2);
@@ -281,6 +282,8 @@ int	key_hook(int keycode, t_all_data *data)
     cast_rays(data);
     render__rays(data);
     
+    // printf("player angle in degree: %d\n", data->player.player_angle_degree);
+    // printf("player angle in radian: %f\n\n", data->player.player_angle_rad);
     put_images_to_window(data);
     return (0);
 }
@@ -294,7 +297,7 @@ int main()
         return (0);
     height_width(data.cu_map);
     minimap_calcs(&data, data.cu_map);
-    data.player.fov_angle = 60 * to_deg;
+    data.player.fov_angle = 60 * to_rad;
     mlx_initial(&data.mlx, &data.minimap_img, &data.game_img, data.minimap);
     
     mini_map(&data, data.cu_map, true);

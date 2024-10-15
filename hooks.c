@@ -34,7 +34,7 @@ static void up_down(t_all_data *data, int direction)
 
 static void    right_left(t_all_data *data, int direction)
 {
-    float degree = data->player.player_angle_rad - (90 * to_deg);
+    float degree = data->player.player_angle_rad - (90 * to_rad);
     float cos_ = cos(degree) * 5;
     float sin_ = sin(degree) * 5;
     data->player.x += cos_ * direction;
