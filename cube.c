@@ -28,27 +28,6 @@ void minimap_calcs(t_all_data *data, t_cu *cu_map)
     data->minimap.height = cu_map->map_height * data->minimap.tile;
 }
 
-void dda(t_all_data *data)
-{
-    int i = 0;
-    float increment_x = data->player.x+3;
-    float increment_y = data->player.y+2;
-
-    while (i < 50)
-    {
-        if (increment_y > 0 && increment_y < data->minimap.height && increment_x > 0 && increment_x < data->minimap.width)
-            custom_mlx_pixel_put(&data->minimap_img, increment_x, increment_y, 0x00FF00);
-        increment_y +=  data->player.factor_y;
-        increment_x +=  data->player.factor_x;
-        i++;
-    }
-}
-
-void    minimap_pov(t_all_data *data)
-{
-    dda(data);
-}
-
 int	key_check(int key)
 {
     if (key == 0 || key == 1 || key == 2 || key == 13
@@ -68,10 +47,10 @@ float angle_fix(float angle)
 
 float calculate__(float px,float py,float px_hit,float py_hit)
 {
-    return sqrt((px_hit - px) * (px_hit -px) * (py_hit -py )* (py_hit -py));
+    return sqrt((px_hit - px) * (px_hit - px) * (py_hit -py )* (py_hit -py));
 }
 
-void cast_ray(float ray_angle, int i , t_all_data *data)
+void cast_ray(float ray_angle, int i, t_all_data *data)
 {
     int ray_up;
     int ray_down;
@@ -81,7 +60,6 @@ void cast_ray(float ray_angle, int i , t_all_data *data)
     float y_hit;
     float x_step;
     float y_step;
-    //
     int horz_hit = false;
     float horz_hitx = 0;
     float horz_hity = 0;
@@ -94,10 +72,10 @@ void cast_ray(float ray_angle, int i , t_all_data *data)
 
     ray_angle = angle_fix(ray_angle);
     ray_up = 0;
+
+    
     if (ray_angle > 0 && ray_angle < M_PI)
-        {
-            ray_up = 1;
-        }
+        ray_up = 1;
     ray_down = !(ray_up);
     ray_left = 0;
     if (ray_angle < (M_PI/2) || ray_angle > (M_PI+(M_PI/2)))
@@ -117,18 +95,15 @@ void cast_ray(float ray_angle, int i , t_all_data *data)
         x_step *= -1;
     next_horz_x = x_hit;
     next_horz_y = y_hit;
-    while (next_horz_x >= 0 && next_horz_x <= data->minimap.width && next_horz_y >= 0 && next_horz_y <= data->minimap.height)
+    while (next_horz_x > 0 && next_horz_x < data->minimap.width && next_horz_y > 0 && next_horz_y < data->minimap.height)
     {
         x_check = next_horz_x;
         y_check = next_horz_y + (ray_up ? -1: 0);
-        // if (ray_up)
-        //     y_check -= 1;
         if (data->cu_map->map[(int)floor(y_check / data->minimap.tile)][(int)floor(x_check/data->minimap.tile)] == '1')
         {
             horz_hitx = next_horz_x;
             horz_hity = next_horz_y;
             horz_hit = true;
-            // 
             break;
         }
         else
@@ -137,16 +112,17 @@ void cast_ray(float ray_angle, int i , t_all_data *data)
             next_horz_y += y_step;
         }
     }
+    //horizontal ends
 
+
+
+    //vertical
     int vert_hit = false;
     float vert_hitx = 0;
     float vert_hity = 0;
     int vert_hit_content;
     float next_vert_x;
     float next_vert_y;
-
-    // float x_check;
-    // float y_check;
     x_hit = floor(data->player.x/ data->minimap.tile) * data->minimap.tile;
     if (ray_right)
         x_hit += data->minimap.tile;
@@ -161,19 +137,16 @@ void cast_ray(float ray_angle, int i , t_all_data *data)
         y_step *= -1;
     next_vert_x = x_hit;
     next_vert_y = y_hit;
-    while (next_vert_x >= 0 && next_vert_x <= data->minimap.width && next_vert_y >= 0 && next_vert_y <= data->minimap.height)
+    while (next_vert_x > 0 && next_vert_x < data->minimap.width && next_vert_y > 0 && next_vert_y < data->minimap.height)
     {
         x_check = next_vert_x + (ray_left ? -1 : 0);
         y_check = next_vert_y;
-        // if (ray_up)
-        //     x_check -= 1;
          if (data->cu_map->map[(int)floor(y_check / data->minimap.tile)][(int)floor(x_check/data->minimap.tile)] == '1')
         {
 
             vert_hitx = next_vert_x;
             vert_hity = next_vert_y;
             vert_hit = 1;
-            // 
             break;
         }
 
@@ -185,9 +158,6 @@ void cast_ray(float ray_angle, int i , t_all_data *data)
     }
 
 
-
-
-    ///
     float  horz_dist ;
     float  vert_dist ;
 
@@ -220,60 +190,50 @@ void cast_ray(float ray_angle, int i , t_all_data *data)
 
 void cast_rays(t_all_data *data)
 {
-    float ray_angle;
-    int i;
-
-    i = 0;
-    ray_angle = data->player.player_angle_rad -  (60 * (M_PI / 180) / 2);
-    while (i < N_RAYS )
+    int i = 0;
+    float ray_angle = data->player.player_angle_rad - (data->player.fov_angle / 2);
+    float angle_factor = data->player.fov_angle / N_RAYS;
+    while (i < N_RAYS)
     {
         cast_ray(ray_angle, i, data);
-        ray_angle += (60 * (M_PI / 180)) / N_RAYS;
+        ray_angle += angle_factor;
         i++;
     }
 }
-void put_pixel(t_all_data *data, int x, int y, int color) {
-    mlx_pixel_put(data->minimap_img.addr ,data->minimap_img.img, x, y, color);
-}
 
-void draw_line(t_all_data *data, int x1, int y1, int x2, int y2, int color) {
-    int dx = abs(x2 - x1);
-    int dy = abs(y2 - y1);
-    int sx = (x1 < x2) ? 1 : -1;
-    int sy = (y1 < y2) ? 1 : -1;
-    int err = dx - dy;
-
-    while (1) {
-        put_pixel(data, x1, y1, color); // Draw pixel at (x1, y1)
-
-        if (x1 == x2 && y1 == y2) 
-            break; // Line finished
-
-        int err2 = err * 2;
-        if (err2 > -dy) {
-            err -= dy;
-            x1 += sx;
-        }
-        if (err2 < dx) {
-            err += dx;
-            y1 += sy;
-        }
+void    ray_dda(t_all_data *data, float ray_x, float ray_y)
+{
+    int i = 0;
+    float dx = ray_x - data->player.x;
+    float dy = ray_y - data->player.y;
+    float steps = 0;
+    if (fabs(dx) >= fabs(dy))
+        steps = fabs(dx);
+    else
+        steps = fabs(dy);
+    float factor_x = dx / steps;
+    float factor_y = dy / steps;
+    float increment_x = data->player.x;
+    float increment_y = data->player.y;
+    while (i < steps)
+    {
+        if (increment_y >= 0 && increment_y <= data->minimap.height && increment_x >= 0 && increment_x <= data->minimap.width)
+            custom_mlx_pixel_put(&data->minimap_img, increment_x, increment_y, 0x00FF00);
+        increment_x +=  factor_x;
+        increment_y += factor_y;
+        i++;
     }
 }
+
 void render__rays(t_all_data *data)
 {
-    int i;
-    i = 1;
-    // draw_line(data, data->player.x, data->player.y, data->rays[2].wall_x, data->rays[2].wall_y, 0x00FF00);
-
-    while (i < N_RAYS )
+    int i = 0;
+    while (i < N_RAYS)
     {
-        // printf("\n@@@@@%f|%f|\n",data->rays[i].wall_x, data->rays[i].wall_y);
-         draw_line(data, data->player.x, data->player.y, data->rays[i].wall_x, data->rays[i].wall_y,  0xFF0000);
-        custom_mlx_pixel_put(&data->minimap_img, data->rays[i].wall_x, data->rays[i].wall_y,  0xFF0000);
-        custom_mlx_pixel_put(&data->minimap_img, data->rays[i].wall_x+1, data->rays[i].wall_y+1,  0xFF0000);
-        custom_mlx_pixel_put(&data->minimap_img, data->rays[i].wall_x+2, data->rays[i].wall_y+2,  0xFF0000);
-       // break;
+        ray_dda(data, data->rays[i].wall_x, data->rays[i].wall_y);
+        // custom_mlx_pixel_put(&data->minimap_img, data->rays[i].wall_x, data->rays[i].wall_y,  0xFF0000);
+        // custom_mlx_pixel_put(&data->minimap_img, data->rays[i].wall_x+1, data->rays[i].wall_y+1,  0xFF0000);
+        // custom_mlx_pixel_put(&data->minimap_img, data->rays[i].wall_x+2, data->rays[i].wall_y+2,  0xFF0000);
         i++;
     }
 }
@@ -281,18 +241,14 @@ void render__rays(t_all_data *data)
 void init_rays(t_all_data *data)
 {
     int i;
-    int r_num;
 
-    data->rays = malloc(sizeof(t_ray)*N_RAYS+1);
+    data->rays = malloc(sizeof(t_ray) * N_RAYS);
     if (!data->rays)
-        return ;
-
-    i = 1;
-    r_num = N_RAYS;
+        exit(1);    
+    i = 0;
     while (i < N_RAYS)
     {
-        printf("\t\t\t||%d||\n\n\n", i);
-        data->rays[i].ray_angle = data->player.player_angle_rad / N_RAYS ; 
+        data->rays[i].ray_angle = data->player.player_angle_rad / N_RAYS; 
         data->rays[i].distance = 0;
         data->rays[i].wall_y = 0;
         data->rays[i].wall_x = 0;
@@ -314,22 +270,21 @@ int	key_hook(int keycode, t_all_data *data)
         mlx_destroy_window(data->mlx.connection, data->mlx.window);
         exit(0);
     }
-    // recalculate endpoint pov line
     re_pov(keycode, data);
-    // recalculate increment factors
-    re_calculate_factors(data);
-    // re-position player
     re_position_player(keycode, data);
-    mini_map(data, data->cu_map, false);
-    // redraw line
-    minimap_pov(data);
+    
+    mini_map(data, data->cu_map, false); 
     free(data->rays);
+    data->rays = NULL;
+
     init_rays(data);
     cast_rays(data);
     render__rays(data);
+    
     put_images_to_window(data);
     return (0);
 }
+
 int main()
 {
     t_all_data data;
@@ -339,15 +294,16 @@ int main()
         return (0);
     height_width(data.cu_map);
     minimap_calcs(&data, data.cu_map);
+    data.player.fov_angle = 60 * to_deg;
     mlx_initial(&data.mlx, &data.minimap_img, &data.game_img, data.minimap);
-    data.player.fov_angle = 60 - (90 * to_deg);
+    
     mini_map(&data, data.cu_map, true);
     initial_endpoint(&data);
-    re_calculate_factors(&data);
-    minimap_pov(&data);
+
     init_rays(&data);
     cast_rays(&data);
     render__rays(&data);
+
     game(&data.game_img);
     put_images_to_window(&data);
     mlx_hook(data.mlx.window, 17, 0, close_btn, &data.mlx);
