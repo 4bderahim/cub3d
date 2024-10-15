@@ -40,152 +40,155 @@ int	key_check(int key)
 
 float angle_fix(float angle)
 {
-    angle = remainder(angle, M_PI*2);
+    angle = remainder(angle, M_PI * 2);
     if (angle < 0)
-        angle = (M_PI*2) + angle;
+        angle = (M_PI * 2) + angle;
     return (angle);
 }
 
-float calculate__(float px,float py,float px_hit,float py_hit)
+float calculate__(float px, float py, float px_hit, float py_hit)
 {
-    return sqrt((px_hit - px) * (px_hit - px) * (py_hit -py )* (py_hit -py));
+    return sqrt(pow(px_hit - px, 2) + pow(py_hit - py, 2));
 }
 
-void cast_ray(float ray_angle, int i, t_all_data *data)
+typedef struct s_direction
 {
-    int ray_up;
-    int ray_down;
-    int ray_right;
-    int ray_left;
+    int up;
+    int down;
+    int right;
+    int left;
+} t_direction;
+
+typedef struct s_rays_utils
+{
     float x_hit;
     float y_hit;
     float x_step;
     float y_step;
-    int horz_hit = false;
-    float horz_hitx = 0;
-    float horz_hity = 0;
-    int horz_hit_content;
-    float next_horz_x;
-    float next_horz_y;
+    float distance;
+} t_rays_utils;
 
+
+void    set_direction(t_direction *direction, float ray_angle)
+{
+    direction->up = 0;
+    direction->left = 0;
+    if (ray_angle > 0 && ray_angle < M_PI)
+        direction->up = 1;
+    direction->down = !(direction->up);
+    if (ray_angle < (M_PI / 2) || ray_angle > (M_PI + (M_PI / 2)))
+        direction->left = 1;
+    direction->right = !direction->left;
+}
+
+
+void cast_ray(float ray_angle, int i, t_all_data *data)
+{
+    t_direction direction;
+    t_rays_utils horizontal;
+    t_rays_utils vertical;
+    
     float x_check;
     float y_check;
-
+        
     ray_angle = angle_fix(ray_angle);
-    ray_up = 0;
-
     
-    if (ray_angle > 0 && ray_angle < M_PI)
-        ray_up = 1;
-    ray_down = !(ray_up);
-    ray_left = 0;
-    if (ray_angle < (M_PI/2) || ray_angle > (M_PI+(M_PI/2)))
-        ray_left = 1;
-    ray_right = !ray_left;
-    y_hit = floor(data->player.y/ data->minimap.tile) * data->minimap.tile;
-    if (ray_down)
-        y_hit += data->minimap.tile;
-    x_hit = data->player.x + (y_hit - data->player.y) / tan(ray_angle);
-    y_step = data->minimap.tile;
-    if (ray_up)
-        y_step *= -1;
-    x_step = data->minimap.tile / tan(ray_angle);
-    if (ray_left && x_step > 0)
-        x_step *= -1;
-    if (ray_right && x_step < 0)
-        x_step *= -1;
-    next_horz_x = x_hit;
-    next_horz_y = y_hit;
-    while (next_horz_x > 0 && next_horz_x < data->minimap.width && next_horz_y > 0 && next_horz_y < data->minimap.height)
+    //set ray direction
+    set_direction(&direction, ray_angle);
+
+    // intersection coordinates
+    // y
+    horizontal.y_hit = (int)(data->player.y / data->minimap.tile) * data->minimap.tile;
+    if (direction.down)
     {
-        x_check = next_horz_x;
-        y_check = next_horz_y + (ray_up ? -1: 0);
-        if (data->cu_map->map[(int)floor(y_check / data->minimap.tile)][(int)floor(x_check/data->minimap.tile)] == '1')
-        {
-            horz_hitx = next_horz_x;
-            horz_hity = next_horz_y;
-            horz_hit = true;
-            break;
-        }
-        else
-        {
-            next_horz_x += x_step;
-            next_horz_y += y_step;
-        }
+        horizontal.y_hit += data->minimap.tile;
     }
-    //horizontal ends
+    // x
+    horizontal.x_hit = data->player.x + ((horizontal.y_hit - data->player.y) / tan(ray_angle));    
 
+    // horizonal x & y steps
+    // y
+    horizontal.y_step = data->minimap.tile;
+    if (direction.up)
+        horizontal.y_step *= -1;
+    // x
+    horizontal.x_step = data->minimap.tile / tan(ray_angle);
+    if (direction.left && horizontal.x_step > 0)
+        horizontal.x_step *= -1;
+    if (direction.right && horizontal.x_step < 0)
+        horizontal.x_step *= -1;
 
-
-    //vertical
-    int vert_hit = false;
-    float vert_hitx = 0;
-    float vert_hity = 0;
-    int vert_hit_content;
-    float next_vert_x;
-    float next_vert_y;
-    x_hit = floor(data->player.x/ data->minimap.tile) * data->minimap.tile;
-    if (ray_right)
-        x_hit += data->minimap.tile;
-    y_hit = data->player.y + (x_hit - data->player.x) * tan(ray_angle );
-    x_step = data->minimap.tile;
-    if (ray_left)
-        x_step *= -1;
-    y_step = data->minimap.tile * tan(ray_angle) ;
-    if (ray_up && y_step > 0)
-        y_step *= -1;
-    if (ray_down && y_step < 0)
-        y_step *= -1;
-    next_vert_x = x_hit;
-    next_vert_y = y_hit;
-    while (next_vert_x > 0 && next_vert_x < data->minimap.width && next_vert_y > 0 && next_vert_y < data->minimap.height)
+    // search for intersection
+    while (horizontal.x_hit > 0 && horizontal.x_hit < data->minimap.width && horizontal.y_hit > 0 && horizontal.y_hit < data->minimap.height)
     {
-        x_check = next_vert_x + (ray_left ? -1 : 0);
-        y_check = next_vert_y;
-         if (data->cu_map->map[(int)floor(y_check / data->minimap.tile)][(int)floor(x_check/data->minimap.tile)] == '1')
-        {
-
-            vert_hitx = next_vert_x;
-            vert_hity = next_vert_y;
-            vert_hit = 1;
+        x_check = horizontal.x_hit;
+        y_check = horizontal.y_hit;
+        if (direction.up)
+            y_check = horizontal.y_hit - 1;
+        if (data->cu_map->map[(int)(y_check / data->minimap.tile)][(int)(x_check / data->minimap.tile)] == '1')
             break;
-        }
-
-        else
-            {
-                next_vert_x += x_step;
-        next_vert_y += y_step;
-        }
+        horizontal.x_hit += horizontal.x_step;
+        horizontal.y_hit += horizontal.y_step;
     }
 
+    //VERTICAL
 
-    float  horz_dist ;
-    float  vert_dist ;
 
-    horz_dist = 100000;
-    vert_dist = 100000;
-    if (horz_hit)
-        horz_dist = calculate__(data->player.x, data->player.y, horz_hitx, horz_hity);
-    if (vert_hit)
-        vert_dist = calculate__(data->player.x, data->player.y, vert_hitx, vert_hity);
-    if (vert_dist < horz_dist)
+
+    // intersection
+    // x
+    vertical.x_hit = (int)(data->player.x / data->minimap.tile) * data->minimap.tile;
+    if (direction.right)
+        vertical.x_hit += data->minimap.tile;
+    // y
+    vertical.y_hit = data->player.y + ((vertical.x_hit - data->player.x) * tan(ray_angle));
+    
+    // vertical x & y steps
+    // x
+    vertical.x_step = data->minimap.tile;
+    if (direction.left)
+        vertical.x_step *= -1;
+    // y
+    vertical.y_step = data->minimap.tile * tan(ray_angle);
+    if (direction.up && vertical.y_step > 0)
+        vertical.y_step *= -1;
+    if (direction.down && vertical.y_step < 0)
+        vertical.y_step *= -1;
+    
+    // search for intersection
+    while (vertical.x_hit > 0 && vertical.x_hit < data->minimap.width && vertical.y_hit > 0 && vertical.y_hit < data->minimap.height)
     {
-        data->rays[i].distance = vert_dist;
+        x_check = vertical.x_hit;
+        if (direction.left)
+            x_check = vertical.x_hit - 1;
+        y_check = vertical.y_hit;
+        if (data->cu_map->map[(int)(y_check / data->minimap.tile)][(int)(x_check/data->minimap.tile)] == '1')
+            break;
+        vertical.x_hit += vertical.x_step;
+        vertical.y_hit += vertical.y_step;
+    }
+    
+    // calculate and compare distances
+    horizontal.distance = calculate__(data->player.x, data->player.y, horizontal.x_hit, horizontal.y_hit);
+    vertical.distance = calculate__(data->player.x, data->player.y, vertical.x_hit, vertical.y_hit);
+    if (vertical.distance < horizontal.distance)
+    {
         data->rays[i].verical_hit = 1;
-        data->rays[i].wall_x = vert_hitx;
-        data->rays[i].wall_y = vert_hity;
+        data->rays[i].wall_x = vertical.x_hit;
+        data->rays[i].wall_y = vertical.y_hit;
+        data->rays[i].distance = vertical.distance;        
     }
     else
     {
-        data->rays[i].distance = horz_dist;
         data->rays[i].verical_hit = 0;
-        data->rays[i].wall_x = horz_hitx;
-        data->rays[i].wall_y = horz_hity;
+        data->rays[i].wall_x = horizontal.x_hit;
+        data->rays[i].wall_y = horizontal.y_hit;
+        data->rays[i].distance = horizontal.distance;
     }
-    data->rays[i].ray_left = ray_left; 
-    data->rays[i].ray_right = ray_right;
-    data->rays[i].ray_down = ray_down;
-    data->rays[i].ray_up = ray_up;
+    data->rays[i].ray_left = direction.left; 
+    data->rays[i].ray_right = direction.right;
+    data->rays[i].ray_down = direction.down;
+    data->rays[i].ray_up = direction.up;
     data->rays[i].ray_angle = ray_angle;
 }
 
@@ -196,9 +199,8 @@ void cast_rays(t_all_data *data)
     float angle_factor = data->player.fov_angle / N_RAYS;
     while (i < N_RAYS)
     {
-        cast_ray(ray_angle, i, data);
+        cast_ray(ray_angle, i++, data);
         ray_angle += angle_factor;
-        i++;
     }
 }
 
@@ -241,12 +243,11 @@ void render__rays(t_all_data *data)
 
 void init_rays(t_all_data *data)
 {
-    int i;
+    int i = 0;
 
     data->rays = malloc(sizeof(t_ray) * N_RAYS);
     if (!data->rays)
         exit(1);    
-    i = 0;
     while (i < N_RAYS)
     {
         data->rays[i].ray_angle = data->player.player_angle_rad / N_RAYS; 
