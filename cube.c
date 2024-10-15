@@ -93,16 +93,16 @@ void cast_ray(float ray_angle, int i , t_all_data *data)
     float y_check;
 
     ray_angle = angle_fix(ray_angle);
-    ray_down = 0;
+    ray_up = 0;
     if (ray_angle > 0 && ray_angle < M_PI)
         {
-            ray_down = 1;
+            ray_up = 1;
         }
-    ray_up = !(ray_down);
-    ray_right = 0;
+    ray_down = !(ray_up);
+    ray_left = 0;
     if (ray_angle < (M_PI/2) || ray_angle > (M_PI+(M_PI/2)))
-        ray_right = 1;
-    ray_left = !ray_right;
+        ray_left = 1;
+    ray_right = !ray_left;
     y_hit = floor(data->player.y/ data->minimap.tile) * data->minimap.tile;
     if (ray_down)
         y_hit += data->minimap.tile;
@@ -138,70 +138,79 @@ void cast_ray(float ray_angle, int i , t_all_data *data)
         }
     }
 
-    // int vert_hit = false;
-    // float vert_hitx = 0;
-    // float vert_hity = 0;
-    // int vert_hit_content;
-    // float next_vert_x;
-    // float next_vert_y;
+    int vert_hit = false;
+    float vert_hitx = 0;
+    float vert_hity = 0;
+    int vert_hit_content;
+    float next_vert_x;
+    float next_vert_y;
 
-    // // float x_check;
-    // // float y_check;
-  
-    // x_hit = floor(data->player.y/ data->minimap.tile) * data->minimap.tile;
-    // if (ray_down)
-    //     x_hit += data->minimap.tile;
-    // y_hit = data->player.y + (x_hit - data->player.x) * tan(data->rays[i].ray_angle );
-    // x_step = data->minimap.tile;
-    // if (ray_up)
-    //     x_step *= -1;
-    // y_step = data->minimap.tile / tan(data->rays[i].ray_angle) ;
-    // if (ray_left && y_step > 0)
-    //     y_step *= -1;
-    // if (ray_right && y_step < 0)
-    //     y_step *= -1;
-    // next_vert_x = x_hit;
-    // next_vert_y = y_hit;
-    // while (next_vert_x >= 0 && next_vert_x <= data->minimap.height && next_vert_y >= 0 && next_vert_y <= data->minimap.height)
-    // {
-    //     x_check = next_vert_x;
-    //     y_check = next_vert_x;
-    //     if (ray_up)
-    //         x_check -= 1;
-    //     if (data->cu_map->map[(int)y_check / data->minimap.tile][(int)x_check/data->minimap.tile] == '1')
-    //     {
-    //         vert_hitx = next_vert_x;
-    //         vert_hity = next_vert_y;
-    //         vert_hit = true;
-    //         // 
-    //         break;
-    //     }
-    //     next_vert_x += x_step;
-    //     next_vert_y += y_step;
-    // }
+    // float x_check;
+    // float y_check;
+    x_hit = floor(data->player.x/ data->minimap.tile) * data->minimap.tile;
+    if (ray_right)
+        x_hit += data->minimap.tile;
+    y_hit = data->player.y + (x_hit - data->player.x) * tan(ray_angle );
+    x_step = data->minimap.tile;
+    if (ray_left)
+        x_step *= -1;
+    y_step = data->minimap.tile * tan(ray_angle) ;
+    if (ray_up && y_step > 0)
+        y_step *= -1;
+    if (ray_down && y_step < 0)
+        y_step *= -1;
+    next_vert_x = x_hit;
+    next_vert_y = y_hit;
+    while (next_vert_x >= 0 && next_vert_x <= data->minimap.width && next_vert_y >= 0 && next_vert_y <= data->minimap.height)
+    {
+        x_check = next_vert_x + (ray_left ? -1 : 0);
+        y_check = next_vert_y;
+        // if (ray_up)
+        //     x_check -= 1;
+         if (data->cu_map->map[(int)floor(y_check / data->minimap.tile)][(int)floor(x_check/data->minimap.tile)] == '1')
+        {
+
+            vert_hitx = next_vert_x;
+            vert_hity = next_vert_y;
+            vert_hit = 1;
+            // 
+            break;
+        }
+
+        else
+            {
+                next_vert_x += x_step;
+        next_vert_y += y_step;
+        }
+    }
+
+
+
+
+    ///
     float  horz_dist ;
     float  vert_dist ;
 
     horz_dist = 100000;
     vert_dist = 100000;
     if (horz_hit)
-        horz_dist = calculate__(data->player.x, data->player.y, x_hit, y_hit);
-    // if (vert_hit)
-    //     vert_dist = calculate__(data->player.x, data->player.y, x_hit, y_hit);
-    // if (vert_dist < horz_dist)
-    // {
-    //     data->rays[i].distance = vert_dist;
-    //     data->rays[i].verical_hit = 1;
-    //     data->rays[i].wall_x = vert_hitx;
-    //     data->rays[i].wall_y = vert_hity;
-    // }
-    // else
-    // {
+        horz_dist = calculate__(data->player.x, data->player.y, horz_hitx, horz_hity);
+    if (vert_hit)
+        vert_dist = calculate__(data->player.x, data->player.y, vert_hitx, vert_hity);
+    if (vert_dist < horz_dist)
+    {
+        data->rays[i].distance = vert_dist;
+        data->rays[i].verical_hit = 1;
+        data->rays[i].wall_x = vert_hitx;
+        data->rays[i].wall_y = vert_hity;
+    }
+    else
+    {
         data->rays[i].distance = horz_dist;
         data->rays[i].verical_hit = 0;
         data->rays[i].wall_x = horz_hitx;
         data->rays[i].wall_y = horz_hity;
-    // }
+    }
     data->rays[i].ray_left = ray_left; 
     data->rays[i].ray_right = ray_right;
     data->rays[i].ray_down = ray_down;
