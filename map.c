@@ -187,14 +187,14 @@ int set_fr_fg_fb(t_cu *cu, char *s, int x)
     i = get_index(s);
     s[i] = 0;
     if (x)
-        cu->fb = atoi(s);
-    else
-        cu->cb = atoi(s);
-    s = s+i+1;
-    if (x)
         cu->fg = atoi(s);
     else
         cu->cg = atoi(s);
+    s = s+i+1;
+    if (x)
+        cu->fb = atoi(s);
+    else
+        cu->cb = atoi(s);
     return (1);
 }
 

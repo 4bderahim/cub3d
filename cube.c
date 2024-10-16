@@ -14,18 +14,49 @@ int	close_btn(t_mlx *mlx)
     exit(0);
 }
 
-void    game(t_data *game_img)
+int	create_rgb(int r, int g, int b)
 {
-    for (int i = 0; i < WIDTH; i++)
-        for (int j = 0; j < HEIGHT; j++)
-            custom_mlx_pixel_put(game_img, i, j, 0x5135);
+	return (r << 16 | g << 8 | b);
+}
+
+
+void    game(t_all_data  *data)
+{
+    int celine_color = create_rgb(data->cu_map->cr, data->cu_map->cg, data->cu_map->cb);
+    int floor_color = create_rgb(data->cu_map->fr, data->cu_map->fg, data->cu_map->fb);
+
+    int i = 0;
+
+    //celine
+    while (i < WIDTH)
+    {
+        int j = 0;
+        while (j < HEIGHT / 2)
+        {
+            custom_mlx_pixel_put(&data->game_img, i, j, celine_color);
+            j++;
+        }
+        i++;
+    }
+
+    i = 0;
+    // floor
+    while (i < WIDTH)
+    {
+        int j = HEIGHT / 2;
+        while (j < HEIGHT)
+        {
+            custom_mlx_pixel_put(&data->game_img, i, j, floor_color);
+            j++;
+        }
+        i++;
+    }
 }
 
 void minimap_calcs(t_all_data *data, t_cu *cu_map)
 {
     data->minimap.tile = 26;
     data->minimap.width = cu_map->map_width * data->minimap.tile;
-    // printf("jackk %d\n", data->minimap.width);
     data->minimap.height = cu_map->map_height * data->minimap.tile;
 }
 
@@ -298,8 +329,7 @@ int main()
     init_rays(&data);
     cast_rays(&data);
     render__rays(&data);
-
-    game(&data.game_img);
+    game(&data);
     put_images_to_window(&data);
     mlx_hook(data.mlx.window, 17, 0, close_btn, &data.mlx);
     mlx_hook(data.mlx.window, 2, 0, key_hook, &data);
