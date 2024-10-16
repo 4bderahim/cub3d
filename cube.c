@@ -26,7 +26,6 @@ void    game(t_all_data  *data)
     int floor_color = create_rgb(data->cu_map->fr, data->cu_map->fg, data->cu_map->fb);
 
     int i = 0;
-
     //celine
     while (i < WIDTH)
     {
@@ -39,8 +38,8 @@ void    game(t_all_data  *data)
         i++;
     }
 
-    i = 0;
     // floor
+    i = 0;
     while (i < WIDTH)
     {
         int j = HEIGHT / 2;
@@ -296,17 +295,16 @@ int	key_hook(int keycode, t_all_data *data)
     }
     re_pov(keycode, data);
     re_position_player(keycode, data);
-    
     mini_map(data, data->cu_map, false); 
     free(data->rays);
     data->rays = NULL;
-
     init_rays(data);
     cast_rays(data);
     render__rays(data);
-    
-    // printf("player angle in degree: %d\n", data->player.player_angle_degree);
-    // printf("player angle in radian: %f\n\n", data->player.player_angle_rad);
+
+    //game
+    game(data);
+
     put_images_to_window(data);
     return (0);
 }
@@ -322,10 +320,8 @@ int main()
     minimap_calcs(&data, data.cu_map);
     data.player.fov_angle = 60 * to_rad;
     mlx_initial(&data.mlx, &data.minimap_img, &data.game_img, data.minimap);
-    
     mini_map(&data, data.cu_map, true);
     initial_endpoint(&data);
-
     init_rays(&data);
     cast_rays(&data);
     render__rays(&data);

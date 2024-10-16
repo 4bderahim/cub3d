@@ -14,7 +14,10 @@
 
 static void reset_game_image(t_all_data *data)
 {
-    (void)data;
+    data->game_img.img = mlx_new_image(data->mlx.connection, WIDTH, HEIGHT);
+    init_error(data->game_img.img);
+    data->game_img.addr = mlx_get_data_addr(data->game_img.img, &data->game_img.bits_per_pixel,
+                                               &data->game_img.line_length, &data->game_img.endian);
 }
 
 static void reset_minimap_image(t_all_data *data)
