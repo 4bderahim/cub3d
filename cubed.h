@@ -16,7 +16,7 @@
 //game res
 # define WIDTH 1200
 # define HEIGHT 1200
-# define N_RAYS  1000
+# define N_RAYS 825
 
 //keys
 #define RA 124
@@ -107,6 +107,23 @@ typedef struct s_all_data
     t_ray *rays;
 } t_all_data;
 
+typedef struct s_direction
+{
+    int up;
+    int down;
+    int right;
+    int left;
+} t_direction;
+
+typedef struct s_rays_utils
+{
+    float x_hit;
+    float y_hit;
+    float x_step;
+    float y_step;
+    float distance;
+} t_rays_utils;
+
 
 t_cu        *fetch__(void);
 void height_width(t_cu *cu);
@@ -146,6 +163,8 @@ void    print_player(t_data *minimap_img, int tile_x, int tile_y, t_minimap mini
 
 //custom pixel put
 void	custom_mlx_pixel_put(t_data *data, int x, int y, int color);
+void    set_direction(t_direction *direction, float ray_angle);
+
 
 
 
