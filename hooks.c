@@ -12,61 +12,64 @@
 
 #include "cubed.h"
 
-static void up_down(t_all_data *data, int direction)
+#define MOVE_FACTOR 5
+
+int check_collision(t_all_data *data, int pos_x, int pos_y) {
+    return data->cu_map->map[pos_y][pos_x] == '1';
+}
+
+int get_position_x(t_all_data *data, float offset) {
+    return (data->player.x + offset) / data->minimap.tile;
+}
+
+int get_position_y(t_all_data *data, float offset) {
+    return (data->player.y + offset) / data->minimap.tile;
+}
+
+void move_player(t_all_data *data, float angle_offset, int direction) {
+
+}
+
+void up_down(t_all_data *data, int direction) 
 {
-    t_direction _direction;
-    set_direction(&_direction, data->player.player_angle_rad);
-
-
-
-    float factor_x = cos(data->player.player_angle_rad) * 3 ;
-    float factor_y = sin(data->player.player_angle_rad) * 3 ;
+    float angle = data->player.player_angle_rad;
+    float factor_x = cos(angle) * MOVE_FACTOR;
+    float factor_y = sin(angle) * MOVE_FACTOR;
 
     data->player.x += factor_x * direction;
     data->player.y += factor_y * direction;
 
-    // int  position_x = (_direction.right && direction == -1) ?  (data->player.x + 2) / data->minimap.tile : (data->player.x - 2) / data->minimap.tile ;
-    // int  position_y = (_direction.up && direction == -1) ? (data->player.y - 2) / data->minimap.tile : (data->player.y + 2)  / data->minimap.tile;
-    
-    // if (data->cu_map->map[position_y][position_x] == '1')
-    // {
-    //         data->player.x -= factor_x * direction;
-    //         data->player.y -= factor_y * direction;
-    //         return ;
-    // }
+    int position_x = get_position_x(data, factor_x * direction);
+    int position_y = get_position_y(data, factor_y * direction);
+
+    if (check_collision(data, position_x, position_y)) {
+        data->player.x -= factor_x * direction;
+        data->player.y -= factor_y * direction;
+        return;
+    }
     data->endpoint.x += factor_x * direction;
     data->endpoint.y += factor_y * direction;
 }
 
-static void    right_left(t_all_data *data, int direction)
-{
-    t_direction _direction;
-    set_direction(&_direction, data->player.player_angle_rad);
+void right_left(t_all_data *data, int direction) {
+    float factor_x = cos(data->player.player_angle_rad - (90 * to_rad)) * MOVE_FACTOR;
+    float factor_y = sin(data->player.player_angle_rad - (90 * to_rad)) * MOVE_FACTOR;
 
+    data->player.x += factor_x * direction;
+    data->player.y += factor_y * direction; 
 
-    float degree = data->player.player_angle_rad - (90 * to_rad);
-    float cos_ = cos(degree) * 3 ;
-    float sin_ = sin(degree) * 3 ;
-    data->player.x += cos_ * direction;
-    data->player.y += sin_ * direction;
-
-    
-    // int  position_x = (_direction.up && direction == 1) ?  (data->player.x + 2) / data->minimap.tile : (data->player.x - 2) / data->minimap.tile ;
-    // int  position_y = (_direction.right && direction == 1) ? (data->player.y + 2) / data->minimap.tile : (data->player.y - 2)  / data->minimap.tile;
-
-    // // int position_x = (data->player.x + 1) / data->minimap.tile;
-    // // int position_y = (data->player.y + 1)  / data->minimap.tile;
-    
-    
-    // if (data->cu_map->map[position_y][position_x] == '1')
-    //     {
-    //         data->player.x -= cos_ * direction;
-    //         data->player.y -= sin_ * direction;
-    //         return ;
-    //     }
-    data->endpoint.x += cos_ * direction;
-    data->endpoint.y += sin_ * direction;
+    int position_x = get_position_x(data, factor_x * direction); 
+    int position_y = get_position_y(data, factor_y * direction); 
+    if (check_collision(data, position_x, position_y)) {
+        data->player.x -= factor_x * direction; 
+        data->player.y -= factor_y * direction; 
+        return;
+    }
+    data->endpoint.x += factor_x * direction;
+    data->endpoint.y += factor_y * direction;
 }
+
+
 
 void re_position_player(int keycode, t_all_data *data)
 {
