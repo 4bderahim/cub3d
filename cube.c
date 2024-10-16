@@ -299,6 +299,7 @@ int main()
     cast_rays(&data);
     render__rays(&data);
 
+    printf("%d\n\n", data.cu_map->map_width);
     game(&data.game_img);
     put_images_to_window(&data);
     mlx_hook(data.mlx.window, 17, 0, close_btn, &data.mlx);

@@ -13,10 +13,10 @@
 #define to_rad M_PI / 180
 #define to_deg 180 / M_PI
 
-//game res
 # define WIDTH 1200
 # define HEIGHT 1200
-# define N_RAYS 825
+# define N_RAYS 100
+#define MOVE_FACTOR 3
 
 //keys
 #define RA 124

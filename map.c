@@ -546,7 +546,58 @@ int not_walled(char **map)
     return (0);
 }
 
+int correct_map(char **map)
+{
+    int i;
+    int j;
+    int x;
 
+    i = 0;
+    x = 0;
+    while (map[i])
+    {
+        j= 0 ;
+        while (map[i][j])
+        {
+            if ((map[i][j] == 'N' ||map[i][j] == 'E' || map[i][j] == 'W' ||map[i][j] == 'S'))
+            {
+                if (x)
+                    return (0);
+                x= 1;
+            }
+            j++;
+        }
+        i++;
+    }
+    return (1);
+}
+
+void free___(t_cu *map, int st)
+{
+    int i;
+    i = 0;
+    if (st == 1)
+        {
+            free(map);
+        }
+    else if (st == 2)
+    {
+        free(map->news[0]);
+        free(map->news[1]);
+        free(map->news[2]);
+        free(map->news[3]);
+    }
+    else 
+    {
+        while (map->map[i])
+        {
+            free(map->map[i]);
+            i++;
+        }
+    }
+    write(2, "error\ninvalid map!\n", 19);
+
+}
 t_cu *fetch__()
 {
     char **str;
@@ -562,8 +613,7 @@ t_cu *fetch__()
     cu->news = set_fc(f, cu);
     if (!(cu->news))
         {
-
-            printf("!!error\n");
+            free___(cu, 1);
             return (0);
         }
     close(f);
@@ -571,7 +621,8 @@ t_cu *fetch__()
     cu->map = get_map(fd);
     if (!cu->map)
         {
-            printf("!!0!!error\n");
+            free___(cu, 2);
+            
             exit(1);
         }
     int i = 0;
@@ -581,9 +632,9 @@ t_cu *fetch__()
         i++;
     }
     i = 0;
-    if (not_walled(cu->map))
+    if (not_walled(cu->map) || !correct_map(cu->map))
     {
-        printf("!!!!!error\n");
+           free___(cu, 3);
         exit(1);
     }
     return (cu);

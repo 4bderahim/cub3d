@@ -28,7 +28,7 @@ void rotate(t_all_data *data, int direction)
     float	radian;
     float   delta_x = data->endpoint.x - data->player.x;
     float   delta_y = data->endpoint.y - data->player.y;
-    int     degree_to_add = 10 * direction;
+    int     degree_to_add = 6 * direction;
 
 
     radian = (degree_to_add * to_rad);
