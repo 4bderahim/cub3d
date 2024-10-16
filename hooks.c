@@ -25,15 +25,15 @@ static void up_down(t_all_data *data, int direction)
     data->player.x += factor_x * direction;
     data->player.y += factor_y * direction;
 
-    // int  position_x = (_direction.right && direction == -1) ?  (data->player.x + 2) / data->minimap.tile : (data->player.x - 2) / data->minimap.tile ;
-    // int  position_y = (_direction.up && direction == -1) ? (data->player.y - 2) / data->minimap.tile : (data->player.y + 2)  / data->minimap.tile;
+    int  position_x = (_direction.right && direction == -1) ?  (data->player.x + 2) / data->minimap.tile : (data->player.x - 2) / data->minimap.tile ;
+    int  position_y = (_direction.up && direction == -1) ? (data->player.y - 2) / data->minimap.tile : (data->player.y + 2)  / data->minimap.tile;
     
-    // if (data->cu_map->map[position_y][position_x] == '1')
-    // {
-    //         data->player.x -= factor_x * direction;
-    //         data->player.y -= factor_y * direction;
-    //         return ;
-    // }
+    if (data->cu_map->map[position_y][position_x] == '1')
+    {
+            data->player.x -= factor_x * direction;
+            data->player.y -= factor_y * direction;
+            return ;
+    }
     data->endpoint.x += factor_x * direction;
     data->endpoint.y += factor_y * direction;
 }
@@ -49,21 +49,19 @@ static void    right_left(t_all_data *data, int direction)
     float sin_ = sin(degree) * 3 ;
     data->player.x += cos_ * direction;
     data->player.y += sin_ * direction;
-
     
-    // int  position_x = (_direction.up && direction == 1) ?  (data->player.x + 2) / data->minimap.tile : (data->player.x - 2) / data->minimap.tile ;
-    // int  position_y = (_direction.right && direction == 1) ? (data->player.y + 2) / data->minimap.tile : (data->player.y - 2)  / data->minimap.tile;
-
-    // // int position_x = (data->player.x + 1) / data->minimap.tile;
-    // // int position_y = (data->player.y + 1)  / data->minimap.tile;
+    int  position_x = (_direction.up && direction == 1) ?  round((data->player.x + 1) / data->minimap.tile) : floor((data->player.x - 1) / data->minimap.tile );
+    int  position_y = (_direction.right && direction == 1) ? floor((data->player.y + 1) / data->minimap.tile) : round((data->player.y - 1)  / data->minimap.tile);
+              
+    // int position_x = (data->player.x + 1) / data->minimap.tile;
+    // int position_y = (data->player.y + 1)  / data->minimap.tile;
     
-    
-    // if (data->cu_map->map[position_y][position_x] == '1')
-    //     {
-    //         data->player.x -= cos_ * direction;
-    //         data->player.y -= sin_ * direction;
-    //         return ;
-    //     }
+    if (data->cu_map->map[position_y][position_x] == '1')
+    {
+        data->player.x -= cos_ * direction;
+        data->player.y -= sin_ * direction;
+        return ;
+    }
     data->endpoint.x += cos_ * direction;
     data->endpoint.y += sin_ * direction;
 }
