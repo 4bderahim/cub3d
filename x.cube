@@ -1,5 +1,5 @@
-F        10,100,100000
-C                 1,1,1
+F        47,79,79
+C                 127, 0, 255
 
 NO ./path_to_the_north_texture
 SO ./path_to_the_south_texture

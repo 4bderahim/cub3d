@@ -14,18 +14,48 @@ int	close_btn(t_mlx *mlx)
     exit(0);
 }
 
-void    game(t_data *game_img)
+int	create_rgb(int r, int g, int b)
 {
-    for (int i = 0; i < WIDTH; i++)
-        for (int j = 0; j < HEIGHT; j++)
-            custom_mlx_pixel_put(game_img, i, j, 0x5135);
+	return (r << 16 | g << 8 | b);
+}
+
+
+void    game(t_all_data  *data)
+{
+    int celine_color = create_rgb(data->cu_map->cr, data->cu_map->cg, data->cu_map->cb);
+    int floor_color = create_rgb(data->cu_map->fr, data->cu_map->fg, data->cu_map->fb);
+
+    int i = 0;
+    //celine
+    while (i < WIDTH)
+    {
+        int j = 0;
+        while (j < HEIGHT / 2)
+        {
+            custom_mlx_pixel_put(&data->game_img, i, j, celine_color);
+            j++;
+        }
+        i++;
+    }
+
+    // floor
+    i = 0;
+    while (i < WIDTH)
+    {
+        int j = HEIGHT / 2;
+        while (j < HEIGHT)
+        {
+            custom_mlx_pixel_put(&data->game_img, i, j, floor_color);
+            j++;
+        }
+        i++;
+    }
 }
 
 void minimap_calcs(t_all_data *data, t_cu *cu_map)
 {
     data->minimap.tile = 26;
     data->minimap.width = cu_map->map_width * data->minimap.tile;
-    // printf("jackk %d\n", data->minimap.width);
     data->minimap.height = cu_map->map_height * data->minimap.tile;
 }
 
@@ -265,17 +295,14 @@ int	key_hook(int keycode, t_all_data *data)
     }
     re_pov(keycode, data);
     re_position_player(keycode, data);
-    
     mini_map(data, data->cu_map, false); 
     free(data->rays);
     data->rays = NULL;
-
     init_rays(data);
     cast_rays(data);
     render__rays(data);
-    
-    // printf("player angle in degree: %d\n", data->player.player_angle_degree);
-    // printf("player angle in radian: %f\n\n", data->player.player_angle_rad);
+    //game 
+    game(data);
     put_images_to_window(data);
     return (0);
 }
@@ -291,16 +318,12 @@ int main()
     minimap_calcs(&data, data.cu_map);
     data.player.fov_angle = 60 * to_rad;
     mlx_initial(&data.mlx, &data.minimap_img, &data.game_img, data.minimap);
-    
     mini_map(&data, data.cu_map, true);
     initial_endpoint(&data);
-
     init_rays(&data);
     cast_rays(&data);
     render__rays(&data);
-
-    printf("%d\n\n", data.cu_map->map_width);
-    game(&data.game_img);
+    game(&data);
     put_images_to_window(&data);
     mlx_hook(data.mlx.window, 17, 0, close_btn, &data.mlx);
     mlx_hook(data.mlx.window, 2, 0, key_hook, &data);

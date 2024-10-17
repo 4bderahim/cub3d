@@ -17,17 +17,12 @@
 int check_collision(t_all_data *data, int pos_x, int pos_y) {
     return data->cu_map->map[pos_y][pos_x] == '1';
 }
-
 int get_position_x(t_all_data *data, float offset) {
     return (data->player.x + offset) / data->minimap.tile;
 }
 
 int get_position_y(t_all_data *data, float offset) {
     return (data->player.y + offset) / data->minimap.tile;
-}
-
-void move_player(t_all_data *data, float angle_offset, int direction) {
-
 }
 
 void up_down(t_all_data *data, int direction) 
@@ -65,11 +60,10 @@ void right_left(t_all_data *data, int direction) {
         data->player.y -= factor_y * direction; 
         return;
     }
+
     data->endpoint.x += factor_x * direction;
     data->endpoint.y += factor_y * direction;
 }
-
-
 
 void re_position_player(int keycode, t_all_data *data)
 {

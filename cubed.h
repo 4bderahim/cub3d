@@ -15,7 +15,7 @@
 
 # define WIDTH 1200
 # define HEIGHT 1200
-# define N_RAYS 100
+# define N_RAYS 300
 #define MOVE_FACTOR 3
 
 //keys
