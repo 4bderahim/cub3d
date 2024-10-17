@@ -16,7 +16,9 @@
 //game res
 # define WIDTH 1200
 # define HEIGHT 1200
-# define N_RAYS 60
+# define N_RAYS WIDTH
+#define thickness WIDTH / N_RAYS 
+
 
 //keys
 #define RA 124

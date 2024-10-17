@@ -20,7 +20,7 @@ int	create_rgb(int r, int g, int b)
 }
 
 
-void    game(t_all_data  *data)
+void    celine_and_floor(t_all_data *data)
 {
     int celine_color = create_rgb(data->cu_map->cr, data->cu_map->cg, data->cu_map->cb);
     int floor_color = create_rgb(data->cu_map->fr, data->cu_map->fg, data->cu_map->fb);
@@ -52,9 +52,48 @@ void    game(t_all_data  *data)
     }
 }
 
+#define thickness WIDTH / N_RAYS 
+
+void    print_wall(t_all_data *data, float wall_height, int starting_x, int starting_y)
+{
+    int i = 0;
+
+    while (i < thickness)
+    {
+        int j = 0;
+        while (j < wall_height)
+        {
+            float x = starting_x + i;
+            float y = starting_y + j;
+            if (y >= 0 && y <= HEIGHT && x >= 0 && x <= WIDTH)
+                custom_mlx_pixel_put(&data->game_img, x, y, 0xffffff);
+            j++;
+        }
+        i++;
+    }
+}
+
+void    game(t_all_data  *data)
+{
+    celine_and_floor(data);
+
+    int i = 0;
+    while (i < N_RAYS)
+    {
+        float to_projection_plan = (WIDTH / 2) / tan(data->player.fov_angle / 2);
+
+        float sanitized_distance = data->rays[i].distance * cos(data->rays[i].ray_angle - data->player.player_angle_rad);
+
+        float wall_height = (data->minimap.tile / sanitized_distance) * to_projection_plan;
+
+        print_wall(data, wall_height, i * thickness, (HEIGHT / 2) - (wall_height / 2));
+        i++;
+    }
+}
+
 void minimap_calcs(t_all_data *data, t_cu *cu_map)
 {
-    data->minimap.tile = 26;
+    data->minimap.tile = 20;
     data->minimap.width = cu_map->map_width * data->minimap.tile;
     data->minimap.height = cu_map->map_height * data->minimap.tile;
 }
@@ -300,10 +339,8 @@ int	key_hook(int keycode, t_all_data *data)
     init_rays(data);
     cast_rays(data);
     render__rays(data);
-
     //game
     game(data);
-
     put_images_to_window(data);
     return (0);
 }

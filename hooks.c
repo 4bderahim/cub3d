@@ -12,7 +12,7 @@
 
 #include "cubed.h"
 
-#define MOVE_FACTOR 5
+#define MOVE_FACTOR 3
 
 int check_collision(t_all_data *data, int pos_x, int pos_y) {
     return data->cu_map->map[pos_y][pos_x] == '1';
