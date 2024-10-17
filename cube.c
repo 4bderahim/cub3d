@@ -137,7 +137,6 @@ void    vertical_intersection(t_all_data *data, t_direction direction, t_rays_ut
     float x_check = 0;
     float y_check = 0;
 
-
     // intersection
     // x
     vertical->x_hit = (int)(data->player.x / data->minimap.tile) * data->minimap.tile;
