@@ -71,14 +71,14 @@ void    print_wall(t_all_data *data, float wall_height, int starting_x, int star
 
     // Sample pixel from texture
         // printf("\t\t\t|%d|\n", index_);
-        int color = *(int *)(data_addr + (index_+(j+4)));
+        // int color = *(int *)(data_addr + (index_+(j)));
         float x = starting_x + i;
         float y = starting_y + j;
         // printf("\t\t\t||%d|||\n", color);
         if (y >= 0 && y <= HEIGHT && x >= 0 && x <= WIDTH)
         {
             //if (j%2 == 0)
-            custom_mlx_pixel_put(&data->game_img, x, y, color);
+            custom_mlx_pixel_put(&data->game_img, x, y, 0x808080);
            // else
             // /    custom_mlx_pixel_put(&data->game_img, x, y, 0x808080);
         }
@@ -110,7 +110,7 @@ void    game(t_all_data  *data)
         double step = 0;//(double)HEIGHT / wall_height;
         double tex_pos = 0;//((((HEIGHT / 2) - (wall_height / 2)) - HEIGHT) / 2 + wall_height / 2) * step;
         print_wall(data, wall_height, i * thickness, (HEIGHT / 2) - (wall_height / 2), index__, img_bpp, data_addr, tex_pos, step);
-        // index__ += (wall_height);
+        index__ += (wall_height);
         i++;
     }
 }
