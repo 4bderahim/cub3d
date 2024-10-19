@@ -20,7 +20,7 @@ int	create_rgb(int r, int g, int b)
 }
 
 
-void    game(t_all_data  *data)
+void    celine_and_floor(t_all_data *data)
 {
     int celine_color = create_rgb(data->cu_map->cr, data->cu_map->cg, data->cu_map->cb);
     int floor_color = create_rgb(data->cu_map->fr, data->cu_map->fg, data->cu_map->fb);
@@ -52,9 +52,75 @@ void    game(t_all_data  *data)
     }
 }
 
+#define thickness WIDTH / N_RAYS 
+
+void    print_wall(t_all_data *data, float wall_height, int starting_x, int starting_y, int index_, int img_bpp, char *data_addr, double tex_pos, double step)
+{
+    int i = 0;
+
+    int x;
+    x= 0;
+    printf("%d\n\n", thickness);
+    // while (i < thickness)
+    // {
+    int j = 0;
+    
+    while (j < wall_height )
+    {
+        int tex_y = (int)tex_pos & (512 - 1);  // Texture Y coordinate (loops if necessary)
+
+    // Sample pixel from texture
+        int tex_x = (10 * x) / 10;
+        int pixel_index = (tex_y * wall_height) + (tex_x * (img_bpp / 8));
+        int color = *(int *)(data_addr + (pixel_index));
+        float x = starting_x + i;
+        float y = starting_y + j;
+        // printf("\t\t\t||%d|||\n", color);
+        if (y >= 0 && y <= HEIGHT && x >= 0 && x <= WIDTH)
+        {
+            //if (j%2 == 0)
+            custom_mlx_pixel_put(&data->game_img, x, y, color);
+           // else
+            // /    custom_mlx_pixel_put(&data->game_img, x, y, 0x808080);
+        }
+        j++;
+        tex_pos += step;
+        // }
+        // i++;
+    }
+}
+
+void    game(t_all_data  *data)
+{
+    celine_and_floor(data);
+    void *mlx;
+    
+    
+    int     index__;
+    index__ =   0;
+    int		img_bpp ;
+	int		img_height ;
+    int endian;
+    void *img = mlx_xpm_file_to_image(data->mlx.connection, "./dun.xpm", &img_bpp,&img_height);
+    char *data_addr = mlx_get_data_addr( img, &img_bpp, &img_height, &endian);
+
+    int i = 0;
+    while (i < N_RAYS)
+    {
+        float to_projection_plan = (WIDTH / 2) / tan(data->player.fov_angle / 2);
+        float sanitized_distance = data->rays[i].distance * cos(data->rays[i].ray_angle - data->player.player_angle_rad);
+        float wall_height = (data->minimap.tile / sanitized_distance) * to_projection_plan;
+        double step = (double)HEIGHT / wall_height;
+        double tex_pos = ((((HEIGHT / 2) - (wall_height / 2)) - HEIGHT) / 2 + wall_height / 2) * step;
+        print_wall(data, wall_height, i * thickness, (HEIGHT / 2) - (wall_height / 2), index__, img_bpp, data_addr, tex_pos, step);
+         index__ += wall_height;
+        i++;
+    }
+}
+
 void minimap_calcs(t_all_data *data, t_cu *cu_map)
 {
-    data->minimap.tile = 26;
+    data->minimap.tile = 20;
     data->minimap.width = cu_map->map_width * data->minimap.tile;
     data->minimap.height = cu_map->map_height * data->minimap.tile;
 }
@@ -136,7 +202,6 @@ void    vertical_intersection(t_all_data *data, t_direction direction, t_rays_ut
 {
     float x_check = 0;
     float y_check = 0;
-
 
     // intersection
     // x
@@ -257,7 +322,7 @@ void render__rays(t_all_data *data)
         ray_dda(data, data->rays[i].wall_x, data->rays[i].wall_y);
         // custom_mlx_pixel_put(&data->minimap_img, data->rays[i].wall_x, data->rays[i].wall_y,  0xFF0000);
         // custom_mlx_pixel_put(&data->minimap_img, data->rays[i].wall_x+1, data->rays[i].wall_y+1,  0xFF0000);
-        // custom_mlx_pixel_put(&data->minimap_img, data->rays[i].wall_x+2, data->rays[i].wall_y+2,  0xFF0000);
+        // custom_mlx_pixel_put(&data->minimap_img, data->rays[i].wall_x, data->rays[i].wall_y,  0xFF0000);
         i++;
     }
 }
@@ -293,24 +358,46 @@ int	key_hook(int keycode, t_all_data *data)
         mlx_destroy_window(data->mlx.connection, data->mlx.window);
         exit(0);
     }
+
     re_pov(keycode, data);
     re_position_player(keycode, data);
     mini_map(data, data->cu_map, false); 
+
     free(data->rays);
     data->rays = NULL;
     init_rays(data);
     cast_rays(data);
     render__rays(data);
-    //game 
     game(data);
     put_images_to_window(data);
     return (0);
 }
+// void	img_pix_put(void *img, int x, int y, int color)
+// {
+//     char    *pixel;
+
+//     pixel = img-> addr + (y * img->line_len + x * (img->bpp / 8));
+//     *(int *)pixel = color;
+// }
+// int render_rect(void *img)
+// {
+//     int	i;
+//     int j = 20;
+
+//     i =  10;
+//     while (i < 10)
+//     {
+//         while (j <  20)
+//             img_pix_put(img, j++, i,  0xfff0000);
+//         ++i;
+//     }
+//     return (0);
+// }
 
 int main()
 {
     t_all_data data;
-
+    
     data.cu_map = fetch__();
     if (!data.cu_map)
         return (0);
@@ -324,6 +411,11 @@ int main()
     cast_rays(&data);
     render__rays(&data);
     game(&data);
+    
+    // printf("\t%d||%d|\n", img_height, img_width);
+
+    // mlx_get_data_addr()
+    // mlx_put_image_to_window(data.mlx.connection, data.mlx.window, img, 0, 0);
     put_images_to_window(&data);
     mlx_hook(data.mlx.window, 17, 0, close_btn, &data.mlx);
     mlx_hook(data.mlx.window, 2, 0, key_hook, &data);

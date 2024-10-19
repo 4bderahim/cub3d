@@ -12,7 +12,7 @@
 
 #include "cubed.h"
 
-
+#define MOVE_FACTOR 1
 
 int check_collision(t_all_data *data, int pos_x, int pos_y) {
     return data->cu_map->map[pos_y][pos_x] == '1';
@@ -60,7 +60,6 @@ void right_left(t_all_data *data, int direction) {
         data->player.y -= factor_y * direction; 
         return;
     }
-
     data->endpoint.x += factor_x * direction;
     data->endpoint.y += factor_y * direction;
 }
