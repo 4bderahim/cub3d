@@ -57,6 +57,14 @@ typedef struct s_data
     int		endian;
 }			t_data;
 
+typedef struct s_map_pars
+{
+    int f;
+    int c;
+    int i;
+    char nb[5];
+
+} t_map_pars;
 typedef struct s_minimap
 {
     int tile;
