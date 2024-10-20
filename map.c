@@ -188,10 +188,34 @@ int len_(char *s)
         return (1);
     return (0);
 }
-int get_index(char *s)
+int get_index(char *s, int order)
 {
     int i;
-    
+    int count;
+
+    if (!order)
+    {
+        i = 0;
+        count = 0;
+        while (s[i])
+        {
+            if (s[i] == ',')
+                count++;
+            if (s[i] == '\n')
+                break;
+            if (s[i] == ',' && s[i+1] == ',')
+                {
+                    count = -1;
+                    break;
+                }
+            i++;
+        }
+        if (count != 2)
+        {
+            free___(NULL, 0);
+            exit(1);
+        }       
+    }
     i = 0;
     while (s[i] && s[i] != ',')
         i++
@@ -203,15 +227,15 @@ int set_fr_fg_fb(t_cu *cu, char *s, int x)
 {
     int i;
     i = 0;
-
-    i = get_index(s);
+    get_index(s, 0);
+    i = get_index(s, 1);
     s[i] = '\0';
     if (x)
         cu->fr = ft_atoi(s);
     else
         cu->cr = ft_atoi(s);
     s = s+i+1;
-    i = get_index(s);
+    i = get_index(s, 1);
     s[i] = 0;
     if (x)
         cu->fg = ft_atoi(s);
@@ -269,9 +293,7 @@ char  **set_fc(int fd, t_cu *cu)
     {
         str = next_line(fd, 1);
         if (!str )
-            {
-                break;
-            }
+            break;
         pars.i = 0;
         while (str[pars.i] && str[pars.i] == ' ')
             pars.i++
@@ -298,12 +320,6 @@ char  **set_fc(int fd, t_cu *cu)
         {
             if (!set_map_direction('A', 1, str, news,  &pars))
                 return (NULL);
-            // if (str[pars.i+1] != 'A')
-            //     return (NULL);
-            // if (str[pars.i+2] != ' ' || pars.nb[1] == '1')
-            //     return (NULL);
-            // news[1] = strdup(str+pars.i);
-            // pars.nb[1] = '1';
         }
         else if (str[pars.i] == 'W')
         {
