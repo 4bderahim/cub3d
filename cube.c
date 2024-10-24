@@ -8,9 +8,11 @@ void custom_mlx_pixel_put(t_data *data, int x, int y, int color)
     *(unsigned int *)dst = color;
 }
 
-int close_btn(t_mlx *mlx)
+int close_btn(t_all_data *data)
 {
-    mlx_destroy_window(mlx->connection, mlx->window);
+    mlx_destroy_image(data->mlx.connection, data->minimap_img.img);
+    mlx_destroy_image(data->mlx.connection, data->game_img.img);
+    mlx_destroy_window(data->mlx.connection, data->mlx.window);
     exit(0);
 }
 
@@ -90,14 +92,14 @@ void game(t_all_data *data)
 
 void minimap_calcs(t_all_data *data, t_cu *cu_map)
 {
-    data->minimap.tile = 20;
+    data->minimap.tile = 15;
     data->minimap.width = cu_map->map_width * data->minimap.tile;
     data->minimap.height = cu_map->map_height * data->minimap.tile;
 }
 
 int key_check(int key)
 {
-    if (key == WK || key == AK || key == SK || key == DK || key == RA || key == LA)
+    if (key == WK || key == AK || key == SK || key == DK || key == RA || key == LA || key == ESC)
         return (1);
     return (0);
 }
@@ -358,7 +360,7 @@ int main()
     //  mlx_hook(data.mlx.window, 17, 0, close_btn, &data.mlx);
     //  mlx_hook(data.mlx.window, 2, 0, key_hook, &data);
     // linux
-    mlx_hook(data.mlx.window, 17, 0, close_btn, &data.mlx);
+    mlx_hook(data.mlx.window, 17, 0, close_btn, &data);
     mlx_hook(data.mlx.window, 2, 1L << 0, key_hook, &data);
     mlx_loop(data.mlx.connection);
 }
