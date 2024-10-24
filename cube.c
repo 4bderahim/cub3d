@@ -53,65 +53,39 @@ void celine_and_floor(t_all_data *data)
 
 #define thickness WIDTH / N_RAYS
 
-void print_wall(t_all_data *data, float wall_height, int starting_x, int starting_y, int index_, int img_bpp, char *data_addr, double tex_pos, double step)
+void print_wall(t_all_data *data, float wall_height, int starting_x, int starting_y)
 {
     int i = 0;
+    int color = 0xbbbbbb;
 
-    int x;
-    x = 0;
-    // printf("%d\n\n", thickness);
-    // while (i < thickness)
-    // {
-    int j = 0;
-
-    while (j < wall_height)
+    while (i < thickness)
     {
-        int tex_y = (int)tex_pos & (512 - 1); // Texture Y coordinate (loops if necessary)
-
-        // Sample pixel from texture
-        // printf("\t\t\t|%d|\n", index_);
-        // int color = *(int *)(data_addr + (index_+(j)));
-        float x = starting_x + i;
-        float y = starting_y + j;
-        // printf("\t\t\t||%d|||\n", color);
-        if (y >= 0 && y <= HEIGHT && x >= 0 && x <= WIDTH)
+        int j = 0;
+        while (j < wall_height)
         {
-            // if (j%2 == 0)
-            custom_mlx_pixel_put(&data->game_img, x, y, 0x808080);
-            // else
-            // /    custom_mlx_pixel_put(&data->game_img, x, y, 0x808080);
+            int x = starting_x + i;
+            int y = starting_y + j;
+            if (x > 0 && x < WIDTH && y > 0 && y < HEIGHT)
+                custom_mlx_pixel_put(&data->game_img, x, y, color);
+            j++;
         }
-        j++;
-        // }
-        // i++;
+        i++;
     }
 }
 
 void game(t_all_data *data)
 {
     celine_and_floor(data);
-    // void *mlx;
+    int i = 0;
+    while (i < N_RAYS)
+    {
+        float to_projection_plan = (WIDTH / 2) / tan(data->player.fov_angle / 2);
 
-    // int index__;
-    // index__ = 0;
-    // int img_bpp;
-    // int img_height;
-    // int endian;
-    // void *img = mlx_xpm_file_to_image(data->mlx.connection, "./dun.xpm", &img_bpp, &img_height);
-    // char *data_addr = mlx_get_data_addr(img, &img_bpp, &img_height, &endian);
-    // // mlx_ 933241 885022
-    // int i = 0;
-    // while (i < N_RAYS)
-    // {
-    //     float to_projection_plan = (WIDTH / 2) / tan(data->player.fov_angle / 2);
-    //     float sanitized_distance = data->rays[i].distance * cos(data->rays[i].ray_angle - data->player.player_angle_rad);
-    //     float wall_height = (data->minimap.tile / sanitized_distance) * to_projection_plan;
-    //     double step = 0;    //(double)HEIGHT / wall_height;
-    //     double tex_pos = 0; //((((HEIGHT / 2) - (wall_height / 2)) - HEIGHT) / 2 + wall_height / 2) * step;
-    //     print_wall(data, wall_height, i * thickness, (HEIGHT / 2) - (wall_height / 2), index__, img_bpp, data_addr, tex_pos, step);
-    //     index__ += (wall_height);
-    //     i++;
-    // }
+        float sanitized_distance = data->rays[i].distance * cos(data->rays[i].ray_angle - data->player.player_angle_rad);
+        float wall_height = (data->minimap.tile / sanitized_distance) * to_projection_plan;
+        print_wall(data, wall_height, i * thickness, (HEIGHT / 2) - (wall_height / 2));
+        i++;
+    }
 }
 
 void minimap_calcs(t_all_data *data, t_cu *cu_map)

@@ -6,13 +6,12 @@
 #    By: resherra <resherra@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/05 17:42:36 by recherra          #+#    #+#              #
-#    Updated: 2024/10/24 15:58:59 by resherra         ###   ########.fr        #
+#    Updated: 2024/10/24 17:06:24 by resherra         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 FRAMEWORKS=-lmlx_Linux -lXext -lX11 -lm -lz
-FLAGS=-Wall -Wextra 
-# FLAGS=-Wall -Wextra -fsanitize=address -g
+FLAGS=-Wall -Wextra -fsanitize=address -g
 SRC=map.c cube.c hooks.c rotate.c mlx_setup.c print_objects.c minimap.c mlx_rebuild.c factors.c error_miscs.c init_player_info.c
 OBJS=${SRC:.c=.o}
 LIBFT=libft/libft.a

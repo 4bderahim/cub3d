@@ -6,6 +6,8 @@ char *next_line(int fd, int len)
     int rt;
     char *line;
     char *next_line;
+    char *tmp;
+
     i = 0;
     rt = 1;
     next_line = (char *)malloc(1);
@@ -13,7 +15,6 @@ char *next_line(int fd, int len)
         return (NULL);
     next_line[0] = 0;
     int te;
-
     while (rt)
     {
         line = (char *)ft_calloc(len + 1, sizeof(char));
@@ -29,8 +30,10 @@ char *next_line(int fd, int len)
             free(line);
             break;
         }
+        tmp = next_line;
         next_line = ft_strjoin(next_line, line);
         i++;
+        free(tmp);
         free(line);
     }
 
