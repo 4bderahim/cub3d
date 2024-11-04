@@ -62,7 +62,7 @@ void mlx_get_color_at(t_data data, int x, int y, unsigned int *color)
 //   0      1     2     3
 int get_texture(t_ray ray)
 {
-    if (ray.verical_hit == 0) // horizontal
+    if (ray.verical_hit == 0)
     {
         if (ray.ray_up)
             return 3;
@@ -76,13 +76,14 @@ int get_texture(t_ray ray)
         else if (ray.ray_left)
             return 1;
     }
+    return 0;
 }
 
 void print_wall(t_all_data *data, float wall_height, int starting_x, int starting_y)
 {
     int i = 0;
-    float offset_x = 0;
-    float offset_y = 0;
+    double offset_x = 0;
+    double offset_y = 0;
     int texture_num = get_texture(data->rays[starting_x]);
     unsigned int color = 0;
     int texture_width = data->news[texture_num]->width;
@@ -97,6 +98,7 @@ void print_wall(t_all_data *data, float wall_height, int starting_x, int startin
         offset_x = fmod(data->rays[starting_x].wall_y, data->minimap.tile);
         offset_x *= texture_width / data->minimap.tile;
     }
+    starting_x =  WIDTH - starting_x;
     while (i < wall_height)
     {
         int x = starting_x;
@@ -322,9 +324,8 @@ void render__rays(t_all_data *data)
     while (i < N_RAYS)
     {
         ray_dda(data, data->rays[i].wall_x, data->rays[i].wall_y);
-        // custom_mlx_pixel_put(&data->minimap_img, data->rays[i].wall_x, data->rays[i].wall_y,  0xFF0000);
-        // custom_mlx_pixel_put(&data->minimap_img, data->rays[i].wall_x+1, data->rays[i].wall_y+1,  0xFF0000);
-        // custom_mlx_pixel_put(&data->minimap_img, data->rays[i].wall_x, data->rays[i].wall_y,  0xFF0000);
+        custom_mlx_pixel_put(&data->minimap_img, data->rays[i].wall_x, data->rays[i].wall_y,  0xFF0000);
+        custom_mlx_pixel_put(&data->minimap_img, data->rays[i].wall_x+1, data->rays[i].wall_y+1,  0xFF0000);
         i++;
     }
 }

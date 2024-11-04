@@ -10,8 +10,8 @@
 #                                                                              #
 # **************************************************************************** #
 
-FRAMEWORKS=-lmlx_Linux -lXext -lX11 -lm -lz
-# FRAMEWORKS=-lmlx -framework OpenGL -framework AppKit
+# FRAMEWORKS=-lmlx_Linux -lXext -lX11 -lm -lz
+FRAMEWORKS=-lmlx -framework OpenGL -framework AppKit
 FLAGS=-Wall -Wextra -fsanitize=address -g
 SRC=map.c cube.c hooks.c rotate.c mlx_setup.c print_objects.c minimap.c mlx_rebuild.c factors.c error_miscs.c init_player_info.c
 OBJS=${SRC:.c=.o}
