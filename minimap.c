@@ -45,7 +45,7 @@ void    mini_map(t_all_data *data, t_cu *cu_map, bool first_time)
                     data->player.x = tile_x;
                     data->player.y = tile_y;
                 }
-                print_player(&data->minimap_img, data->player.x - 2, data->player.y - 2, data->minimap);
+                print_player(&data->minimap_img, data->player.x, data->player.y, data->minimap);
             }
             j++;
         }

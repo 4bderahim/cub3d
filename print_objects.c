@@ -15,8 +15,7 @@
 
 void    print_player(t_data *minimap_img, int tile_x, int tile_y, t_minimap minimap)
 {
-    int dot = minimap.tile / 4
-    ;
+    int dot = 4;
     
     int i = 0;
     while (i < dot)

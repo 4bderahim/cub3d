@@ -20,6 +20,8 @@
 #define TILE 16
 #define WIDTH 1920
 #define HEIGHT 1080
+#define MINIMAP_WIDTH 426
+#define MINIMAP_HEIGHT 240 
 #define ESC 53
 #define RA 124
 #define LA 123
@@ -30,7 +32,7 @@
 
 #else
 #define M_PI 3.14159265358979323846
-#define TILE 15
+#define TILE 16
 #define WIDTH 1280
 #define HEIGHT 720
 #include <X11/Xlib.h>
@@ -133,7 +135,7 @@ typedef struct s_all_data
     t_endpoint endpoint;
     t_ray *rays;
     t_textures **news;
-    int tile;
+    float testing_factor;
 } t_all_data;
 
 typedef struct s_direction
