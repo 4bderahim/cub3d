@@ -95,6 +95,13 @@ typedef struct s_player
     int direction;
     float fov_angle;
 } t_player;
+typedef struct s_parsed_data
+{
+    int f;
+    int c;
+    int i;
+    char nb[5];
+} t_parsed_data;
 
 typedef struct s_endpoint
 {

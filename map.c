@@ -198,101 +198,96 @@ int set_fr_fg_fb(t_cu *cu, char *s, int x)
     return (1);
 }
 
+int set_fc__(t_parsed_data *data_set, char *str , t_cu *cu, char c)
+{
+    if (str[data_set->i + 1] != ' ' || str[data_set->i + 2] == 0 || !len_(str + 2) || data_set->f == 1)
+        return (0);
+    set_fr_fg_fb(cu, str + data_set->i + 2, 1);
+    if (c == 'F')
+        data_set->f = 1;
+    else
+        data_set->c = 1;
+    return (1);
+}
+
+int set_news__(char *str, char c, int i, t_parsed_data *data_set, char **news)
+{
+    if (str[i + 1] != c)
+            return (0);
+    if (str[i + 2] != ' ' || data_set->nb[3] == '1')
+        return (0);
+    news[3] = ft_strdup(str + i);
+    data_set->nb[3] = '1';
+    return (1);
+}
+
 char **set_fc(int fd, t_cu *cu)
 {
-    int f;
-    int c;
-    int i;
+    t_parsed_data data_set;
     char **news;
-    char nb[5];
     news = (char **)malloc(sizeof(char *) * 5);
     if (!news)
         return (NULL);
     news[4] = NULL;
-
-    i = 0;
+    data_set.i = 0;
     char *str;
-    c = 0;
-    f = 0;
+    data_set.c = 0;
+    data_set.f = 0;
     while (1)
     {
         str = next_line(fd, 1);
         if (!str)
-        {
             break;
-        }
-        i = 0;
-        while (str[i] && str[i] == ' ')
-            i++;
-        if (str[i] == 'F')
+        data_set.i = 0;
+        while (str[data_set.i] && str[data_set.i] == ' ')
+            data_set.i++;
+        if (str[data_set.i] == 'F')
         {
-            if (str[i + 1] != ' ' || str[i + 2] == 0 || !len_(str + 2) || f == 1)
+            if (!set_fc__(&data_set, str, cu, 'F'))
                 return (NULL);
-            set_fr_fg_fb(cu, str + i + 2, 1);
-            f = 1;
         }
-        else if (str[i] == 'C')
+        else if (str[data_set.i] == 'C')
         {
-            if (str[i + 1] != ' ' || str[i + 2] == 0 || !len_(str + i + 2) || c == 1)
+            if (!set_fc__(&data_set, str, cu, 'C'))
                 return (NULL);
-            set_fr_fg_fb(cu, str + i + 2, 0);
-            c = 1;
         }
-        else if (str[i] == 'N')
+        else if (str[data_set.i] == 'N')
         {
-
-            if (str[i + 1] != 'O')
+           if (!set_news__(str, 'N', data_set.i, &data_set, news) )
                 return (NULL);
-            if (str[i + 2] != ' ' || nb[0] == '1')
-                return (NULL); // error!!!
-            news[0] = strdup(str + i);
-            nb[0] = '1';
         }
-        else if (str[i] == 'E')
+        else if (str[data_set.i] == 'E')
         {
-            if (str[i + 1] != 'A')
+            if (!set_news__(str, 'E', data_set.i, &data_set, news) )
                 return (NULL);
-            if (str[i + 2] != ' ' || nb[1] == '1')
-                return (NULL);
-            news[1] = strdup(str + i);
-            nb[1] = '1';
         }
-        else if (str[i] == 'W')
+        else if (str[data_set.i] == 'W')
         {
-            if (str[i + 1] != 'E')
+            if (!set_news__(str, 'W', data_set.i, &data_set, news) )
                 return (NULL);
-            if (str[i + 2] != ' ' || nb[2] == '1')
-                return (NULL);
-            news[2] = strdup(str + i);
-            nb[2] = '1';
         }
-        else if (str[i] == 'S')
+        else if (str[data_set.i] == 'S')
         {
-
-            if (str[i + 1] != 'O')
+            if (!set_news__(str, 'S', data_set.i, &data_set, news) )
                 return (NULL);
-            if (str[i + 2] != ' ' || nb[3] == '1')
-                return (NULL);
-            news[3] = strdup(str + i);
-            nb[3] = '1';
         }
-        else if (str[i] == '1')
+        else if (str[data_set.i] == '1')
             break;
         else
         {
-            if (*(str + i) != '\0')
+            if (*(str + data_set.i) != '\0')
                 return (NULL);
         }
         free(str);
     }
-    if (!f || !c)
+    if (!data_set.f || !data_set.c)
         return (NULL);
-    i = 0;
-    while (i < 4)
+    data_set.i = 0;
+    while (data_set.i < 4)
     {
-        if (nb[i] != '1')
+        if (data_set.nb[data_set.i] != '1')
             return (NULL);
-        i++;
+        data_set.i++;
     }
     free(str);
     return (news);
@@ -615,7 +610,6 @@ t_cu *fetch__()
     if (!cu->map)
     {
         free___(cu, 2);
-
         exit(1);
     }
     int i = 0;
