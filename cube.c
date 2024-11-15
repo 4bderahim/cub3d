@@ -433,6 +433,7 @@ void	init_textures(t_all_data *data)
 	if (!data->news)
 		exit(1);
 	res = NULL;
+	
 	while (data->cu_map->news[i])
 	{
 		res = ft_split(data->cu_map->news[i], ' ');

@@ -11,9 +11,11 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
 static int	check_sep(char c, char sep)
 {
+	
 	if (c == sep)
 		return (1);
 	return (0);
@@ -24,6 +26,7 @@ static int	count_words(char const *s, char sep)
 	int	words;
 
 	words = 0;
+
 	while (*s)
 	{
 		while (*s && check_sep(*s, sep))
@@ -67,7 +70,6 @@ static void	*ffree(char **re, int index)
 	free(re);
 	return (NULL);
 }
-
 char	**ft_split(char const *s, char c)
 {
 	char	**re;

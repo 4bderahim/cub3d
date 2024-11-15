@@ -1,5 +1,5 @@
 F        43, 45, 47
-C                 52, 1, 1
+C           52, 1, 1
 
 NO ./textures/blue_wall.xpm   
 SO ./textures/red_wall.xpm

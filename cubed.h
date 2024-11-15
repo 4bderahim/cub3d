@@ -1,7 +1,8 @@
 #ifndef CUBED_H
 #define CUBED_H
-
-#include <mlx.h>
+#include "/Users/ael-krid/minilibx_opengl_20191021/mlx.h"
+// #include "/Users/ael-krid/MLX42/include/MLX42/MLX42.h"
+// #include <mlx.h>
 #include <fcntl.h>
 #include <stdio.h>
 #include <string.h>
@@ -11,7 +12,6 @@
 
 #define to_rad M_PI / 180
 #define to_deg 180 / M_PI
-
 #define N_RAYS WIDTH
 
 #define MODE 1
@@ -21,7 +21,7 @@
 #define WIDTH 1920
 #define HEIGHT 1080
 #define MINIMAP_WIDTH 426
-#define MINIMAP_HEIGHT 240 
+#define MINIMAP_HEIGHT 240
 #define ESC 53
 #define RA 124
 #define LA 123
@@ -31,6 +31,7 @@
 #define DK 2
 
 #else
+
 #define M_PI 3.14159265358979323846
 #define TILE 16
 #define WIDTH 1280
@@ -44,6 +45,7 @@
 #define AK XK_q
 #define SK XK_s
 #define DK XK_d
+
 #endif
 
 typedef struct cu

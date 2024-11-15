@@ -56,93 +56,93 @@ char *line(char *s)
     return (NULL);
 }
 
-char **news_textures(int fd, int len)
-{
-    char *str;
-    int i;
-    int x;
+// char **news_textures(int fd, int len)
+// {
+//     char *str;
+//     int i;
+//     int x;
 
-    i = 0;
-    x = 0;
-    char **news;
-    char nb[5];
-    news = (char **)malloc(sizeof(char *) * 5);
-    if (!news)
-        return (NULL);
-    news[4] = NULL;
-    while (1)
-    {
-        str = next_line(fd, 1);
+//     i = 0;
+//     x = 0;
+//     char **news;
+//     char nb[5];
+//     news = (char **)malloc(sizeof(char *) * 5);
+//     if (!news)
+//         return (NULL);
+//     news[4] = NULL;
+//     while (1)
+//     {
+//         str = next_line(fd, 1);
 
-        if (!str)
-        {
-            break;
-        }
-        i = 0;
-        while (str[i] && str[i] == ' ')
-            i++;
-        if (ft_strlen(str) < 3)
-            continue;
-        else if (str[0] == 'N')
-        {
-            if (str[1] != 'O')
-                return (NULL);
-            if (str[2] != ' ' || nb[0] == '1')
-                return (NULL); // error!!!
-            news[0] = strdup(str);
-            nb[0] = '1';
-        }
-        else if (str[0] == 'E')
-        {
-            if (str[1] != 'A')
-                return (NULL);
-            if (str[2] != ' ' || nb[1] == '1')
-                return (NULL);
-            news[1] = strdup(str);
-            nb[1] = '1';
-        }
-        else if (str[0] == 'W')
-        {
-            if (str[1] != 'E')
-                return (NULL);
-            if (str[2] != ' ' || nb[2] == '1')
-                return (NULL);
-            news[2] = strdup(str);
-            nb[2] = '1';
-        }
-        else if (str[0] == 'S')
-        {
-            if (str[1] != 'O')
-                return (NULL);
-            if (str[2] != ' ' || nb[3] == '1')
-                return (NULL);
-            news[3] = strdup(str);
-            nb[3] = '1';
-        }
-        else if (str[0] == '1' && str[1] == '1')
-        {
-            if (str[i + 2] != '1')
-            {
-                return (NULL);
-            }
-            break;
-        }
-        // else
-        //     return (NULL);
+//         if (!str)
+//         {
+//             break;
+//         }
+//         i = 0;
+//         while (str[i] && str[i] == ' ')
+//             i++;
+//         if (ft_strlen(str) < 3)
+//             continue;
+//         else if (str[0] == 'N')
+//         {
+//             if (str[1] != 'O')
+//                 return (NULL);
+//             if (str[2] != ' ' || nb[0] == '1')
+//                 return (NULL); // error!!!
+//             news[0] = strdup(str);
+//             nb[0] = '1';
+//         }
+//         else if (str[0] == 'E')
+//         {
+//             if (str[1] != 'A')
+//                 return (NULL);
+//             if (str[2] != ' ' || nb[1] == '1')
+//                 return (NULL);
+//             news[1] = strdup(str);
+//             nb[1] = '1';
+//         }
+//         else if (str[0] == 'W')
+//         {
+//             if (str[1] != 'E')
+//                 return (NULL);
+//             if (str[2] != ' ' || nb[2] == '1')
+//                 return (NULL);
+//             news[2] = strdup(str);
+//             nb[2] = '1';
+//         }
+//         else if (str[0] == 'S')
+//         {
+//             if (str[1] != 'O')
+//                 return (NULL);
+//             if (str[2] != ' ' || nb[3] == '1')
+//                 return (NULL);
+//             news[3] = strdup(str);
+//             nb[3] = '1';
+//         }
+//         else if (str[0] == '1' && str[1] == '1')
+//         {
+//             if (str[i + 2] != '1')
+//             {
+//                 return (NULL);
+//             }
+//             break;
+//         }
+//         // else
+//         //     return (NULL);
 
-        i++;
-    }
-    i = 0;
-    while (i < 4)
-    {
-        if (nb[i] != '1')
-        {
-            return (NULL);
-        }
-        i++;
-    }
-    return (news);
-}
+//         i++;
+//     }
+//     i = 0;
+//     while (i < 4)
+//     {
+//         if (nb[i] != '1')
+//         {
+//             return (NULL);
+//         }
+//         i++;
+//     }
+//     return (news);
+// }
 int len_(char *s)
 {
     int i;
@@ -200,86 +200,36 @@ int set_fr_fg_fb(t_cu *cu, char *s, int x)
 
 int set_fc__(t_parsed_data *data_set, char *str , t_cu *cu, char c)
 {
-    if (str[data_set->i + 1] != ' ' || str[data_set->i + 2] == 0 || !len_(str + 2) || data_set->f == 1)
+    if (str[data_set->i + 1] != ' ' || str[data_set->i + 2] == 0 || !len_(str + 2))
         return (0);
-    set_fr_fg_fb(cu, str + data_set->i + 2, 1);
     if (c == 'F')
-        data_set->f = 1;
+        {
+            if (data_set->f == 1)
+                return (0);
+            set_fr_fg_fb(cu, str + data_set->i + 2, 0);
+            data_set->f = 1;
+        }
     else
-        data_set->c = 1;
+        {
+            if ( data_set->c == 1)
+                return (0);
+            set_fr_fg_fb(cu, str + data_set->i + 2, 1);
+            data_set->c = 1;
+        }
     return (1);
 }
 
-int set_news__(char *str, char c, int i, t_parsed_data *data_set, char **news)
+int set_news__(char *str, char c, int index_num, t_parsed_data *data_set, char **news)
 {
-    if (str[i + 1] != c)
-            return (0);
-    if (str[i + 2] != ' ' || data_set->nb[3] == '1')
+    
+    if (str[data_set->i + 2] != ' ' || data_set->nb[index_num] == '1')
         return (0);
-    news[3] = ft_strdup(str + i);
-    data_set->nb[3] = '1';
+    news[index_num] = ft_strdup(str + data_set->i);
+    data_set->nb[index_num] = '1';
     return (1);
 }
-
-char **set_fc(int fd, t_cu *cu)
+char ** last_news_cf_checkes(t_parsed_data data_set,char *str, char **news)
 {
-    t_parsed_data data_set;
-    char **news;
-    news = (char **)malloc(sizeof(char *) * 5);
-    if (!news)
-        return (NULL);
-    news[4] = NULL;
-    data_set.i = 0;
-    char *str;
-    data_set.c = 0;
-    data_set.f = 0;
-    while (1)
-    {
-        str = next_line(fd, 1);
-        if (!str)
-            break;
-        data_set.i = 0;
-        while (str[data_set.i] && str[data_set.i] == ' ')
-            data_set.i++;
-        if (str[data_set.i] == 'F')
-        {
-            if (!set_fc__(&data_set, str, cu, 'F'))
-                return (NULL);
-        }
-        else if (str[data_set.i] == 'C')
-        {
-            if (!set_fc__(&data_set, str, cu, 'C'))
-                return (NULL);
-        }
-        else if (str[data_set.i] == 'N')
-        {
-           if (!set_news__(str, 'N', data_set.i, &data_set, news) )
-                return (NULL);
-        }
-        else if (str[data_set.i] == 'E')
-        {
-            if (!set_news__(str, 'E', data_set.i, &data_set, news) )
-                return (NULL);
-        }
-        else if (str[data_set.i] == 'W')
-        {
-            if (!set_news__(str, 'W', data_set.i, &data_set, news) )
-                return (NULL);
-        }
-        else if (str[data_set.i] == 'S')
-        {
-            if (!set_news__(str, 'S', data_set.i, &data_set, news) )
-                return (NULL);
-        }
-        else if (str[data_set.i] == '1')
-            break;
-        else
-        {
-            if (*(str + data_set.i) != '\0')
-                return (NULL);
-        }
-        free(str);
-    }
     if (!data_set.f || !data_set.c)
         return (NULL);
     data_set.i = 0;
@@ -291,6 +241,119 @@ char **set_fc(int fd, t_cu *cu)
     }
     free(str);
     return (news);
+}
+int parse_fc(t_parsed_data *data_set, char *str, t_cu *cu)
+{
+    if (str[data_set->i] == 'F')
+    {
+        if (!set_fc__(data_set, str, cu, 'F'))
+            return (0);
+    }
+    else if (str[data_set->i] == 'C')
+    {
+        if (!set_fc__(data_set, str, cu, 'C'))
+            return (0);
+    }
+    return (1);
+}
+
+int parse_news(t_parsed_data *data_set, char **news, char *str)
+{
+    if (str[data_set->i] == 'N')
+    {
+        if (str[data_set->i + 1] != 'O')
+            return (0); 
+        if (!set_news__(str, 'N', 0, data_set, news) )
+            return (0);
+    }
+    else if (str[data_set->i] == 'E')
+    {
+        if (str[data_set->i + 1] != 'A')
+            return (0);
+        if (!set_news__(str, 'E', 1, data_set, news))
+            return (0);
+    }
+    else if (str[data_set->i] == 'W')
+    {
+        if (str[data_set->i + 1] != 'E')
+            return (0); 
+        if (!set_news__(str, 'W', 2, data_set, news) )
+            return (0);
+    }
+    else if (str[data_set->i] == 'S')
+    {
+        if (!set_news__(str, 'S', 3, data_set, news) )
+            return (0);
+    }
+    return (1);
+}
+
+int check_map__cf_news(t_parsed_data *data_set, char **news, char *str, t_cu *cu)
+{
+    if (str[data_set->i] == 'F' || str[data_set->i] == 'C' 
+        || str[data_set->i] == 'N' || str[data_set->i] == 'E'
+        || str[data_set->i] == 'W' || str[data_set->i] == 'S')
+    {
+        if (str[data_set->i] == 'F' || str[data_set->i] == 'C')
+        {
+            if (!parse_fc(data_set, str, cu))
+                return (0);
+        }
+        else
+        {
+            if (!parse_news(data_set , news, str))
+                return (0);
+        }
+    }
+    else if (str[data_set->i] == '1')
+        return (-1);
+    else
+    {
+        if (*(str + data_set->i) != '\0')
+            return (0);
+    }
+    return (1);
+}
+char ** set_parsed_data(t_parsed_data data_set, int *map_check_ret)
+{
+    char **news;
+
+    news = (char **)malloc(sizeof(char *) * 5);
+    if (!news)
+        return (NULL);
+    news[4] = NULL;
+    data_set.i = 0;
+    data_set.c = 0;
+    data_set.f = 0;
+    *map_check_ret = 0;
+    return (news);
+}
+char **set_fc(int fd, t_cu *cu)
+{
+    t_parsed_data data_set;
+    char **news;
+    int map_check_ret;
+    char *str;
+
+    news = set_parsed_data(data_set, &map_check_ret);
+    if (!news)
+        return (NULL);
+    while (1)
+    {
+        str = next_line(fd, 1);
+        if (!str)
+            break;
+        data_set.i = 0;
+        while (str[data_set.i] && str[data_set.i] == ' ')
+            data_set.i++;
+        map_check_ret =  check_map__cf_news(&data_set, news, str, cu);
+        if (!map_check_ret)
+            return (NULL);
+        if (map_check_ret == -1)
+            break;
+        free(str);
+    }
+    return (last_news_cf_checkes(data_set, str, news));
 }
 
 int player_char(char c, char *s, int i)
@@ -599,7 +662,7 @@ t_cu *fetch__()
         return (0);
     f = open("./x.cube", O_RDWR);
     cu->news = set_fc(f, cu);
-    if (!(cu->news))
+    if ((cu->news) == NULL)
     {
         free___(cu, 1);
         return (0);
@@ -619,6 +682,8 @@ t_cu *fetch__()
         i++;
     }
     i = 0;
+   
+    
     if (not_walled(cu->map) || !correct_map(cu->map))
     {
         free___(cu, 3);
