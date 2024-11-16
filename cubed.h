@@ -15,7 +15,6 @@
 #define N_RAYS WIDTH
 
 #define MODE 1
-
 #if MODE == 1
 #define TILE 16
 #define WIDTH 1920

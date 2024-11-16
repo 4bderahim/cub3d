@@ -364,7 +364,6 @@ char *fill_(char *s, int index, int map_index)
     int i;
     char *new;
 
-    // printf("\n\t---%d|%d\n\n\n", index, map_index);
     new = (char *)malloc(sizeof(char) * (index + 1));
     if (!new)
         exit(1);
