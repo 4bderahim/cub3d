@@ -36,7 +36,6 @@ char *next_line(int fd, int len)
         free(tmp);
         free(line);
     }
-
     return (next_line);
 }
 char *line(char *s)
@@ -56,93 +55,6 @@ char *line(char *s)
     return (NULL);
 }
 
-// char **news_textures(int fd, int len)
-// {
-//     char *str;
-//     int i;
-//     int x;
-
-//     i = 0;
-//     x = 0;
-//     char **news;
-//     char nb[5];
-//     news = (char **)malloc(sizeof(char *) * 5);
-//     if (!news)
-//         return (NULL);
-//     news[4] = NULL;
-//     while (1)
-//     {
-//         str = next_line(fd, 1);
-
-//         if (!str)
-//         {
-//             break;
-//         }
-//         i = 0;
-//         while (str[i] && str[i] == ' ')
-//             i++;
-//         if (ft_strlen(str) < 3)
-//             continue;
-//         else if (str[0] == 'N')
-//         {
-//             if (str[1] != 'O')
-//                 return (NULL);
-//             if (str[2] != ' ' || nb[0] == '1')
-//                 return (NULL); // error!!!
-//             news[0] = strdup(str);
-//             nb[0] = '1';
-//         }
-//         else if (str[0] == 'E')
-//         {
-//             if (str[1] != 'A')
-//                 return (NULL);
-//             if (str[2] != ' ' || nb[1] == '1')
-//                 return (NULL);
-//             news[1] = strdup(str);
-//             nb[1] = '1';
-//         }
-//         else if (str[0] == 'W')
-//         {
-//             if (str[1] != 'E')
-//                 return (NULL);
-//             if (str[2] != ' ' || nb[2] == '1')
-//                 return (NULL);
-//             news[2] = strdup(str);
-//             nb[2] = '1';
-//         }
-//         else if (str[0] == 'S')
-//         {
-//             if (str[1] != 'O')
-//                 return (NULL);
-//             if (str[2] != ' ' || nb[3] == '1')
-//                 return (NULL);
-//             news[3] = strdup(str);
-//             nb[3] = '1';
-//         }
-//         else if (str[0] == '1' && str[1] == '1')
-//         {
-//             if (str[i + 2] != '1')
-//             {
-//                 return (NULL);
-//             }
-//             break;
-//         }
-//         // else
-//         //     return (NULL);
-
-//         i++;
-//     }
-//     i = 0;
-//     while (i < 4)
-//     {
-//         if (nb[i] != '1')
-//         {
-//             return (NULL);
-//         }
-//         i++;
-//     }
-//     return (news);
-// }
 int len_(char *s)
 {
     int i;
@@ -550,14 +462,38 @@ int check_map(char **map)
     return (1);
 }
 
+
+int not_valid(int i, int j, int map_len , char **map)
+{
+    int line_len;
+
+    line_len = 0;
+    if (map[i][j] != '1' && map[i][j] != ' ')
+            return (1);
+        line_len = ft_strlen(map[i]) - 1;
+        while (map[i][line_len] == ' ')
+            line_len--;
+        if (map[i][line_len] != '1')
+            return (1);
+    if (i == 0 || i == map_len - 1)
+    {
+        while (map[i][j])
+        {
+            if (map[i][j] != '1' && map[i][j] != ' ')
+                return (1);
+            j++;
+        }
+    }
+    return (0);
+}
 int not_walled(char **map)
 {
     int i;
     int j;
     int map_len;
-    int line_len;
-    i = 0;
+    
     map_len = 0;
+    i = 0;
     while (map[map_len])
         map_len++;
     while (map[i])
@@ -570,23 +506,8 @@ int not_walled(char **map)
             i++;
             continue;
         }
-        if (map[i][j] != '1' && map[i][j] != ' ')
+        if (not_valid(i, j,map_len, map))
             return (1);
-        line_len = ft_strlen(map[i]) - 1;
-        while (map[i][line_len] == ' ')
-            line_len--;
-        if (map[i][line_len] != '1')
-            return (1);
-        j = 0;
-        if (i == 0 || i == map_len - 1)
-        {
-            while (map[i][j])
-            {
-                if (map[i][j] != '1' && map[i][j] != ' ')
-                    return (1);
-                j++;
-            }
-        }
         i++;
     }
     if (!check_map(map))
@@ -594,7 +515,6 @@ int not_walled(char **map)
         // free all
         return (1);
     }
-
     return (0);
 }
 
