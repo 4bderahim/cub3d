@@ -1,20 +1,52 @@
 #include "cubed.h"
 
-char *next_line(int fd, int len)
+void free___(t_cu *map, int st)
 {
     int i;
+    i = 0;
+    if (st == 1)
+        free(map);
+    else if (st == 2)
+    {
+        free(map->news[0]);
+        free(map->news[1]);
+        free(map->news[2]);
+        free(map->news[3]);
+    }
+    else
+    {
+        while (map->map[i])
+        {
+            free(map->map[i]);
+            i++;
+        }
+    }
+    write(2, "error\ninvalid map!\n", 19);
+}
+
+int alloc_next_line(char **next_line)
+{
+    *next_line = (char *)malloc(1);
+    if (!next_line)
+        return (0);
+    (*next_line)[0] = 0;
+    return (1);
+}
+void free_line_and_tmp(char *tmp, char *line)
+{
+    free(tmp);
+    free(line);
+}
+
+char *next_line(int fd, int len)
+{
     int rt;
     char *line;
     char *next_line;
     char *tmp;
 
-    i = 0;
-    rt = 1;
-    next_line = (char *)malloc(1);
-    if (!next_line)
-        return (NULL);
-    next_line[0] = 0;
-    int te;
+    next_line = NULL;
+    rt = alloc_next_line(&next_line);
     while (rt)
     {
         line = (char *)ft_calloc(len + 1, sizeof(char));
@@ -30,9 +62,7 @@ char *next_line(int fd, int len)
         }
         tmp = next_line;
         next_line = ft_strjoin(next_line, line);
-        i++;
-        free(tmp);
-        free(line);
+       
     }
     return (next_line);
 }
@@ -126,7 +156,6 @@ int cf_color_not_valid(char *str)
         {
             if (str[i+1] && str[i+1] == ' ')
                 return (1);
-
         }
         i++;
     }
@@ -182,7 +211,15 @@ int set_fc__(t_parsed_data *data_set, char *str , t_cu *cu, char c)
 
 int set_news__(char *str, char c, int index_num, t_parsed_data *data_set, char **news)
 {
-    
+    int i;
+
+    i = data_set->i + 2;
+
+    while (str[i] && str[i] == ' ')
+        i++
+        ;
+    if (str[i] == 0 || str[i] == '\n')
+        return (0);
     if (str[data_set->i + 2] != ' ' || data_set->nb[index_num] == '1')
         return (0);
     news[index_num] = ft_strdup(str + data_set->i);
@@ -203,6 +240,7 @@ char ** last_news_cf_checkes(t_parsed_data data_set,char *str, char **news)
     free(str);
     return (news);
 }
+
 int parse_fc(t_parsed_data *data_set, char *str, t_cu *cu)
 {
     if (str[data_set->i] == 'F')
@@ -222,24 +260,18 @@ int parse_news(t_parsed_data *data_set, char **news, char *str)
 {
     if (str[data_set->i] == 'N')
     {
-        if (str[data_set->i + 1] != 'O')
+        if (str[data_set->i + 1] != 'O' || !set_news__(str, 'N', 0, data_set, news))
             return (0); 
-        if (!set_news__(str, 'N', 0, data_set, news) )
-            return (0);
     }
     else if (str[data_set->i] == 'E')
     {
-        if (str[data_set->i + 1] != 'A')
-            return (0);
-        if (!set_news__(str, 'E', 1, data_set, news))
+        if (str[data_set->i + 1] != 'A' || !set_news__(str, 'E', 1, data_set, news))
             return (0);
     }
     else if (str[data_set->i] == 'W')
     {
-        if (str[data_set->i + 1] != 'E')
+        if (str[data_set->i + 1] != 'E' || !set_news__(str, 'W', 2, data_set, news))
             return (0); 
-        if (!set_news__(str, 'W', 2, data_set, news) )
-            return (0);
     }
     else if (str[data_set->i] == 'S')
     {
@@ -478,8 +510,7 @@ char **get_map(int fd)
     str = next_line(fd, 51);
     map = get_map__(str);
     if (!map)
-        return (NULL); // exit / error.
-
+        return (NULL);
     return (map);
 }
 
@@ -533,7 +564,16 @@ int not_valid(int i, int j, int map_len , char **map)
     }
     return (0);
 }
-int not_walled(char **map)
+
+int free_all(t_cu *map)
+{
+    free___(map, 3);
+    free___(map, 2);
+    free___(map, 1);
+    return (1);
+}
+
+int not_walled(char **map, t_cu *cu)
 {
     int i;
     int j;
@@ -558,10 +598,7 @@ int not_walled(char **map)
         i++;
     }
     if (!check_map(map))
-    {
-        // free all
-        return (1);
-    }
+        return (free_all(cu));
     return (0);
 }
 
@@ -591,31 +628,20 @@ int correct_map(char **map)
     return (1);
 }
 
-void free___(t_cu *map, int st)
+void check_not_walled_map(t_cu *cu)
 {
-    int i;
-    i = 0;
-    if (st == 1)
+    if (!cu->map)
     {
-        free(map);
+        free___(cu, 2);
+        exit(1);
     }
-    else if (st == 2)
+    if (not_walled(cu->map, cu) || !correct_map(cu->map))
     {
-        free(map->news[0]);
-        free(map->news[1]);
-        free(map->news[2]);
-        free(map->news[3]);
+        free___(cu, 3);
+        exit(1);
     }
-    else
-    {
-        while (map->map[i])
-        {
-            free(map->map[i]);
-            i++;
-        }
-    }
-    write(2, "error\ninvalid map!\n", 19);
 }
+
 t_cu *fetch__()
 {
     char **str;
@@ -637,25 +663,7 @@ t_cu *fetch__()
     close(f);
     fd = open("./x.cube", O_RDWR);
     cu->map = get_map(fd);
-    if (!cu->map)
-    {
-        free___(cu, 2);
-        exit(1);
-    }
-    int i = 0;
-    while (cu->map[i])
-    {
-        // printf("[%s]\n", cu->map[i]);
-        i++;
-    }
-    i = 0;
-   
-    
-    if (not_walled(cu->map) || !correct_map(cu->map))
-    {
-        free___(cu, 3);
-        exit(1);
-    }
+    check_not_walled_map(cu);
     return (cu);
 }
 
