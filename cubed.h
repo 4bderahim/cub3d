@@ -162,7 +162,12 @@ typedef struct s_rays_utils
     float y_step;
     float distance;
 } t_rays_utils;
-
+int map_beg(char *s, int i);
+size_t count_len(char *s);
+char *fill_(char *s, int index);
+int check_map(char **map);
+void check_not_walled_map(t_cu *cu);
+char **get_map(int fd);
 int check_map__cf_news(t_parsed_data *data_set, char **news, char *str, t_cu *cu);
 char ** set_parsed_data(t_parsed_data data_set, int *map_check_ret);
 int set_fc__(t_parsed_data *data_set, char *str , t_cu *cu, char c);
