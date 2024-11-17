@@ -163,6 +163,11 @@ typedef struct s_rays_utils
     float distance;
 } t_rays_utils;
 
+int check_map__cf_news(t_parsed_data *data_set, char **news, char *str, t_cu *cu);
+char ** set_parsed_data(t_parsed_data data_set, int *map_check_ret);
+int set_fc__(t_parsed_data *data_set, char *str , t_cu *cu, char c);
+void free___(t_cu *map, int st);
+char *next_line(int fd, int len);
 t_cu *fetch__(void);
 void height_width(t_cu *cu);
 

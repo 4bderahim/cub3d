@@ -1,231 +1,5 @@
 #include "cubed.h"
 
-void free___(t_cu *map, int st)
-{
-    int i;
-    i = 0;
-    if (st == 1)
-        free(map);
-    else if (st == 2)
-    {
-        free(map->news[0]);
-        free(map->news[1]);
-        free(map->news[2]);
-        free(map->news[3]);
-    }
-    else
-    {
-        while (map->map[i])
-        {
-            free(map->map[i]);
-            i++;
-        }
-    }
-    write(2, "error\ninvalid map!\n", 19);
-}
-
-int alloc_next_line(char **next_line)
-{
-    *next_line = (char *)malloc(1);
-    if (!next_line)
-        return (0);
-    (*next_line)[0] = 0;
-    return (1);
-}
-void free_line_and_tmp(char *tmp, char *line)
-{
-    free(tmp);
-    free(line);
-}
-
-char *next_line(int fd, int len)
-{
-    int rt;
-    char *line;
-    char *next_line;
-    char *tmp;
-
-    next_line = NULL;
-    rt = alloc_next_line(&next_line);
-    while (rt)
-    {
-        line = (char *)ft_calloc(len + 1, sizeof(char));
-        rt = read(fd, line, len);
-        if (rt == -1)
-            exit(1);
-        if (rt == 0 && ft_strlen(next_line) == 0)
-            return (NULL);
-        if (rt == 0 || (len == 1 && *line == '\n'))
-        {
-            free(line);
-            break;
-        }
-        tmp = next_line;
-        next_line = ft_strjoin(next_line, line);
-       
-    }
-    return (next_line);
-}
-
-char *line(char *s)
-{
-    int i;
-    i = 0;
-
-    while (s[i])
-    {
-        if (s[i] == '\n')
-        {
-            s[i] = 0;
-            return (s);
-        }
-        i++;
-    }
-    return (NULL);
-}
-
-int len_(char *s)
-{
-    int i;
-    int j;
-
-    j = 0;
-    i = 0;
-    while (s[i])
-    {
-        if (s[i] == ',' && s[i + 1] != 0)
-            j++;
-        if (s[i] == ',' && (i == 0 || s[i + 1] == ','))
-            return (0);
-        i++;
-    }
-    if (j == 2)
-        return (1);
-    return (0);
-}
-int get_index(char *s)
-{
-    int i;
-
-    i = 0;
-    while (s[i] && s[i] != ',')
-        i++;
-    return (i);
-}
-
-int	ft_atoi(const char *str)
-{
-	int	number;
-	int	sign;
-
-	number = 0;
-	sign = 0;
-	while ((*str >= 9 && *str <= 13) || *str == 32)
-		str++;
-	while (*str == '+' || *str == '-')
-	{
-		if (*(str + 1) == '+' || *(str + 1) == '-')
-			return (0);
-		else if (*str == '-')
-			sign = 1;
-		str++;
-	}
-	while (*str >= '0' && *str <= '9')
-	{
-		number *= 10;
-		number += (*str - 48);
-		str++;
-	}
-	if (sign == 1)
-		return (-number);
-	return (number);
-}
-int cf_color_not_valid(char *str)
-{
-    int i;
-    i = 0;
-
-    while (str[i] && str[i] != '\n')
-    {
-        if (str[i] < '0' || str[i] > '9')
-        {
-            if (!(str[i] >= 9 && str[i] <= 13) && str[i] != 32 && str[i] != '-' && str[i] != ',')
-                return (1);
-        }
-        if (str[i] >= '0' && str[i] <= '9')
-        {
-            if (str[i+1] && str[i+1] == ' ')
-                return (1);
-        }
-        i++;
-    }
-    return (0);
-}
-
-int set_fr_fg_fb(t_cu *cu, char *s, int x)
-{
-    int i;
-    i = 0;
-
-    i = get_index(s);
-    s[i] = '\0';
-    if (x)
-        cu->fr = ft_atoi(s);
-    else
-        cu->cr = ft_atoi(s);
-    s = s + i + 1;
-    i = get_index(s);
-    s[i] = 0;
-    if (x)
-        cu->fg = ft_atoi(s);
-    else
-        cu->cg = ft_atoi(s);
-    s = s + i + 1;
-    if (x)
-        cu->fb = ft_atoi(s);
-    else
-        cu->cb = ft_atoi(s);
-    return (1);
-}
-
-int set_fc__(t_parsed_data *data_set, char *str , t_cu *cu, char c)
-{
-    if (str[data_set->i + 1] != ' ' || str[data_set->i + 2] == 0 || !len_(str + 2))
-        return (0);
-    if (c == 'F')
-    {
-        if (data_set->f == 1 || cf_color_not_valid(str + data_set->i + 2))
-            return (0);
-        set_fr_fg_fb(cu, str + data_set->i + 2, 0);
-        data_set->f = 1;
-        }
-    else
-    {
-        if ( data_set->c == 1 || cf_color_not_valid(str + data_set->i + 2))
-            return (0);
-        set_fr_fg_fb(cu, str + data_set->i + 2, 1);
-        data_set->c = 1;
-    }
-    return (1);
-}
-
-int set_news__(char *str, char c, int index_num, t_parsed_data *data_set, char **news)
-{
-    int i;
-
-    i = data_set->i + 2;
-
-    while (str[i] && str[i] == ' ')
-        i++
-        ;
-    if (str[i] == 0 || str[i] == '\n')
-        return (0);
-    if (str[data_set->i + 2] != ' ' || data_set->nb[index_num] == '1')
-        return (0);
-    news[index_num] = ft_strdup(str + data_set->i);
-    data_set->nb[index_num] = '1';
-    return (1);
-}
 char ** last_news_cf_checkes(t_parsed_data data_set,char *str, char **news)
 {
     if (!data_set.f || !data_set.c)
@@ -241,86 +15,6 @@ char ** last_news_cf_checkes(t_parsed_data data_set,char *str, char **news)
     return (news);
 }
 
-int parse_fc(t_parsed_data *data_set, char *str, t_cu *cu)
-{
-    if (str[data_set->i] == 'F')
-    {
-        if (!set_fc__(data_set, str, cu, 'F'))
-            return (0);
-    }
-    else if (str[data_set->i] == 'C')
-    {
-        if (!set_fc__(data_set, str, cu, 'C'))
-            return (0);
-    }
-    return (1);
-}
-
-int parse_news(t_parsed_data *data_set, char **news, char *str)
-{
-    if (str[data_set->i] == 'N')
-    {
-        if (str[data_set->i + 1] != 'O' || !set_news__(str, 'N', 0, data_set, news))
-            return (0); 
-    }
-    else if (str[data_set->i] == 'E')
-    {
-        if (str[data_set->i + 1] != 'A' || !set_news__(str, 'E', 1, data_set, news))
-            return (0);
-    }
-    else if (str[data_set->i] == 'W')
-    {
-        if (str[data_set->i + 1] != 'E' || !set_news__(str, 'W', 2, data_set, news))
-            return (0); 
-    }
-    else if (str[data_set->i] == 'S')
-    {
-        if (!set_news__(str, 'S', 3, data_set, news) )
-            return (0);
-    }
-    return (1);
-}
-
-int check_map__cf_news(t_parsed_data *data_set, char **news, char *str, t_cu *cu)
-{
-    if (str[data_set->i] == 'F' || str[data_set->i] == 'C' 
-        || str[data_set->i] == 'N' || str[data_set->i] == 'E'
-        || str[data_set->i] == 'W' || str[data_set->i] == 'S')
-    {
-        if (str[data_set->i] == 'F' || str[data_set->i] == 'C')
-        {
-            if (!parse_fc(data_set, str, cu))
-                return (0);
-        }
-        else
-        {
-            if (!parse_news(data_set , news, str))
-                return (0);
-        }
-    }
-    else if (str[data_set->i] == '1')
-        return (-1);
-    else
-    {
-        if (*(str + data_set->i) != '\0')
-            return (0);
-    }
-    return (1);
-}
-char ** set_parsed_data(t_parsed_data data_set, int *map_check_ret)
-{
-    char **news;
-
-    news = (char **)malloc(sizeof(char *) * 5);
-    if (!news)
-        return (NULL);
-    news[4] = NULL;
-    data_set.i = 0;
-    data_set.c = 0;
-    data_set.f = 0;
-    *map_check_ret = 0;
-    return (news);
-}
 char **set_fc(int fd, t_cu *cu)
 {
     t_parsed_data data_set;
@@ -391,7 +85,7 @@ size_t count_len(char *s)
     return (count + 1);
 }
 
-char *fill_(char *s, int index, int map_index)
+char *fill_(char *s, int index)
 {
     int i;
     char *new;
@@ -411,11 +105,8 @@ char *fill_(char *s, int index, int map_index)
 
 int map_beg(char *s, int i)
 {
-
-    // printf("%s\n\n\n", s+i);
     while (s[i] != '\n')
     {
-        // printf("%c|\n\n\n\n\n", s[i]);
         if (s[i] != ' ')
             return (0);
         if (i == 0)
@@ -424,16 +115,15 @@ int map_beg(char *s, int i)
     }
     return (1);
 }
-char **alloc_map(char *str)
+
+int get_i_index(char **map, char *str )
 {
     int i;
     int j;
-    int cnt;
-    char **map;
-    int x;
 
+    j = 0;
     i = 0;
-    x = 0;
+
     while (str[i])
     {
         if (str[i] == '1' && map_beg(str, i - 1))
@@ -445,7 +135,14 @@ char **alloc_map(char *str)
         }
         i++;
     }
-    str = str + i;
+    return (i);
+}
+
+char ** alloc_full_map(char *str)
+{
+    char **map;
+    int cnt;
+
     cnt = count_len(str);
     if (cnt == -1)
         return (NULL);
@@ -453,14 +150,24 @@ char **alloc_map(char *str)
     map[cnt] = NULL;
     if (!map)
         return (NULL);
+    return (map);
+}
+
+char **alloc_map(char *str)
+{
+    int i;
+    int j;
+    char **map;
+
+    str = str + get_i_index(map, str);
+    map =  alloc_full_map(str);
     j = 0;
     i = 0;
     while (str[i])
     {
-        x = 0;
         if (str[i] == '\n' || str[i + 1] == 0)
         {
-            map[j] = fill_(str, i, j);
+            map[j] = fill_(str, i);
             if (str[i + 1] == 0)
                 break;
             j++;
