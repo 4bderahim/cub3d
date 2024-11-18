@@ -4,10 +4,20 @@
 int get_index(char *s)
 {
     int i;
+    int j;
 
     i = 0;
     while (s[i] && s[i] != ',')
         i++;
+    if (s[i] == ',')
+    {
+        j = i+1;
+        while (s[j] && s[j] ==' ')
+            j++
+            ;
+        if (s[j] == 0)
+            return (-11);
+    }
     return (i);
 }
 
@@ -17,6 +27,8 @@ int set_fr_fg_fb(t_cu *cu, char *s, int x)
     i = 0;
 
     i = get_index(s);
+    if (i < 0)
+        return (0);
     s[i] = '\0';
     if (x)
         cu->fr = ft_atoi(s);
@@ -24,12 +36,16 @@ int set_fr_fg_fb(t_cu *cu, char *s, int x)
         cu->cr = ft_atoi(s);
     s = s + i + 1;
     i = get_index(s);
+    if (i < 0)
+        return (0);
     s[i] = 0;
     if (x)
         cu->fg = ft_atoi(s);
     else
         cu->cg = ft_atoi(s);
     s = s + i + 1;
+    if (i < 0)
+        return (0);
     if (x)
         cu->fb = ft_atoi(s);
     else
@@ -85,14 +101,16 @@ int set_fc__(t_parsed_data *data_set, char *str , t_cu *cu, char c)
     {
         if (data_set->f == 1 || cf_color_not_valid(str + data_set->i + 2))
             return (0);
-        set_fr_fg_fb(cu, str + data_set->i + 2, 0);
+        if (!set_fr_fg_fb(cu, str + data_set->i + 2, 1))
+            return (0);
         data_set->f = 1;
         }
     else
     {
         if ( data_set->c == 1 || cf_color_not_valid(str + data_set->i + 2))
             return (0);
-        set_fr_fg_fb(cu, str + data_set->i + 2, 1);
+        if (!set_fr_fg_fb(cu, str + data_set->i + 2, 0))
+            return (0);
         data_set->c = 1;
     }
     return (1);

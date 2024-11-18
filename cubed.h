@@ -175,8 +175,8 @@ void free___(t_cu *map, int st);
 char *next_line(int fd, int len);
 t_cu *fetch__(void);
 void height_width(t_cu *cu);
-
 // mlx setup
+
 void mlx_initial(t_mlx *mlx, t_data *minimap, t_data *game_img, t_minimap minim);
 void initial_minimap(t_mlx mlx, t_data *imgs, t_minimap minim);
 void initial_game(t_mlx mlx, t_data *imgs);
