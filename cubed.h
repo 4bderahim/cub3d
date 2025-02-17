@@ -223,4 +223,9 @@ void			print_player(t_data *minimap_img, int tile_x, int tile_y,
 void			custom_mlx_pixel_put(t_data *data, int x, int y, int color);
 void			set_direction(t_direction *direction, float ray_angle);
 
+//hooks utils
+void 			up_down(t_all_data *data, int direction);
+void 			right_left(t_all_data *data, int direction);
+
+
 #endif

@@ -12,14 +12,17 @@
 
 #include "cubed.h"
 
-void    re_calculate_factors(t_all_data *data)
+void	re_calculate_factors(t_all_data *data)
 {
-    float dx = data->endpoint.x - data->player.x;
-    float dy = data->endpoint.y - data->player.y;
-    if (fabs(dx) >= fabs(dy))
-        data->player.steps = fabs(dx);
-    else
-        data->player.steps = fabs(dy);
-    data->player.factor_x = dx / data->player.steps;
-    data->player.factor_y = dy / data->player.steps;
+	float	dx;
+	float	dy;
+
+	dx = data->endpoint.x - data->player.x;
+	dy = data->endpoint.y - data->player.y;
+	if (fabs(dx) >= fabs(dy))
+		data->player.steps = fabs(dx);
+	else
+		data->player.steps = fabs(dy);
+	data->player.factor_x = dx / data->player.steps;
+	data->player.factor_y = dy / data->player.steps;
 }
