@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 18:40:06 by recherra          #+#    #+#             */
-/*   Updated: 2024/01/04 21:26:49 by recherra         ###   ########.fr       */
+/*   Updated: 2025/02/17 15:46:22 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int					ft_isascii(int c);
 int					ft_isprint(int c);
 int					ft_toupper(int c);
 int					ft_tolower(int c);
-size_t				ft_strlen(const char *s);
+int					ft_strlen(const char *s);
 int					ft_atoi(const char *str);
 void				*ft_memset(void *b, int c, size_t len);
 char				*ft_strchr(const char *s, int c);

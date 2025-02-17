@@ -1,4 +1,4 @@
-#include "cubed.h"
+#include "../cubed.h"
 
 int not_valid(int i, int j, int map_len , char **map)
 {

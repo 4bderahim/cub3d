@@ -1,4 +1,4 @@
-#include "cubed.h"
+#include "../cubed.h"
 
 
 int get_index(char *s)

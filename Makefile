@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: resherra <resherra@student.42.fr>          +#+  +:+       +#+         #
+#    By: recherra <recherra@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/05 17:42:36 by recherra          #+#    #+#              #
-#    Updated: 2024/10/30 19:24:22 by resherra         ###   ########.fr        #
+#    Updated: 2025/02/17 16:37:42 by recherra         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # FRAMEWORKS=-lmlx_Linux -lXext -lX11 -lm -lz
 FRAMEWORKS=-lmlx -framework OpenGL -framework AppKit
-FLAGS=-Wall -Wextra -fsanitize=address -g
-SRC= get_map___.c get_map__.c get_map.c news_parsing.c cf_parsing.c next_line.c map.c cube.c hooks.c rotate.c mlx_setup.c print_objects.c minimap.c mlx_rebuild.c factors.c error_miscs.c init_player_info.c
+FLAGS=-Wall -Wextra -Werror
+SRC= parsing/get_map___.c parsing/get_map__.c parsing/get_map.c parsing/news_parsing.c parsing/cf_parsing.c parsing/next_line.c parsing/map.c cube.c hooks.c rotate.c mlx_setup.c print_objects.c minimap.c mlx_rebuild.c factors.c error_miscs.c init_player_info.c init_textures.c
 OBJS=${SRC:.c=.o}
 LIBFT=libft/libft.a
 NAME=cub3D
@@ -21,12 +21,13 @@ NAME=cub3D
 all: ${NAME}
 
 ${NAME}: ${LIBFT} ${OBJS}
-	cc ${OBJS} -o ${NAME} ${FLAGS} ${LIBFT} ${FRAMEWORKS}
+	gcc ${FLAGS} ${OBJS} -o ${NAME}  ${LIBFT} ${FRAMEWORKS}
 
 ${LIBFT}:
 	make -C libft/
 
-${OBJS}: cubed.h
+%.o: %.c cubed.h
+	gcc $(FLAGS) -c $< -o $@
 
 clean:
 	make -C libft/ clean

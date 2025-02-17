@@ -1,8 +1,9 @@
 
-#include "cubed.h"
+#include "../cubed.h"
 
 int get_i_index(char **map, char *str )
 {
+    (void)map;
     int i;
     int j;
 
@@ -25,7 +26,7 @@ int get_i_index(char **map, char *str )
 
 char ** alloc_full_map(char *str)
 {
-    char **map;
+    char **map = NULL;
     int cnt;
 
     cnt = count_len(str);
@@ -42,7 +43,7 @@ char **alloc_map(char *str)
 {
     int i;
     int j;
-    char **map;
+    char **map = NULL;
 
     str = str + get_i_index(map, str);
     map =  alloc_full_map(str);
@@ -68,7 +69,7 @@ char **get_map__(char *str)
 {
     int len;
     int i;
-    char **map;
+    char **map = NULL;
 
     i = ft_strlen(str) - 1;
     while (i >= 0 && (str[i] == ' ' || str[i] == '\n'))

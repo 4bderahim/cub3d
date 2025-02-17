@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 21:01:23 by recherra          #+#    #+#             */
-/*   Updated: 2024/10/10 21:01:24 by recherra         ###   ########.fr       */
+/*   Updated: 2025/02/17 15:52:56 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 void    print_player(t_data *minimap_img, int tile_x, int tile_y, t_minimap minimap)
 {
+    (void)minimap;
     int dot = 4;
     
     int i = 0;

@@ -1,4 +1,4 @@
-#include "cubed.h"
+#include "../cubed.h"
 
 char **last_news_cf_checkes(t_parsed_data data_set,char *str, char **news)
 {
@@ -17,12 +17,12 @@ char **last_news_cf_checkes(t_parsed_data data_set,char *str, char **news)
 
 char **set_fc(int fd, t_cu *cu)
 {
-    t_parsed_data data_set;
+    t_parsed_data data_set ;
     char **news;
     int map_check_ret;
     char *str;
 
-    news = set_parsed_data(data_set, &map_check_ret);
+    news = set_parsed_data(&data_set, &map_check_ret);
     if (!news)
         return (NULL);
     while (1)
@@ -71,8 +71,6 @@ int player_char(char c, char *s, int i)
 
 t_cu *fetch__()
 {
-    char **str;
-    char *s;
     t_cu *cu;
     int fd, f;
 

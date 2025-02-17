@@ -1,7 +1,8 @@
-#include "cubed.h"
+#include "../cubed.h"
 
 int set_news__(char *str, char c, int index_num, t_parsed_data *data_set, char **news)
 {
+    (void)c;
     int i;
 
     i = data_set->i + 2;
@@ -84,7 +85,7 @@ int check_map__cf_news(t_parsed_data *data_set, char **news, char *str, t_cu *cu
     }
     return (1);
 }
-char ** set_parsed_data(t_parsed_data data_set, int *map_check_ret)
+char **set_parsed_data(t_parsed_data *data_set, int *map_check_ret)
 {
     char **news;
 
@@ -92,9 +93,9 @@ char ** set_parsed_data(t_parsed_data data_set, int *map_check_ret)
     if (!news)
         return (NULL);
     news[4] = NULL;
-    data_set.i = 0;
-    data_set.c = 0;
-    data_set.f = 0;
+    data_set->i = 0;
+    data_set->c = 0;
+    data_set->f = 0;
     *map_check_ret = 0;
     return (news);
 }
