@@ -6,12 +6,20 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 21:03:04 by recherra          #+#    #+#             */
-/*   Updated: 2024/10/10 21:03:05 by recherra         ###   ########.fr       */
+/*   Updated: 2025/02/17 21:14:07 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "cubed.h"
+
+void	 minimap_calcs(t_all_data *data, t_cu *cu_map)
+{
+	data->minimap.tile = TILE;
+
+	data->minimap.width = cu_map->map_width * data->minimap.tile;
+	data->minimap.height = cu_map->map_height * data->minimap.tile;
+}
 
 static int check_player(char c)
 {

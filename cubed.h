@@ -165,6 +165,37 @@ typedef struct s_rays_utils
 	float		distance;
 }				t_rays_utils;
 
+
+typedef struct s_dda_data
+{
+	float	dx;
+	float	dy;
+	float	steps;
+	
+	
+	float	factor_x;
+	float	factor_y;
+
+	
+	float	increment_x;
+	float	increment_y;
+} t_dda_data;
+
+
+typedef struct s_wall_data
+{
+	double			offset_x;
+	double			offset_y;
+	int				texture_num;
+	int				texture_width;
+	int				texture_height;
+	int				distance_from_top;
+	int				x;
+	int				y;
+	unsigned int	color;
+} t_wall_data;
+
+
 int				map_beg(char *s, int i);
 size_t			count_len(char *s);
 char			*fill_(char *s, int index);
@@ -227,5 +258,24 @@ void			set_direction(t_direction *direction, float ray_angle);
 void 			up_down(t_all_data *data, int direction);
 void 			right_left(t_all_data *data, int direction);
 
+//dda
+void	ray_dda(t_all_data *data, float ray_x, float ray_y);
+
+//render wall
+void	print_wall(t_all_data *data, float wall_height, int starting_x,
+		int starting_y);
+
+//celine and floor
+void	celine_and_floor(t_all_data *data);
+
+void	game(t_all_data *data);
+
+
+void	render__rays(t_all_data *data);
+void	init_rays(t_all_data *data);
+
+void	 minimap_calcs(t_all_data *data, t_cu *cu_map);
+
+void	cast_rays(t_all_data *data);
 
 #endif
