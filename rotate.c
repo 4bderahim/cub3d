@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 20:48:45 by recherra          #+#    #+#             */
-/*   Updated: 2025/02/17 17:00:33 by recherra         ###   ########.fr       */
+/*   Updated: 2025/02/18 16:36:07 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,26 +22,22 @@ int	fixed_degree(int degree)
 
 void	rotate(t_all_data *data, int direction)
 {
-	float	cos_theta;
-	float	sin_theta;
-	float	radian;
-	float	delta_x;
-	float	delta_y;
-	int		degree_to_add;
-	float	x;
-	float	y;
+	t_rotation	u;
+	int			*ref;
 
-	delta_x = data->endpoint.x - data->player.x;
-	delta_y = data->endpoint.y - data->player.y;
-	degree_to_add = 5 * direction;
-	radian = (degree_to_add * to_rad);
-	cos_theta = cos(radian);
-	sin_theta = sin(radian);
-	x = (delta_x * cos_theta) - (delta_y * sin_theta) + data->player.x;
-	y = (delta_x * sin_theta) + (delta_y * cos_theta) + data->player.y;
-	data->endpoint.x = x;
-	data->endpoint.y = y;
-	data->player.player_angle_degree = fixed_degree((data->player.player_angle_degree
-				+ degree_to_add));
-	data->player.player_angle_rad = data->player.player_angle_degree * to_rad;
+	ref = &data->player.player_angle_degree;
+	u.delta_x = data->endpoint.x - data->player.x;
+	u.delta_y = data->endpoint.y - data->player.y;
+	u.degree_to_add = 5 * direction;
+	u.radian = (u.degree_to_add * to_rad);
+	u.cos_theta = cos(u.radian);
+	u.sin_theta = sin(u.radian);
+	u.x = (u.delta_x * u.cos_theta) - (u.delta_y * u.sin_theta)
+		+ data->player.x;
+	u.y = (u.delta_x * u.sin_theta) + (u.delta_y * u.cos_theta)
+		+ data->player.y;
+	data->endpoint.x = u.x;
+	data->endpoint.y = u.y;
+	*ref = fixed_degree((*ref + u.degree_to_add));
+	data->player.player_angle_rad = *ref * to_rad;
 }

@@ -49,6 +49,18 @@
 
 # endif
 
+typedef struct s_rotation
+{
+	float	cos_theta;
+	float	sin_theta;
+	float	radian;
+	float	delta_x;
+	float	delta_y;
+	int		degree_to_add;
+	float	x;
+	float	y;
+} t_rotation;
+
 typedef struct cu
 {
 	char		**news;
@@ -277,5 +289,15 @@ void	init_rays(t_all_data *data);
 void	 minimap_calcs(t_all_data *data, t_cu *cu_map);
 
 void	cast_rays(t_all_data *data);
+void	horizontal_intersection(t_all_data *data, t_direction direction,
+		t_rays_utils *horizontal, float ray_angle);
+void	vertical_intersection(t_all_data *data, t_direction direction,
+		t_rays_utils *vertical, float ray_angle);
+
+// ray casting utils
+float	angle_fix(float angle);
+float	calculate__(float px, float py, float px_hit, float py_hit);
+void	set_direction(t_direction *direction, float ray_angle);
+
 
 #endif
