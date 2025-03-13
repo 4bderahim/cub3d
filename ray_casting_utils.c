@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:09:26 by recherra          #+#    #+#             */
-/*   Updated: 2025/02/18 16:31:21 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/13 17:27:00 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 float	angle_fix(float angle)
 {
-	angle = remainder(angle, M_PI * 2);
+	angle = fmod(angle, M_PI * 2);
 	if (angle < 0)
-	{
 		angle = (M_PI * 2) + angle;
-	}
 	return (angle);
 }
 

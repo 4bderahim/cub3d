@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 21:03:04 by recherra          #+#    #+#             */
-/*   Updated: 2025/02/17 21:14:07 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/13 15:02:15 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	 minimap_calcs(t_all_data *data, t_cu *cu_map)
 	data->minimap.height = cu_map->map_height * data->minimap.tile;
 }
 
-static int check_player(char c)
+static int get_player_direction(char c)
 {
     if (c == 'N' || c == 'S' || c == 'E' ||  c==  'W')
         return c;
@@ -41,10 +41,10 @@ void    mini_map(t_all_data *data, t_cu *cu_map, bool first_time)
         int tile_y = i * data->minimap.tile;
         while (cu_map->map[i][j])
         {
-            direction = check_player(cu_map->map[i][j]);
             int tile_x = j * data->minimap.tile;
             if (cu_map->map[i][j] == '1')
                 print_square(&data->minimap_img, tile_x, tile_y, data->minimap);
+            direction = get_player_direction(cu_map->map[i][j]);
             if (direction)
             {
                 data->player.direction = direction;

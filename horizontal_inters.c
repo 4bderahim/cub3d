@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 13:41:34 by recherra          #+#    #+#             */
-/*   Updated: 2025/02/18 16:26:10 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/13 22:08:49 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,12 @@ static void	check_horizontal_intersection(t_all_data *data,
 void	horizontal_intersection(t_all_data *data, t_direction direction,
 		t_rays_utils *horizontal, float ray_angle)
 {
-	horizontal->y_hit = (int)(data->player.y / data->minimap.tile)
+	horizontal->y_hit = (int)(data->player.y / data->minimap.tile) 
 		* data->minimap.tile;
 	if (direction.down)
 		horizontal->y_hit += data->minimap.tile;
-	horizontal->x_hit = data->player.x + ((horizontal->y_hit - data->player.y)
+	horizontal->triangle.opposite = horizontal->y_hit - data->player.y;
+	horizontal->x_hit = data->player.x + (horizontal->triangle.opposite
 			/ tan(ray_angle));
 	horizontal->y_step = data->minimap.tile;
 	if (direction.up)
@@ -48,7 +49,7 @@ void	horizontal_intersection(t_all_data *data, t_direction direction,
 	horizontal->x_step = data->minimap.tile / tan(ray_angle);
 	if (direction.left && horizontal->x_step > 0)
 		horizontal->x_step *= -1;
-	if (direction.right && horizontal->x_step < 0)
+	else if (direction.right && horizontal->x_step < 0)
 		horizontal->x_step *= -1;
 	check_horizontal_intersection(data, horizontal, direction);
 }

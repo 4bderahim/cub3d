@@ -168,6 +168,13 @@ typedef struct s_direction
 	int			left;
 }				t_direction;
 
+typedef struct s_triangle
+{
+	float adjacent;
+	float opposite;
+	float hypo;
+} t_triangle;
+
 typedef struct s_rays_utils
 {
 	float		x_hit;
@@ -175,6 +182,7 @@ typedef struct s_rays_utils
 	float		x_step;
 	float		y_step;
 	float		distance;
+	t_triangle	triangle;
 }				t_rays_utils;
 
 
