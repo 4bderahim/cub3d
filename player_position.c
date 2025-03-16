@@ -34,4 +34,5 @@ void    player_position(t_all_data *data, t_cu *cu_map)
         }
         i++;
     }
+    
 }

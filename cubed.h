@@ -250,7 +250,7 @@ void			re_position_player(int keycode, t_all_data *data);
 
 // initial position
 void			initial_endpoint(t_all_data *data);
-void    		player_postion(t_all_data *data, t_cu *cu_map);
+void    		player_position(t_all_data *data, t_cu *cu_map);
 
 // rotate pov
 void			rotate(t_all_data *data, int direction);
