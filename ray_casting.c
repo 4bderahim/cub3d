@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 20:54:32 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/13 18:08:21 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/16 15:58:37 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,7 @@ void	cast_ray(float ray_angle, int i, t_all_data *data)
 		vertical_hit(i, vertical, data);
 	else
 		horizontal_hit(i, horizontal, data);
-	data->rays[i].ray_left = direction.left;
-	data->rays[i].ray_right = direction.right;
-	data->rays[i].ray_down = direction.down;
-	data->rays[i].ray_up = direction.up;
+	data->rays[i].direction = direction;
 	data->rays[i].ray_angle = ray_angle;
 }
 

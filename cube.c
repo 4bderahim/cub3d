@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 13:12:50 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/13 15:02:23 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/16 22:01:49 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	key_hook(int keycode, t_all_data *data)
 	}
 	re_pov(keycode, data);
 	re_position_player(keycode, data);
-	mini_map(data, data->cu_map, false);
+	mini_map(data, data->cu_map);
 	free(data->rays);
 	data->rays = NULL;
 	init_rays(data);
@@ -49,6 +49,8 @@ int	key_hook(int keycode, t_all_data *data)
 	put_images_to_window(data);
 	return (0);
 }
+
+
 
 int	main(void)
 {
@@ -61,7 +63,8 @@ int	main(void)
 	minimap_calcs(&data, data.cu_map);
 	mlx_initial(&data.mlx, &data.minimap_img, &data.game_img, data.minimap);
 	init_textures(&data);
-	mini_map(&data, data.cu_map, true);
+	player_position(&data, data.cu_map);
+	mini_map(&data, data.cu_map);
 	initial_endpoint(&data);
 	init_rays(&data);
 	cast_rays(&data);

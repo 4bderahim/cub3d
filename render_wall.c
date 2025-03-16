@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 20:45:20 by recherra          #+#    #+#             */
-/*   Updated: 2025/02/17 21:14:39 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/16 15:57:44 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,16 @@ static int	get_texture(t_ray ray)
 {
 	if (ray.verical_hit == 0)
 	{
-		if (ray.ray_up)
+		if (ray.direction.up)
 			return (3);
-		else if (ray.ray_down)
+		else if (ray.direction.down)
 			return (0);
 	}
 	else
 	{
-		if (ray.ray_right)
+		if (ray.direction.right)
 			return (2);
-		else if (ray.ray_left)
+		else if (ray.direction.left)
 			return (1);
 	}
 	return (0);

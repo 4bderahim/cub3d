@@ -124,17 +124,23 @@ typedef struct s_endpoint
 	float		y;
 }				t_endpoint;
 
-typedef struct s_raya
+typedef struct s_direction
+{
+	int			up;
+	int			down;
+	int			right;
+	int			left;
+}				t_direction;
+
+
+typedef struct s_ray
 {
 	float		ray_angle;
 	float		wall_x;
 	float		wall_y;
 	float		distance;
 	int			verical_hit;
-	int			ray_up;
-	int			ray_down;
-	int			ray_left;
-	int			ray_right;
+	t_direction	direction;
 }				t_ray;
 
 typedef struct s_textures
@@ -160,13 +166,6 @@ typedef struct s_all_data
 	float		testing_factor;
 }				t_all_data;
 
-typedef struct s_direction
-{
-	int			up;
-	int			down;
-	int			right;
-	int			left;
-}				t_direction;
 
 typedef struct s_triangle
 {
@@ -251,6 +250,7 @@ void			re_position_player(int keycode, t_all_data *data);
 
 // initial position
 void			initial_endpoint(t_all_data *data);
+void    		player_postion(t_all_data *data, t_cu *cu_map);
 
 // rotate pov
 void			rotate(t_all_data *data, int direction);
@@ -259,7 +259,7 @@ void			rotate(t_all_data *data, int direction);
 void			re_calculate_factors(t_all_data *data);
 
 // minimap
-void			mini_map(t_all_data *data, t_cu *cu_map, bool first_time);
+void			mini_map(t_all_data *data, t_cu *cu_map);
 
 // minimap pov
 void			minimap_pov(t_all_data *data);
