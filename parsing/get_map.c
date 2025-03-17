@@ -48,29 +48,18 @@ char **alloc_map(char *str)
     str = str + get_i_index(map, str);
     map =  alloc_full_map(str);
 
-    int t;
-    t = 0;
    
     j = 0;
     i = 0;
 
-    //-------prob
-
-    printf("\t\t\t|%s|\n");
     while (str[i])
     {
         if (str[i] == '\n' || str[i + 1] == 0)
         {
-            int d;
-            d = 0;
-            printf(">>>>>>>>>>>\n");
-            while (d < i)
-            {
-                printf("%c", str[d]);
-                d++;
-            }
-            map[j] = fill_(str, i);
-
+            if (str[i + 1] == 0)
+                map[j] = fill_(str, i+1);
+            else
+                map[j] = fill_(str, i);
             if (str[i + 1] == 0)
                 break;
             j++;
@@ -79,20 +68,6 @@ char **alloc_map(char *str)
         }
         i++;
     }
-    // int y = 0;
-    //  while (map[t])
-    // {
-    //     y = 0;
-    //     while (map[t][y])
-    //     {
-    //         printf("%c|", map[t][y]);
-
-    //         y++;
-    //     }
-    //     printf("\n");
-    //     t++;
-    // }
-    
     return (map);
 }
 

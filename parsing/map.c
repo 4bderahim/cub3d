@@ -110,6 +110,7 @@ void height_width(t_cu *cu)
             pr_max = j;
         i++;
     }
-    cu->map_width = pr_max;
+    printf("%d@@@@@@@@@@%d<<<\n\n", pr_max,j );
+    cu->map_width = j;
     cu->map_height = i;
 }

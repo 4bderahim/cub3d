@@ -17,7 +17,7 @@ size_t count_len(char *s)
     return (count + 1);
 }
 
-char *fill_(char *s, int index)
+char *fill_(char *s, int index )
 {
     int i;
     char *new;
@@ -32,6 +32,7 @@ char *fill_(char *s, int index)
         new[i] = s[i];
         i++;
     }
+    printf("\t\t\t||%s|!<\n\n\n", new);
     return (new);
 }
 

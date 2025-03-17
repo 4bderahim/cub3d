@@ -78,7 +78,7 @@ int	main(void)
 	height_width(data.cu_map);
 	minimap_calcs(&data, data.cu_map);
 	print_map(data.cu_map);
-	exit(1);
+	// exit(1);
 
 	mlx_initial(&data.mlx, &data.minimap_img, &data.game_img, data.minimap);
 	init_textures(&data);

@@ -14,6 +14,20 @@
 
 int	check_wall(t_all_data *data, int x, int y)
 {
+	int i= 0 ;
+	int j= 0;
+
+	while (data->cu_map->map[i])
+	{
+		j=0;
+		while (data->cu_map->map[i][j])
+		{
+			j++;
+		}
+		i++;
+	}
+	// printf("\t\t\t->>>[%d]>>%d||%d<<<<<<<<\n",j, (int)(y / data->minimap.tile),(int)(x
+				// / data->minimap.tile) );
 	if (data->cu_map->map[(int)(y / data->minimap.tile)][(int)(x
 				/ data->minimap.tile)] == '1')
 	{

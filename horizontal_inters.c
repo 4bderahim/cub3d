@@ -27,7 +27,9 @@ static void	check_horizontal_intersection(t_all_data *data,
 		y_check = horizontal->y_hit;
 		if (direction.up)
 			y_check = horizontal->y_hit - 1;
-		if (check_wall(data, x_check, y_check))
+
+		// printf("%d---------------\n\n",data->minimap.width / data->minimap.tile);
+		if (check_wall(data, floor( x_check), y_check))
 			break;
 		horizontal->x_hit += horizontal->x_step;
 		horizontal->y_hit += horizontal->y_step;
