@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 13:41:44 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/16 15:50:07 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/17 16:25:37 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,8 @@ static void	check_vertical_intersection(t_all_data *data,
 		if (direction.left)
 			x_check = vertical->x_hit - 1;
 		y_check = vertical->y_hit;
-		if (data->cu_map->map[(int)(y_check / data->minimap.tile)][(int)(x_check
-				/ data->minimap.tile)] == '1')
-			break ;
+		if (check_wall(data, x_check, y_check))
+			break;
 		vertical->x_hit += vertical->x_step;
 		vertical->y_hit += vertical->y_step;
 	}

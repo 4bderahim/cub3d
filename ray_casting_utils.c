@@ -6,11 +6,21 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:09:26 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/13 17:27:00 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/17 17:57:27 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cubed.h"
+
+int	check_wall(t_all_data *data, int x, int y)
+{
+	if (data->cu_map->map[(int)(y / data->minimap.tile)][(int)(x
+				/ data->minimap.tile)] == '1')
+	{
+		return 1;
+	}
+	return 0;
+}
 
 float	angle_fix(float angle)
 {

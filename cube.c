@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 13:12:50 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/16 22:01:49 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/17 18:01:45 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,22 @@ int	key_hook(int keycode, t_all_data *data)
 }
 
 
+void	print_map(t_cu *map)
+{
+	int i = 0;
+	int j = 0;
+	while (map->map[i])
+	{
+		j = 0;
+		while (map->map[i][j])
+		{
+			printf("%c", map->map[i][j]);
+			j++;
+		}
+		printf("\n");
+		i++;
+	}
+}
 
 int	main(void)
 {
@@ -61,6 +77,9 @@ int	main(void)
 		return (0);
 	height_width(data.cu_map);
 	minimap_calcs(&data, data.cu_map);
+	print_map(data.cu_map);
+	exit(1);
+
 	mlx_initial(&data.mlx, &data.minimap_img, &data.game_img, data.minimap);
 	init_textures(&data);
 	player_position(&data, data.cu_map);

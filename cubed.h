@@ -15,7 +15,7 @@
 #define to_deg 180 / M_PI
 #define N_RAYS WIDTH
 
-#define MODE 0
+#define MODE 1
 #if MODE == 1
 #define TILE 16
 #define WIDTH 1920
@@ -295,5 +295,8 @@ void vertical_intersection(t_all_data *data, t_direction direction,
 float angle_fix(float angle);
 float calculate__(float px, float py, float px_hit, float py_hit);
 void set_direction(t_direction *direction, float ray_angle);
+
+int	check_wall(t_all_data *data, int x, int y);
+
 
 #endif
