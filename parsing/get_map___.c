@@ -32,7 +32,6 @@ char *fill_(char *s, int index )
         new[i] = s[i];
         i++;
     }
-    printf("\t\t\t||%s|!<\n\n\n", new);
     return (new);
 }
 

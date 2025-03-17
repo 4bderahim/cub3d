@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 13:12:50 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/17 18:01:45 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/17 21:38:11 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,8 @@ int	main(void)
 		return (0);
 	height_width(data.cu_map);
 	minimap_calcs(&data, data.cu_map);
-	print_map(data.cu_map);
+	// print_map(data.cu_map);
 	// exit(1);
-
 	mlx_initial(&data.mlx, &data.minimap_img, &data.game_img, data.minimap);
 	init_textures(&data);
 	player_position(&data, data.cu_map);
