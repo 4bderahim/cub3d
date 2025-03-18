@@ -6,14 +6,14 @@
 #    By: recherra <recherra@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/05 17:42:36 by recherra          #+#    #+#              #
-#    Updated: 2025/03/18 21:04:30 by recherra         ###   ########.fr        #
+#    Updated: 2025/03/18 22:13:48 by recherra         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # FRAMEWORKS=-lmlx_Linux -lXext -lX11 -lm -lz
 FRAMEWORKS=-lmlx -framework OpenGL -framework AppKit
-# FLAGS=-Wall -Wextra
-FLAGS=-Wall -Wextra -fsanitize=address -g
+FLAGS=-Wall -Wextra
+# FLAGS=-Wall -Wextra -fsanitize=address -g
 SRC= 	parsing/get_map___.c parsing/get_map__.c parsing/get_map.c parsing/news_parsing.c parsing/cf_parsing.c parsing/next_line.c \
 		parsing/map.c cube.c hooks.c rotate.c player_position.c  mlx_setup.c print_objects.c minimap.c mlx_rebuild.c factors.c error_miscs.c init_player_info.c \
 		init_textures.c hooks_utils.c ray_dda.c render_wall.c celine_floor.c game.c mlx_utils.c ray_casting.c rays.c horizontal_inters.c vertical_inters.c \

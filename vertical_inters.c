@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 13:41:44 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/18 16:46:44 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/18 22:15:26 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	check_vertical_intersection(t_all_data *data,
 		if (direction.left)
 			x_check = vertical->x_hit - 1;
 		y_check = vertical->y_hit;
-		if (check_wall(data, x_check, y_check))
+		if (check_wall(data, x_check, y_check) == 1)
 			break;
 		vertical->x_hit += vertical->x_step;
 		vertical->y_hit += vertical->y_step;
