@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 17:27:49 by recherra          #+#    #+#             */
-/*   Updated: 2025/02/17 20:59:20 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/18 16:50:34 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ray_dda(t_all_data *data, float ray_x, float ray_y)
 	{
 		if (dda.increment_y >= 0 && dda.increment_y <= data->minimap.height
 			&& dda.increment_x >= 0 && dda.increment_x <= data->minimap.width)
-			custom_mlx_pixel_put(&data->minimap_img, dda.increment_x,
+			custom_mlx_pixel_put(&data->game_img , dda.increment_x,
 				dda.increment_y, 0x00FF00);
 		dda.increment_x += dda.factor_x;
 		dda.increment_y += dda.factor_y;

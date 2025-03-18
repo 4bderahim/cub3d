@@ -109,6 +109,7 @@ typedef struct s_player
     int direction;
     float fov_angle;
 } t_player;
+
 typedef struct s_parsed_data
 {
     int f;
@@ -153,7 +154,6 @@ typedef struct s_textures
 typedef struct s_all_data
 {
     t_mlx mlx;
-    t_data minimap_img;
     t_data game_img;
     t_minimap minimap;
     t_cu *cu_map;
@@ -224,8 +224,7 @@ void height_width(t_cu *cu);
 void init_textures(t_all_data *data);
 
 // mlx setup
-void mlx_initial(t_mlx *mlx, t_data *minimap, t_data *game_img,
-                 t_minimap minim);
+void mlx_initial(t_mlx *mlx, t_data *game_img);
 void initial_minimap(t_mlx mlx, t_data *imgs, t_minimap minim);
 void initial_game(t_mlx mlx, t_data *imgs);
 void init_error(void *ptr);
@@ -257,8 +256,7 @@ void minimap_pov(t_all_data *data);
 // print objects
 void print_square(t_data *minimap_img, int tile_x, int tile_y,
                   t_minimap minimap);
-void print_player(t_data *minimap_img, int tile_x, int tile_y,
-                  t_minimap minimap);
+void print_player(t_data *minimap_img, int tile_x, int tile_y);
 
 // custom pixel put
 void custom_mlx_pixel_put(t_data *data, int x, int y, int color);
@@ -298,5 +296,6 @@ void set_direction(t_direction *direction, float ray_angle);
 
 int	check_wall(t_all_data *data, int x, int y);
 
+int get_player_direction(char c);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:09:26 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/17 17:57:27 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/18 16:38:07 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,13 @@
 
 int	check_wall(t_all_data *data, int x, int y)
 {
-	int i= 0 ;
-	int j= 0;
-
-	while (data->cu_map->map[i])
-	{
-		j=0;
-		while (data->cu_map->map[i][j])
-		{
-			j++;
-		}
-		i++;
-	}
-	// printf("\t\t\t->>>[%d]>>%d||%d<<<<<<<<\n",j, (int)(y / data->minimap.tile),(int)(x
-				// / data->minimap.tile) );
 	if (data->cu_map->map[(int)(y / data->minimap.tile)][(int)(x
 				/ data->minimap.tile)] == '1')
-	{
 		return 1;
-	}
-	return 0;
+	else if (data->cu_map->map[(int)(y / data->minimap.tile)][(int)(x
+				/ data->minimap.tile)] == '0')
+		return 0;
+	return -1;
 }
 
 float	angle_fix(float angle)

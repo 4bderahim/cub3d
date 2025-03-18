@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 13:12:50 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/17 21:38:11 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/18 18:02:04 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	close_btn(t_all_data *data)
 {
-	mlx_destroy_image(data->mlx.connection, data->minimap_img.img);
 	mlx_destroy_image(data->mlx.connection, data->game_img.img);
 	mlx_destroy_window(data->mlx.connection, data->mlx.window);
 	exit(0);
@@ -39,13 +38,13 @@ int	key_hook(int keycode, t_all_data *data)
 	}
 	re_pov(keycode, data);
 	re_position_player(keycode, data);
-	mini_map(data, data->cu_map);
 	free(data->rays);
 	data->rays = NULL;
 	init_rays(data);
 	cast_rays(data);
-	render__rays(data);
 	game(data);
+	mini_map(data, data->cu_map);
+	render__rays(data);
 	put_images_to_window(data);
 	return (0);
 }
@@ -79,15 +78,15 @@ int	main(void)
 	minimap_calcs(&data, data.cu_map);
 	// print_map(data.cu_map);
 	// exit(1);
-	mlx_initial(&data.mlx, &data.minimap_img, &data.game_img, data.minimap);
+	mlx_initial(&data.mlx, &data.game_img);
 	init_textures(&data);
 	player_position(&data, data.cu_map);
-	mini_map(&data, data.cu_map);
 	initial_endpoint(&data);
 	init_rays(&data);
 	cast_rays(&data);
-	render__rays(&data);
 	game(&data);
+	mini_map(&data, data.cu_map);
+	render__rays(&data);
 	put_images_to_window(&data);
 	mlx_hook(data.mlx.window, 17, 0, close_btn, &data);
 	mlx_hook(data.mlx.window, 2, 1L << 0, key_hook, &data);

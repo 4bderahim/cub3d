@@ -6,13 +6,11 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 13:41:34 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/17 16:24:26 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/18 16:47:43 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cubed.h"
-
-
 
 static void	check_horizontal_intersection(t_all_data *data,
 		t_rays_utils *horizontal, t_direction direction)
@@ -20,16 +18,14 @@ static void	check_horizontal_intersection(t_all_data *data,
 	float	x_check;
 	float	y_check;
 
-	while (horizontal->x_hit > 0 && horizontal->x_hit < data->minimap.width
-		&& horizontal->y_hit > 0 && horizontal->y_hit < data->minimap.height)
+	while (horizontal->x_hit >= 0 && horizontal->x_hit < data->minimap.width
+		&& horizontal->y_hit >= 0 && horizontal->y_hit < data->minimap.height)
 	{
 		x_check = horizontal->x_hit;
 		y_check = horizontal->y_hit;
 		if (direction.up)
 			y_check = horizontal->y_hit - 1;
-
-		// printf("%d---------------\n\n",data->minimap.width / data->minimap.tile);
-		if (check_wall(data, floor( x_check), y_check))
+		if (check_wall(data, x_check, y_check))
 			break;
 		horizontal->x_hit += horizontal->x_step;
 		horizontal->y_hit += horizontal->y_step;
