@@ -82,14 +82,12 @@ t_cu *fetch__()
     cu->news = set_fc(f, cu);
     if ((cu->news) == NULL)
     {
-        // printf("shousfetch__fetch__fetch__fetch__fetch__fetch__fetch__fetch__fetch__fetch__fetch__\n\n\n\n\n\n\n");
         free___(cu, 1);
         return (0);
     }
     close(f);
     fd = open("./x.cube", O_RDWR);
     cu->map = get_map(fd);
-    
     check_not_walled_map(cu);
     return (cu);
 }

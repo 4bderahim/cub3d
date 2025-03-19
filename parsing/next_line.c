@@ -67,5 +67,6 @@ char *next_line(int fd, int len)
         next_line = ft_strjoin(next_line, line);
        
     }
+    //  more checkss// 
     return (next_line);
 }

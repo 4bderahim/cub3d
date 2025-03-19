@@ -130,7 +130,6 @@ char **get_map__(char *str)
 
 char **get_map(int fd)
 {
-
     char **map;
     char *str;
 

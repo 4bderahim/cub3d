@@ -255,8 +255,6 @@ void mini_map(t_all_data *data, t_cu *cu_map);
 void minimap_pov(t_all_data *data);
 
 // print objects
-void print_square(t_data *minimap_img, int tile_x, int tile_y,
-                  t_minimap minimap);
 void print_player(t_data *minimap_img, int tile_x, int tile_y);
 
 // custom pixel put
