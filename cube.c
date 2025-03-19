@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 13:12:50 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/18 18:02:04 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/19 16:18:05 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,27 +44,8 @@ int	key_hook(int keycode, t_all_data *data)
 	cast_rays(data);
 	game(data);
 	mini_map(data, data->cu_map);
-	render__rays(data);
 	put_images_to_window(data);
 	return (0);
-}
-
-
-void	print_map(t_cu *map)
-{
-	int i = 0;
-	int j = 0;
-	while (map->map[i])
-	{
-		j = 0;
-		while (map->map[i][j])
-		{
-			printf("%c", map->map[i][j]);
-			j++;
-		}
-		printf("\n");
-		i++;
-	}
 }
 
 int	main(void)
@@ -76,8 +57,7 @@ int	main(void)
 		return (0);
 	height_width(data.cu_map);
 	minimap_calcs(&data, data.cu_map);
-	// print_map(data.cu_map);
-	// exit(1);
+
 	mlx_initial(&data.mlx, &data.game_img);
 	init_textures(&data);
 	player_position(&data, data.cu_map);
@@ -86,7 +66,6 @@ int	main(void)
 	cast_rays(&data);
 	game(&data);
 	mini_map(&data, data.cu_map);
-	render__rays(&data);
 	put_images_to_window(&data);
 	mlx_hook(data.mlx.window, 17, 0, close_btn, &data);
 	mlx_hook(data.mlx.window, 2, 1L << 0, key_hook, &data);

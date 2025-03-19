@@ -5,7 +5,9 @@ void free___(t_cu *map, int st)
     int i;
     i = 0;
     if (st == 1)
-        free(map);
+        {
+            free(map);
+        }
     else if (st == 2)
     {
         free(map->news[0]);
@@ -22,6 +24,7 @@ void free___(t_cu *map, int st)
         }
     }
     write(2, "error\ninvalid map!\n", 19);
+    
 }
 
 int alloc_next_line(char **next_line)

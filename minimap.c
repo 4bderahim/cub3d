@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 21:03:04 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/18 21:01:08 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/19 17:35:18 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	position_check(t_all_data *data,  double x, double y, t_cu *map)
 		&& y >= 0 && y < data->minimap.height)
 	{
 		if (check_wall(data, x, y) == 0
-			// || get_player_direction(map->map[(int)(y / data->minimap.tile)][(int)(x / data->minimap.tile)])
+			|| get_player_direction(map->map[(int)(y / data->minimap.tile)][(int)(x / data->minimap.tile)])
 			)  
 			return 0;
 		else if (check_wall(data, x, y) == 1)
@@ -41,13 +41,13 @@ void	mini_map(t_all_data *data, t_cu *cu_map)
 	int		j = 0;
 	double	starting_x;
 	double	starting_y;
-	int 	padding = 5;
+	int 	padding = 8;
 
 	starting_y  = data->player.y - padding * data->minimap.tile;
 	while (j < data->minimap.tile * (padding * 2))
 	{
 		starting_x = data->player.x - padding * data->minimap.tile;
-		i = 0 ;
+		i = 0;
 		while (i < data->minimap.tile * (padding * 2))
 		{
 			if (position_check(data, starting_x, starting_y , cu_map) == 1)

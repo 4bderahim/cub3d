@@ -9,6 +9,7 @@
 #include <mlx.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #define to_rad M_PI / 180
@@ -109,7 +110,6 @@ typedef struct s_player
     int direction;
     float fov_angle;
 } t_player;
-
 typedef struct s_parsed_data
 {
     int f;
@@ -154,6 +154,7 @@ typedef struct s_textures
 typedef struct s_all_data
 {
     t_mlx mlx;
+    t_data minimap_img;
     t_data game_img;
     t_minimap minimap;
     t_cu *cu_map;
@@ -209,7 +210,7 @@ typedef struct s_wall_data
 
 int map_beg(char *s, int i);
 size_t count_len(char *s);
-char *fill_(char *s, int index);
+char *fill_(char *s, int index, int max);
 int check_map(char **map);
 void check_not_walled_map(t_cu *cu);
 char **get_map(int fd);
@@ -266,13 +267,11 @@ void set_direction(t_direction *direction, float ray_angle);
 void up_down(t_all_data *data, int direction);
 void right_left(t_all_data *data, int direction);
 
-// dda
-void ray_dda(t_all_data *data, float ray_x, float ray_y);
 
 // render wall
 void print_wall(t_all_data *data, float wall_height, int starting_x,
                 int starting_y);
-
+                
 // celine and floor
 void celine_and_floor(t_all_data *data);
 
@@ -295,6 +294,7 @@ float calculate__(float px, float py, float px_hit, float py_hit);
 void set_direction(t_direction *direction, float ray_angle);
 
 int	check_wall(t_all_data *data, int x, int y);
+
 
 int get_player_direction(char c);
 

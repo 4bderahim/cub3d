@@ -39,27 +39,55 @@ char ** alloc_full_map(char *str)
     return (map);
 }
 
+int max_len(char *s)
+{
+
+    int i;
+    int x;
+    int j;
+    i = 0;
+    j = 0;
+    x = 0;
+    while (s[i])
+    {
+        // printf("%d||%d||\n", i, x);
+        if (s[i] == '\n' || s[i+1] == '\0')
+        {
+            // printf("\t\t\t\t\t\t%d|--|%d\n\n", i, x);
+            if ((x) < (i))
+                {
+                    x = i;
+                }
+            s += i+1;
+            i = -1;
+        }
+        i++;
+    }
+    return (x);
+}
 char **alloc_map(char *str)
 {
     int i;
     int j;
     char **map = NULL;
+    int max_size;
 
     str = str + get_i_index(map, str);
     map =  alloc_full_map(str);
-
-   
+    max_size = max_len(str);
+    // printf("\t\t\t\t ########## %d \n\n\n" ,  max_size);
     j = 0;
     i = 0;
+    // exit(1);
 
     while (str[i])
     {
         if (str[i] == '\n' || str[i + 1] == 0)
         {
             if (str[i + 1] == 0)
-                map[j] = fill_(str, i+1);
+                map[j] = fill_(str, i+1, max_size);
             else
-                map[j] = fill_(str, i);
+                map[j] = fill_(str, i, max_size);
             if (str[i + 1] == 0)
                 break;
             j++;

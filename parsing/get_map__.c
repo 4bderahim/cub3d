@@ -34,6 +34,7 @@ int free_all(t_cu *map)
 
 int not_walled(char **map, t_cu *cu)
 {
+    (void)cu;
     int i;
     int j;
     int map_len;
@@ -57,7 +58,7 @@ int not_walled(char **map, t_cu *cu)
         i++;
     }
     if (!check_map(map))
-        return (free_all(cu));
+        return (1);
     return (0);
 }
 
@@ -96,7 +97,8 @@ void check_not_walled_map(t_cu *cu)
     }
     if (not_walled(cu->map, cu) || !correct_map(cu->map))
     {
-        free___(cu, 3);
+        free_all(cu);
+        // free___(cu, 3);
         exit(1);
     }
 }

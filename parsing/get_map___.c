@@ -17,19 +17,24 @@ size_t count_len(char *s)
     return (count + 1);
 }
 
-char *fill_(char *s, int index )
+char *fill_(char *s, int index, int max )
 {
     int i;
     char *new;
 
-    new = (char *)malloc(sizeof(char) * (index + 1));
+    new = (char *)malloc(sizeof(char) * (max + 1));
     if (!new)
         exit(1);
-    new[index] = 0;
+    new[max] = 0;
     i = 0;
     while (i < index)
     {
         new[i] = s[i];
+        i++;
+    }
+    while (i < max)
+    {
+        new[i] = '\0';
         i++;
     }
     return (new);
