@@ -162,7 +162,7 @@ typedef struct s_all_data
     t_endpoint endpoint;
     t_ray *rays;
     t_textures **news;
-    float testing_factor;
+    double prev_x;
 } t_all_data;
 
 typedef struct s_triangle
@@ -243,7 +243,7 @@ void initial_endpoint(t_all_data *data);
 void player_position(t_all_data *data, t_cu *cu_map);
 
 // rotate pov
-void rotate(t_all_data *data, int direction);
+void rotate(t_all_data *data, int direction, bool from_mouse);
 
 // re calclulate factors
 void re_calculate_factors(t_all_data *data);
@@ -265,11 +265,10 @@ void set_direction(t_direction *direction, float ray_angle);
 void up_down(t_all_data *data, int direction);
 void right_left(t_all_data *data, int direction);
 
-
 // render wall
 void print_wall(t_all_data *data, float wall_height, int starting_x,
                 int starting_y);
-                
+
 // celine and floor
 void celine_and_floor(t_all_data *data);
 
@@ -291,8 +290,7 @@ float angle_fix(float angle);
 float calculate__(float px, float py, float px_hit, float py_hit);
 void set_direction(t_direction *direction, float ray_angle);
 
-int	check_wall(t_all_data *data, int x, int y);
-
+int check_wall(t_all_data *data, int x, int y);
 
 int get_player_direction(char c);
 

@@ -12,22 +12,22 @@
 
 #include "cubed.h"
 
-void	re_position_player(int keycode, t_all_data *data)
+void re_position_player(int keycode, t_all_data *data)
 {
-	if (keycode == WK)
-		up_down(data, -1);
-	if (keycode == SK)
-		up_down(data, 1);
-	if (keycode == AK)
-		right_left(data, -1);
-	if (keycode == DK)
-		right_left(data, 1);
+    if (keycode == WK)
+        up_down(data, -1);
+    if (keycode == SK)
+        up_down(data, 1);
+    if (keycode == AK)
+        right_left(data, -1);
+    if (keycode == DK)
+        right_left(data, 1);
 }
 
-void	re_pov(int keycode, t_all_data *data)
+void re_pov(int keycode, t_all_data *data)
 {
-	if (keycode == RA)
-		rotate(data, 1);
-	if (keycode == LA)
-		rotate(data, -1);
+    if (keycode == RA)
+        rotate(data, 1, false);
+    if (keycode == LA)
+        rotate(data, -1, false);
 }

@@ -1,13 +1,11 @@
 
 #include "../cubed.h"
 
-int get_i_index(char **map, char *str )
+int get_i_index(char **map, char *str)
 {
     (void)map;
     int i;
-    int j;
 
-    j = 0;
     i = 0;
 
     while (str[i])
@@ -24,7 +22,7 @@ int get_i_index(char **map, char *str )
     return (i);
 }
 
-char ** alloc_full_map(char *str)
+char **alloc_full_map(char *str)
 {
     char **map = NULL;
     int cnt;
@@ -44,21 +42,19 @@ int max_len(char *s)
 
     int i;
     int x;
-    int j;
     i = 0;
-    j = 0;
     x = 0;
     while (s[i])
     {
         // printf("%d||%d||\n", i, x);
-        if (s[i] == '\n' || s[i+1] == '\0')
+        if (s[i] == '\n' || s[i + 1] == '\0')
         {
             // printf("\t\t\t\t\t\t%d|--|%d\n\n", i, x);
             if ((x) < (i))
-                {
-                    x = i;
-                }
-            s += i+1;
+            {
+                x = i;
+            }
+            s += i + 1;
             i = -1;
         }
         i++;
@@ -73,7 +69,7 @@ char **alloc_map(char *str)
     int max_size;
 
     str = str + get_i_index(map, str);
-    map =  alloc_full_map(str);
+    map = alloc_full_map(str);
     max_size = max_len(str);
     // printf("\t\t\t\t ########## %d \n\n\n" ,  max_size);
     j = 0;
@@ -85,7 +81,7 @@ char **alloc_map(char *str)
         if (str[i] == '\n' || str[i + 1] == 0)
         {
             if (str[i + 1] == 0)
-                map[j] = fill_(str, i+1, max_size);
+                map[j] = fill_(str, i + 1, max_size);
             else
                 map[j] = fill_(str, i, max_size);
             if (str[i + 1] == 0)
@@ -101,7 +97,6 @@ char **alloc_map(char *str)
 
 char **get_map__(char *str)
 {
-    int len;
     int i;
     char **map = NULL;
 
@@ -112,7 +107,6 @@ char **get_map__(char *str)
         return (NULL);
     str[i + 1] = 0;
     i = 0;
-    len = ft_strlen(str);
     while (str[i])
     {
         if (str[i] == '1')
