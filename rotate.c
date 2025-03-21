@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 20:48:45 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/19 22:21:11 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/21 18:12:58 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void rotate(t_all_data *data, int direction, bool from_mouse)
 
     factor = 5;
     if (from_mouse)
-        factor = 2;
+        factor = 3;
     ref = &data->player.player_angle_degree;
     u.delta_x = data->endpoint.x - data->player.x;
     u.delta_y = data->endpoint.y - data->player.y;
