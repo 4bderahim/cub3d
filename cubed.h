@@ -16,7 +16,7 @@
 #define to_deg 180 / M_PI
 #define N_RAYS WIDTH
 
-#define MODE 1
+#define MODE 0
 #if MODE == 1
 #define TILE 16
 #define WIDTH 1920
@@ -151,6 +151,17 @@ typedef struct s_textures
     t_data data;
 } t_textures;
 
+typedef struct s_keys_state
+{
+    int w;
+    int a;
+    int s;
+    int d;
+    int left_arrow;
+    int right_arrow;
+
+} t_keys_state;
+
 typedef struct s_all_data
 {
     t_mlx mlx;
@@ -162,6 +173,7 @@ typedef struct s_all_data
     t_endpoint endpoint;
     t_ray *rays;
     t_textures **news;
+    t_keys_state state;
     double prev_x;
 } t_all_data;
 

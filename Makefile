@@ -10,9 +10,9 @@
 #                                                                              #
 # **************************************************************************** #
 
-# FRAMEWORKS=-lmlx_Linux -lXext -lX11 -lm -lz
-FRAMEWORKS=-lmlx -framework OpenGL -framework AppKit
-FLAGS=-Wall -Wextra -fsanitize=address -g -O3
+FRAMEWORKS=-lmlx_Linux -lXext -lX11 -lm -lz
+# FRAMEWORKS=-lmlx -framework OpenGL -framework AppKit
+FLAGS=-Wall -Wextra -O3
 # FLAGS=-Wall -Wextra -fsanitize=address -g
 SRC= 	parsing/get_map___.c parsing/get_map__.c parsing/get_map.c parsing/news_parsing.c parsing/cf_parsing.c parsing/next_line.c \
 		parsing/map.c cube.c hooks.c rotate.c player_position.c  mlx_setup.c print_objects.c minimap.c mlx_rebuild.c factors.c error_miscs.c init_player_info.c \
