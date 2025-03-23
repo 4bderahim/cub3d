@@ -26,7 +26,7 @@ static void	check_vertical_intersection(t_all_data *data,
 			x_check = vertical->x_hit - 1;
 		y_check = vertical->y_hit;
 		if (check_wall(data, x_check, y_check) == 1)
-			break;
+			break ;
 		vertical->x_hit += vertical->x_step;
 		vertical->y_hit += vertical->y_step;
 	}

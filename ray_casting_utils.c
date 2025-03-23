@@ -15,12 +15,12 @@
 int	check_wall(t_all_data *data, int x, int y)
 {
 	if (data->cu_map->map[(int)(y / data->minimap.tile)][(int)(x
-				/ data->minimap.tile)] == '1')
-		return 1;
+			/ data->minimap.tile)] == '1')
+		return (1);
 	else if (data->cu_map->map[(int)(y / data->minimap.tile)][(int)(x
-				/ data->minimap.tile)] == '0')
-		return 0;
-	return -1;
+			/ data->minimap.tile)] == '0')
+		return (0);
+	return (-1);
 }
 
 float	angle_fix(float angle)

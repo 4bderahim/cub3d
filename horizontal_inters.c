@@ -26,7 +26,7 @@ static void	check_horizontal_intersection(t_all_data *data,
 		if (direction.up)
 			y_check = horizontal->y_hit - 1;
 		if (check_wall(data, x_check, y_check) == 1)
-			break;
+			break ;
 		horizontal->x_hit += horizontal->x_step;
 		horizontal->y_hit += horizontal->y_step;
 	}
@@ -35,7 +35,7 @@ static void	check_horizontal_intersection(t_all_data *data,
 void	horizontal_intersection(t_all_data *data, t_direction direction,
 		t_rays_utils *horizontal, float ray_angle)
 {
-	horizontal->y_hit = (int)(data->player.y / data->minimap.tile) 
+	horizontal->y_hit = (int)(data->player.y / data->minimap.tile)
 		* data->minimap.tile;
 	if (direction.down)
 		horizontal->y_hit += data->minimap.tile;

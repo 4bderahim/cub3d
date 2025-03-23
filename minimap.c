@@ -32,8 +32,6 @@ int	position_check(t_all_data *data, double x, double y, t_cu *map)
 	return (-1);
 }
 
-
-
 void	mini_map(t_all_data *data, t_cu *cu_map)
 {
 	int		i;
