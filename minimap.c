@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 21:03:04 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/23 22:05:07 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/23 22:46:39 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,36 +32,39 @@ int	position_check(t_all_data *data, double x, double y, t_cu *map)
 	return (-1);
 }
 
-void	mini_map(t_all_data *data, t_cu *cu_map)
+void	check_and_draw(t_all_data *data, t_minimap_utils utils)
 {
-	int		i;
-	int		j;
-	double	starting_x;
-	double	starting_y;
-	int		padding;
+	if (position_check(data, utils.starting_x, utils.starting_y,
+			data->cu_map) == 1)
+		custom_mlx_pixel_put(&data->game_img, utils.i, utils.j, 0xffffff);
+	else if (position_check(data, utils.starting_x, utils.starting_y,
+			data->cu_map) == 0)
+		custom_mlx_pixel_put(&data->game_img, utils.i, utils.j, 0x000000);
+	else
+		custom_mlx_pixel_put(&data->game_img, utils.i, utils.j, 0x808080);
+}
 
-	i = 0;
-	j = 0;
-	padding = 8;
-	starting_y = data->player.y - padding * data->minimap.tile;
-	while (j < data->minimap.tile * (padding * 2))
+void	mini_map(t_all_data *data)
+{
+	t_minimap_utils	utils;
+
+	utils.i = 0;
+	utils.j = 0;
+	utils.padding = 8;
+	utils.starting_y = data->player.y - utils.padding * data->minimap.tile;
+	while (utils.j < data->minimap.tile * (utils.padding * 2))
 	{
-		starting_x = data->player.x - padding * data->minimap.tile;
-		i = 0;
-		while (i < data->minimap.tile * (padding * 2))
+		utils.starting_x = data->player.x - utils.padding * data->minimap.tile;
+		utils.i = 0;
+		while (utils.i < data->minimap.tile * (utils.padding * 2))
 		{
-			if (position_check(data, starting_x, starting_y, cu_map) == 1)
-				custom_mlx_pixel_put(&data->game_img, i, j, 0xffffff);
-			else if (position_check(data, starting_x, starting_y, cu_map) == 0)
-				custom_mlx_pixel_put(&data->game_img, i, j, 0x000000);
-			else
-				custom_mlx_pixel_put(&data->game_img, i, j, 0x808080);
-			i++;
-			starting_x++;
+			check_and_draw(data, utils);
+			utils.i++;
+			utils.starting_x++;
 		}
-		j++;
-		starting_y++;
+		utils.j++;
+		utils.starting_y++;
 	}
-	print_player(&data->game_img, padding * data->minimap.tile, padding
-		* data->minimap.tile);
+	print_player(&data->game_img, utils.padding * data->minimap.tile,
+		utils.padding * data->minimap.tile);
 }

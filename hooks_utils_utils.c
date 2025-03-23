@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 21:56:37 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/23 22:01:16 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/23 22:47:37 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,6 @@ void	re_render(t_all_data *data)
 	init_rays(data);
 	cast_rays(data);
 	game(data);
-	mini_map(data, data->cu_map);
+	mini_map(data);
 	put_images_to_window(data);
 }

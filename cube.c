@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 13:12:50 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/23 22:00:02 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/23 22:46:53 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	main(void)
 	init_rays(&data);
 	cast_rays(&data);
 	game(&data);
-	mini_map(&data, data.cu_map);
+	mini_map(&data);
 	put_images_to_window(&data);
 	mlx_hook(data.mlx.window, 2, 1L << 0, key_press, &data);
 	mlx_hook(data.mlx.window, 3, 1L << 1, key_release, &data);

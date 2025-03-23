@@ -220,6 +220,16 @@ typedef struct s_wall_data
     unsigned int color;
 } t_wall_data;
 
+
+typedef struct s_minimap_utils 
+{	
+	int		i;
+	int		j;
+	double	starting_x;
+	double	starting_y;
+	int		padding;
+} t_minimap_utils;
+
 int map_beg(char *s, int i);
 size_t count_len(char *s);
 char *fill_(char *s, int index, int max);
@@ -257,7 +267,7 @@ void rotate(t_all_data *data, int direction, bool from_mouse);
 void re_calculate_factors(t_all_data *data);
 
 // minimap
-void mini_map(t_all_data *data, t_cu *cu_map);
+void mini_map(t_all_data *data);
 
 // minimap pov
 void minimap_pov(t_all_data *data);
