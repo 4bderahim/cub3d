@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 21:09:34 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/19 17:59:45 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/23 22:01:06 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	game(t_all_data *data)
 {
 	int		i;
-	float	to_projection_plan;
 	float	sanitized_distance;
 	float	wall_height;
 
@@ -23,11 +22,9 @@ void	game(t_all_data *data)
 	i = 0;
 	while (i < N_RAYS)
 	{
-		to_projection_plan = (WIDTH / 2) / tan(data->player.fov_angle / 2);
 		sanitized_distance = data->rays[i].distance
 			* cos(data->rays[i].ray_angle - data->player.player_angle_rad);
-		wall_height = (data->minimap.tile / sanitized_distance)
-			* to_projection_plan;
+		wall_height = (data->minimap.tile * HEIGHT * 1.4) / sanitized_distance;
 		print_wall(data, wall_height, i, (HEIGHT / 2) - (wall_height / 2));
 		i++;
 	}

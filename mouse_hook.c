@@ -1,33 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hooks.c                                            :+:      :+:    :+:   */
+/*   mouse_hook.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/10 20:51:18 by recherra          #+#    #+#             */
-/*   Updated: 2025/02/17 16:54:31 by recherra         ###   ########.fr       */
+/*   Created: 2025/03/23 21:51:23 by recherra          #+#    #+#             */
+/*   Updated: 2025/03/23 22:01:45 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cubed.h"
 
-void re_position_player(int keycode, t_all_data *data)
+int	mouse_hook(int x, int y, t_all_data *data)
 {
-    if (keycode == WK)
-        up_down(data, -1);
-    if (keycode == SK)
-        up_down(data, 1);
-    if (keycode == AK)
-        right_left(data, -1);
-    if (keycode == DK)
-        right_left(data, 1);
-}
-
-void re_pov(int keycode, t_all_data *data)
-{
-    if (keycode == RA)
-        rotate(data, 1, false);
-    if (keycode == LA)
-        rotate(data, -1, false);
+	(void)y;
+	if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
+	{
+		if (x < data->prev_x)
+			rotate(data, -1, true);
+		else if (x > data->prev_x)
+			rotate(data, 1, true);
+		data->prev_x = x;
+		re_render(data);
+	}
+	return (0);
 }

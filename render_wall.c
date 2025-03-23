@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 20:45:20 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/16 15:57:44 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/23 17:15:20 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,11 @@ void	print_wall(t_all_data *data, float wall_height, int starting_x,
 			wall_d.offset_y, &wall_d.color);
 		if (wall_d.x > 0 && wall_d.x < WIDTH && wall_d.y > 0
 			&& wall_d.y < HEIGHT)
-			custom_mlx_pixel_put(&data->game_img, wall_d.x, wall_d.y,
-				wall_d.color);
+			{
+				custom_mlx_pixel_put(&data->game_img, wall_d.x, wall_d.y,
+					wall_d.color);	
+			}
+			
 		i++;
 	}
 }

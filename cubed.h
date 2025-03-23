@@ -246,10 +246,6 @@ void init_error(void *ptr);
 void rebuild(t_all_data *data);
 void put_images_to_window(t_all_data *data);
 
-// hooks
-void re_pov(int keycode, t_all_data *data);
-void re_position_player(int keycode, t_all_data *data);
-
 // initial position
 void initial_endpoint(t_all_data *data);
 void player_position(t_all_data *data, t_cu *cu_map);
@@ -305,5 +301,20 @@ void set_direction(t_direction *direction, float ray_angle);
 int check_wall(t_all_data *data, int x, int y);
 
 int get_player_direction(char c);
+
+
+// keys hook 
+int     key_press(int keycode, t_all_data *data);
+int     key_release(int keycode, t_all_data *data);
+void    set_state(t_all_data *data, int keycode, int state);
+int     ultimate_hook(t_all_data *data);
+
+//mouse hook
+int     mouse_hook(int x, int y, t_all_data *data);
+
+// hooks utils utils
+void    re_render(t_all_data *data);
+int check_state(t_all_data *data);
+void initialize_keys_state(t_all_data *data);
 
 #endif
