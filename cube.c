@@ -137,13 +137,19 @@ int ultimate_hook(t_all_data *data)
     return 0;
 }
 
+void f()
+{
+    system("leaks -q cub3D");
+}
+
 int main(void)
 {
     t_all_data data;
 
+    atexit(f);
     data.cu_map = fetch__();
     if (!data.cu_map)
-        return (0);
+        exit(1);
     initialize_keys_state(&data);
     height_width(data.cu_map);
     minimap_calcs(&data, data.cu_map);

@@ -61,6 +61,7 @@ int parse_news(t_parsed_data *data_set, char **news, char *str)
 
 int check_map__cf_news(t_parsed_data *data_set, char **news, char *str, t_cu *cu)
 {
+    
     if (str[data_set->i] == 'F' || str[data_set->i] == 'C' 
         || str[data_set->i] == 'N' || str[data_set->i] == 'E'
         || str[data_set->i] == 'W' || str[data_set->i] == 'S')
@@ -68,12 +69,16 @@ int check_map__cf_news(t_parsed_data *data_set, char **news, char *str, t_cu *cu
         if (str[data_set->i] == 'F' || str[data_set->i] == 'C')
         {
             if (!parse_fc(data_set, str, cu))
-                return (0);
+                {
+                    return (0);
+                }
         }
         else
         {
             if (!parse_news(data_set , news, str))
-                return (0);
+                {
+                    return (0);
+                }
         }
     }
     else if (str[data_set->i] == '1')

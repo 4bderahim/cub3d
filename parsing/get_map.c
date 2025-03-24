@@ -39,17 +39,15 @@ char **alloc_full_map(char *str)
 
 int max_len(char *s)
 {
-
     int i;
     int x;
     i = 0;
     x = 0;
+    
     while (s[i])
     {
-        // printf("%d||%d||\n", i, x);
         if (s[i] == '\n' || s[i + 1] == '\0')
         {
-            // printf("\t\t\t\t\t\t%d|--|%d\n\n", i, x);
             if ((x) < (i))
             {
                 x = i;
@@ -71,11 +69,8 @@ char **alloc_map(char *str)
     str = str + get_i_index(map, str);
     map = alloc_full_map(str);
     max_size = max_len(str);
-    // printf("\t\t\t\t ########## %d \n\n\n" ,  max_size);
     j = 0;
     i = 0;
-    // exit(1);
-
     while (str[i])
     {
         if (str[i] == '\n' || str[i + 1] == 0)
@@ -104,9 +99,13 @@ char **get_map__(char *str)
     while (i >= 0 && (str[i] == ' ' || str[i] == '\n'))
         i--;
     if (str[i - 1] != '1')
-        return (NULL);
+        {
+            free(str);
+            return (NULL);
+        }
     str[i + 1] = 0;
     i = 0;
+
     while (str[i])
     {
         if (str[i] == '1')
@@ -122,14 +121,34 @@ char **get_map__(char *str)
     return (map);
 }
 
-char **get_map(int fd)
+char **get_map(int fd, t_cu *cu)
 {
     char **map;
     char *str;
-
+    int i;
+    int j;
+    
+    i = 0;
     str = next_line(fd, 51);
     map = get_map__(str);
     if (!map)
         return (NULL);
+    while (map[i])
+    {
+        j = 0;
+        while (map[i][j])
+        {
+            if (map[i][j] != '0' && map[i][j] != ' ' && map[i][j] != '1' && map[i][j] != 'N' && map[i][j] != 'S' && map[i][j] != 'E' && map[i][j] != 'W')
+                {
+                    cu->map = map;
+                    free___(cu, 13);
+                    free(cu->map);
+                    return (NULL);
+                }
+            j++;
+        }
+        i++;
+    }
     return (map);
 }
+
