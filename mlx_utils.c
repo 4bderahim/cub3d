@@ -6,11 +6,11 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 21:06:58 by recherra          #+#    #+#             */
-/*   Updated: 2025/02/17 21:14:13 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/24 16:02:00 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cubed.h"
+#include "cube.h"
 
 void	custom_mlx_pixel_put(t_data *data, int x, int y, int color)
 {

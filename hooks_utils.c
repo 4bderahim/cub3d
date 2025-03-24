@@ -6,11 +6,11 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:54:12 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/23 22:02:12 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/24 16:02:01 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cubed.h"
+#include "cube.h"
 
 #define MOVE_FACTOR 1.5
 

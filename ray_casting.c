@@ -6,11 +6,11 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 20:54:32 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/16 15:58:37 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/24 16:02:00 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cubed.h"
+#include "cube.h"
 
 void	vertical_hit(int i, t_rays_utils vertical, t_all_data *data)
 {

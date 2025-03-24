@@ -6,11 +6,11 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 21:09:34 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/23 22:01:06 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/24 16:02:00 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cubed.h"
+#include "cube.h"
 
 void	game(t_all_data *data)
 {

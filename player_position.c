@@ -6,11 +6,11 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 22:11:21 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/23 22:11:39 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/24 16:02:00 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cubed.h"
+#include "cube.h"
 
 int	get_player_direction(char c)
 {

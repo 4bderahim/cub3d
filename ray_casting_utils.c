@@ -6,11 +6,11 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:09:26 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/18 16:38:07 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/24 16:02:00 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cubed.h"
+#include "cube.h"
 
 int	check_wall(t_all_data *data, int x, int y)
 {

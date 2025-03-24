@@ -1,4 +1,4 @@
-#include "../cubed.h"
+#include "../cube.h"
 
 char **last_news_cf_checkes(t_parsed_data data_set,char *str, char **news)
 {

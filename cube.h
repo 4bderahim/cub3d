@@ -1,5 +1,5 @@
-#ifndef CUBED_H
-#define CUBED_H
+#ifndef CUBE_H
+#define CUBE_H
 
 // #include "/Users/ael-krid/minilibx_opengl_20191021/mlx.h"
 // #include "/Users/ael-krid/MLX42/include/MLX42/MLX42.h"
@@ -266,8 +266,6 @@ void rotate(t_all_data *data, int direction, bool from_mouse);
 // re calclulate factors
 void re_calculate_factors(t_all_data *data);
 
-// minimap
-void mini_map(t_all_data *data);
 
 // minimap pov
 void minimap_pov(t_all_data *data);
@@ -319,8 +317,8 @@ int     key_release(int keycode, t_all_data *data);
 void    set_state(t_all_data *data, int keycode, int state);
 int     ultimate_hook(t_all_data *data);
 
-//mouse hook
-int     mouse_hook(int x, int y, t_all_data *data);
+// //mouse hook
+// int     mouse_hook(int x, int y, t_all_data *data);
 
 // hooks utils utils
 void    re_render(t_all_data *data);

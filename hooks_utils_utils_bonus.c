@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hooks_utils_utils.c                                :+:      :+:    :+:   */
+/*   hooks_utils_utils_bonus.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 21:56:37 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/24 16:41:20 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/24 17:28:39 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube.h"
+#include "cube_bonus.h"
 
 void	initialize_keys_state(t_all_data *data)
 {
@@ -39,5 +39,6 @@ void	re_render(t_all_data *data)
 	init_rays(data);
 	cast_rays(data);
 	game(data);
+	mini_map(data);
 	put_images_to_window(data);
 }

@@ -1,4 +1,4 @@
-#include "../cubed.h"
+#include "../cube.h"
 
 void free___(t_cu *map, int st)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: resherra <resherra@student.42.fr>          +#+  +:+       +#+        */
+/*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 14:20:28 by recherra          #+#    #+#             */
-/*   Updated: 2024/01/05 16:02:17 by resherra         ###   ########.fr       */
+/*   Updated: 2025/03/24 15:37:33 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 static int	check_sep(char c, char sep)
 {
-	
 	if (c == sep)
 		return (1);
 	return (0);
@@ -26,7 +25,6 @@ static int	count_words(char const *s, char sep)
 	int	words;
 
 	words = 0;
-
 	while (*s)
 	{
 		while (*s && check_sep(*s, sep))
@@ -70,6 +68,7 @@ static void	*ffree(char **re, int index)
 	free(re);
 	return (NULL);
 }
+
 char	**ft_split(char const *s, char c)
 {
 	char	**re;

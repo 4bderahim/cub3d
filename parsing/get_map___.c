@@ -1,4 +1,4 @@
-#include "../cubed.h"
+#include "../cube.h"
 size_t count_len(char *s)
 {
     int count;
