@@ -235,7 +235,7 @@ size_t count_len(char *s);
 char *fill_(char *s, int index, int max);
 int check_map(char **map);
 void check_not_walled_map(t_cu *cu);
-char **get_map(int fd);
+char **get_map(int fd, t_cu *cu);
 int check_map__cf_news(t_parsed_data *data_set, char **news,
                        char *str, t_cu *cu);
 char **set_parsed_data(t_parsed_data *data_set, int *map_check_ret);

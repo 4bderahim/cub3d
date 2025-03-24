@@ -8,7 +8,11 @@ char **last_news_cf_checkes(t_parsed_data data_set,char *str, char **news)
     while (data_set.i < 4)
     {
         if (data_set.nb[data_set.i] != '1')
-            return (NULL);
+            {
+                free(news);
+                free(str);
+                return (NULL);
+            }
         data_set.i++;
     }
     free(str);
@@ -35,7 +39,10 @@ char **set_fc(int fd, t_cu *cu)
             data_set.i++;
         map_check_ret =  check_map__cf_news(&data_set, news, str, cu);
         if (!map_check_ret)
-            return (NULL);
+            {
+                free(str);
+                return (NULL);
+            }
         if (map_check_ret == -1)
             break;
         free(str);
@@ -67,27 +74,38 @@ int player_char(char c, char *s, int i)
     return (1);
 }
 
-
-
 t_cu *fetch__()
 {
     t_cu *cu;
     int fd, f;
+    char **notnull;
 
     cu = (t_cu *)malloc(sizeof(t_cu));
+    if (!cu)
+        return (NULL);
     fd = open("./x.cube", O_RDWR);
     if (!fd)
         return (0);
     f = open("./x.cube", O_RDWR);
-    cu->news = set_fc(f, cu);
-    if ((cu->news) == NULL)
+    notnull = set_fc(f, cu);
+    // cu->news = set_fc(f, cu);
+    // exit(1);
+
+    if (notnull == NULL)
     {
+        printf("\t\treturned!!!!!\n");
+        
         free___(cu, 1);
         return (0);
+        exit(1);
+        // free(cu);
     }
+    cu->news = notnull;     
     close(f);
     fd = open("./x.cube", O_RDWR);
-    cu->map = get_map(fd);
+    cu->map = get_map(fd, cu);
+    // if (!cu->map)
+    //     free___(cu, 25);
     check_not_walled_map(cu);
     return (cu);
 }
@@ -110,7 +128,7 @@ void height_width(t_cu *cu)
             pr_max = j;
         i++;
     }
-    // printf("%d@@@@@@@@@@%d<<<\n\n", pr_max,j );
     cu->map_width = pr_max;
     cu->map_height = i;
 }
+

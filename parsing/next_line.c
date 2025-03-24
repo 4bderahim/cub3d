@@ -46,20 +46,22 @@ char *next_line(int fd, int len)
     char *line = NULL;
     char *next_line;
     char *tmp;
-    char *line_tmp;
-
+    // char *line_tmp;
     next_line = NULL;
     rt = alloc_next_line(&next_line);
     while (rt)
     {
-        line_tmp = line;
+        // line_tmp = line;
         line = (char *)ft_calloc(len + 1, sizeof(char));
-        free(line_tmp);
+        // free(line_tmp);
         rt = read(fd, line, len);
         if (rt == -1)
             exit(1);
         if (rt == 0 && ft_strlen(next_line) == 0)
-            return (NULL);
+            {
+                free(line);
+                return (NULL);
+            }
         if (rt == 0 || (len == 1 && *line == '\n'))
         {
             free(line);
@@ -67,8 +69,8 @@ char *next_line(int fd, int len)
         }
         tmp = next_line;
         next_line = ft_strjoin(next_line, line);
+        free(line);
         free(tmp);
     }
-    //  more checkss//
     return (next_line);
 }

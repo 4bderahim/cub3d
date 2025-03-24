@@ -18,11 +18,15 @@ int	close_btn(t_all_data *data)
 	mlx_destroy_window(data->mlx.connection, data->mlx.window);
 	exit(0);
 }
-
+void f()
+{
+    system("leaks -q cub3D");
+}
 int	main(void)
 {
 	t_all_data	data;
 
+    atexit(f);
 	data.cu_map = fetch__();
 	if (!data.cu_map)
 		return (0);
