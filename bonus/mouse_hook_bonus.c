@@ -6,11 +6,11 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 21:51:23 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/24 17:29:03 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/24 22:20:17 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube_bonus.h"
+#include "../cube_bonus.h"
 
 int	mouse_hook(int x, int y, t_all_data *data)
 {
