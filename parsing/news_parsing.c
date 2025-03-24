@@ -1,4 +1,4 @@
-#include "../cubed.h"
+#include "../cube.h"
 
 int set_news__(char *str, char c, int index_num, t_parsed_data *data_set, char **news)
 {

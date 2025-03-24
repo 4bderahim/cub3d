@@ -6,11 +6,11 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 21:31:29 by recherra          #+#    #+#             */
-/*   Updated: 2025/02/17 16:58:51 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/24 16:02:01 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cubed.h"
+#include "cube.h"
 
 static void	ft_putstr(char *str)
 {

@@ -1,5 +1,5 @@
 
-#include "../cubed.h"
+#include "../cube.h"
 
 int get_i_index(char **map, char *str)
 {

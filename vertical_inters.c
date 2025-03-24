@@ -6,11 +6,11 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 13:41:44 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/18 22:15:26 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/24 16:02:00 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cubed.h"
+#include "cube.h"
 
 static void	check_vertical_intersection(t_all_data *data,
 		t_rays_utils *vertical, t_direction direction)
@@ -26,7 +26,7 @@ static void	check_vertical_intersection(t_all_data *data,
 			x_check = vertical->x_hit - 1;
 		y_check = vertical->y_hit;
 		if (check_wall(data, x_check, y_check) == 1)
-			break;
+			break ;
 		vertical->x_hit += vertical->x_step;
 		vertical->y_hit += vertical->y_step;
 	}

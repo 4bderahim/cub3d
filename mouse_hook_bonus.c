@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minimap.c                                          :+:      :+:    :+:   */
+/*   mouse_hook_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/10 21:03:04 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/24 17:22:22 by recherra         ###   ########.fr       */
+/*   Created: 2025/03/23 21:51:23 by recherra          #+#    #+#             */
+/*   Updated: 2025/03/24 17:29:03 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube.h"
+#include "cube_bonus.h"
 
-void	minimap_calcs(t_all_data *data, t_cu *cu_map)
+int	mouse_hook(int x, int y, t_all_data *data)
 {
-	data->minimap.tile = TILE;
-	data->minimap.width = cu_map->map_width * data->minimap.tile;
-	data->minimap.height = cu_map->map_height * data->minimap.tile;
+	(void)y;
+	if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
+	{
+		if (x < data->prev_x)
+			rotate(data, -1, true);
+		else if (x > data->prev_x)
+			rotate(data, 1, true);
+		data->prev_x = x;
+		re_render(data);
+	}
+	return (0);
 }

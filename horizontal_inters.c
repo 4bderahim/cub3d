@@ -6,11 +6,11 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 13:41:34 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/19 18:19:43 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/24 16:02:00 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cubed.h"
+#include "cube.h"
 
 static void	check_horizontal_intersection(t_all_data *data,
 		t_rays_utils *horizontal, t_direction direction)
@@ -26,7 +26,7 @@ static void	check_horizontal_intersection(t_all_data *data,
 		if (direction.up)
 			y_check = horizontal->y_hit - 1;
 		if (check_wall(data, x_check, y_check) == 1)
-			break;
+			break ;
 		horizontal->x_hit += horizontal->x_step;
 		horizontal->y_hit += horizontal->y_step;
 	}
@@ -35,7 +35,7 @@ static void	check_horizontal_intersection(t_all_data *data,
 void	horizontal_intersection(t_all_data *data, t_direction direction,
 		t_rays_utils *horizontal, float ray_angle)
 {
-	horizontal->y_hit = (int)(data->player.y / data->minimap.tile) 
+	horizontal->y_hit = (int)(data->player.y / data->minimap.tile)
 		* data->minimap.tile;
 	if (direction.down)
 		horizontal->y_hit += data->minimap.tile;

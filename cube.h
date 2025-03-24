@@ -1,5 +1,5 @@
-#ifndef CUBED_H
-#define CUBED_H
+#ifndef CUBE_H
+#define CUBE_H
 
 // #include "/Users/ael-krid/minilibx_opengl_20191021/mlx.h"
 // #include "/Users/ael-krid/MLX42/include/MLX42/MLX42.h"
@@ -220,6 +220,16 @@ typedef struct s_wall_data
     unsigned int color;
 } t_wall_data;
 
+
+typedef struct s_minimap_utils 
+{	
+	int		i;
+	int		j;
+	double	starting_x;
+	double	starting_y;
+	int		padding;
+} t_minimap_utils;
+
 int map_beg(char *s, int i);
 size_t count_len(char *s);
 char *fill_(char *s, int index, int max);
@@ -246,10 +256,6 @@ void init_error(void *ptr);
 void rebuild(t_all_data *data);
 void put_images_to_window(t_all_data *data);
 
-// hooks
-void re_pov(int keycode, t_all_data *data);
-void re_position_player(int keycode, t_all_data *data);
-
 // initial position
 void initial_endpoint(t_all_data *data);
 void player_position(t_all_data *data, t_cu *cu_map);
@@ -260,8 +266,6 @@ void rotate(t_all_data *data, int direction, bool from_mouse);
 // re calclulate factors
 void re_calculate_factors(t_all_data *data);
 
-// minimap
-void mini_map(t_all_data *data, t_cu *cu_map);
 
 // minimap pov
 void minimap_pov(t_all_data *data);
@@ -305,5 +309,20 @@ void set_direction(t_direction *direction, float ray_angle);
 int check_wall(t_all_data *data, int x, int y);
 
 int get_player_direction(char c);
+
+
+// keys hook 
+int     key_press(int keycode, t_all_data *data);
+int     key_release(int keycode, t_all_data *data);
+void    set_state(t_all_data *data, int keycode, int state);
+int     ultimate_hook(t_all_data *data);
+
+// //mouse hook
+// int     mouse_hook(int x, int y, t_all_data *data);
+
+// hooks utils utils
+void    re_render(t_all_data *data);
+int check_state(t_all_data *data);
+void initialize_keys_state(t_all_data *data);
 
 #endif
