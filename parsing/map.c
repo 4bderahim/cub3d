@@ -3,13 +3,17 @@
 char **last_news_cf_checkes(t_parsed_data data_set,char *str, char **news)
 {
     if (!data_set.f || !data_set.c)
-        return (NULL);
+        {
+            free_news(&data_set, news);
+            free(str);
+            return (NULL);
+        }
     data_set.i = 0;
     while (data_set.i < 4)
     {
         if (data_set.nb[data_set.i] != '1')
             {
-                free(news);
+                free_news(&data_set, news);
                 free(str);
                 return (NULL);
             }
@@ -25,17 +29,17 @@ char **set_fc(int fd, t_cu *cu)
     char **news;
     int map_check_ret;
     char *str;
-
+    
     news = set_parsed_data(&data_set, &map_check_ret);
     if (!news)
-        return (NULL);
+        return (NULL);    
     while (1)
     {
         str = next_line(fd, 1);
         if (!str)
             break;
         data_set.i = 0;
-        while (str[data_set.i] && str[data_set.i] == ' ')
+        while (str[data_set.i] && str [data_set.i] == ' ')
             data_set.i++;
         map_check_ret =  check_map__cf_news(&data_set, news, str, cu);
         if (!map_check_ret)
@@ -47,6 +51,8 @@ char **set_fc(int fd, t_cu *cu)
             break;
         free(str);
     }
+
+    // return (NULL);
     return (last_news_cf_checkes(data_set, str, news));
 }
 
@@ -87,14 +93,13 @@ t_cu *fetch__()
     if (!fd)
         return (0);
     f = open("./x.cube", O_RDWR);
+
     notnull = set_fc(f, cu);
     // cu->news = set_fc(f, cu);
     // exit(1);
 
     if (notnull == NULL)
     {
-        printf("\t\treturned!!!!!\n");
-        
         free___(cu, 1);
         return (0);
         exit(1);

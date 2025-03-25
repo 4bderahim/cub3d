@@ -1,10 +1,15 @@
-F    43, 45, 47
+
+
+
 C       52, 7, 0
+F    43, 45, 47
 
 NO ./textures/blue_wall.xpm   
 SO ./textures/red_wall.xpm
 WE ./textures/grey_wall.xpm
 EA ./textures/danger_door.xpm
+
+
 
 
 
