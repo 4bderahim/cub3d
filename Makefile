@@ -6,7 +6,7 @@
 #    By: recherra <recherra@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/05 17:42:36 by recherra          #+#    #+#              #
-#    Updated: 2025/03/24 22:20:17 by recherra         ###   ########.fr        #
+#    Updated: 2025/03/25 15:32:56 by recherra         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ FRAMEWORKS=-lmlx -framework OpenGL -framework AppKit
 FLAGS=  -Wall -Wextra -O3
 # FLAGS=-Wall -Wextra -O3 -fsanitize=address -g
 GENERAL= parsing/get_map___.c parsing/get_map__.c parsing/get_map.c parsing/news_parsing.c parsing/cf_parsing.c parsing/next_line.c \
-		parsing/map.c rotate.c player_position.c  mlx_setup.c print_objects.c mlx_rebuild.c factors.c error_miscs.c init_player_info.c \
+		parsing/map.c rotate.c player_position.c  mlx_setup.c print_objects.c mlx_rebuild.c error_miscs.c init_player_info.c \
 		init_textures.c keys_hook.c hooks_utils.c render_wall.c celine_floor.c game.c mlx_utils.c ray_casting.c rays.c horizontal_inters.c vertical_inters.c \
 		ray_casting_utils.c
 SRC= ${GENERAL} cube.c  minimap.c  hooks_utils_utils.c 

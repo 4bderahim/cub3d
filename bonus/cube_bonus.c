@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 15:59:39 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/24 22:20:17 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/25 17:19:44 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(void)
 	mlx_initial(&data.mlx, &data.game_img);
 	init_textures(&data);
 	player_position(&data, data.cu_map);
-	initial_endpoint(&data);
+	initial_angle(&data);
 	init_rays(&data);
 	cast_rays(&data);
 	game(&data);

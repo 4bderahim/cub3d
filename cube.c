@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 13:12:50 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/24 16:42:42 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/25 17:19:44 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,11 @@ int	close_btn(t_all_data *data)
 	mlx_destroy_window(data->mlx.connection, data->mlx.window);
 	exit(0);
 }
-void f()
-{
-    system("leaks -q cub3D");
-}
+
 int	main(void)
 {
 	t_all_data	data;
 
-    atexit(f);
 	data.cu_map = fetch__();
 	if (!data.cu_map)
 		return (0);
@@ -36,7 +32,7 @@ int	main(void)
 	mlx_initial(&data.mlx, &data.game_img);
 	init_textures(&data);
 	player_position(&data, data.cu_map);
-	initial_endpoint(&data);
+	initial_angle(&data);
 	init_rays(&data);
 	cast_rays(&data);
 	game(&data);

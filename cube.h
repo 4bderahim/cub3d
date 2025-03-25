@@ -49,17 +49,7 @@
 
 #endif
 
-typedef struct s_rotation
-{
-    float cos_theta;
-    float sin_theta;
-    float radian;
-    float delta_x;
-    float delta_y;
-    int degree_to_add;
-    float x;
-    float y;
-} t_rotation;
+
 
 typedef struct cu
 {
@@ -118,12 +108,6 @@ typedef struct s_parsed_data
     char nb[5];
 } t_parsed_data;
 
-typedef struct s_endpoint
-{
-    float x;
-    float y;
-} t_endpoint;
-
 typedef struct s_direction
 {
     int up;
@@ -170,7 +154,6 @@ typedef struct s_all_data
     t_minimap minimap;
     t_cu *cu_map;
     t_player player;
-    t_endpoint endpoint;
     t_ray *rays;
     t_textures **news;
     t_keys_state state;
@@ -257,7 +240,7 @@ void rebuild(t_all_data *data);
 void put_images_to_window(t_all_data *data);
 
 // initial position
-void initial_endpoint(t_all_data *data);
+void initial_angle(t_all_data *data);
 void player_position(t_all_data *data, t_cu *cu_map);
 
 // rotate pov
