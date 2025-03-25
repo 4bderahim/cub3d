@@ -46,4 +46,6 @@ int	main(void)
 	mlx_loop_hook(data.mlx.connection, ultimate_hook, &data);
 	mlx_hook(data.mlx.window, 17, 0, close_btn, &data);
 	mlx_loop(data.mlx.connection);
+    atexit(f);
+
 }

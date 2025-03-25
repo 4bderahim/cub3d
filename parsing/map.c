@@ -3,22 +3,22 @@
 char **last_news_cf_checkes(t_parsed_data data_set,char *str, char **news)
 {
     if (!data_set.f || !data_set.c)
-        return (NULL);
+        {
+            free_news(&data_set, news);
+            free(str);
+            return (NULL);
+        }
     data_set.i = 0;
-
-        
     while (data_set.i < 4)
     {
         if (data_set.nb[data_set.i] != '1')
             {
-                free(news);
-
+                free_news(&data_set, news);
                 free(str);
                 return (NULL);
             }
         data_set.i++;
     }
-    
     free(str);
     return (news);
 }

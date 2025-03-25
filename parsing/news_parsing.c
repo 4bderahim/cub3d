@@ -90,6 +90,7 @@ int check_map__cf_news(t_parsed_data *data_set, char **news, char *str, t_cu *cu
         {
             if (!parse_fc(data_set, str, cu))
             {
+                free_news(data_set, news);
                 return (0);
             }
         }

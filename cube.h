@@ -230,6 +230,9 @@ typedef struct s_minimap_utils
 	int		padding;
 } t_minimap_utils;
 
+
+void free_news(t_parsed_data *data_set, char **n);
+
 int map_beg(char *s, int i);
 size_t count_len(char *s);
 char *fill_(char *s, int index, int max);
