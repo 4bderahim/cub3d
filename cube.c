@@ -25,7 +25,7 @@ void f()
 int	main(void)
 {
 	t_all_data	data;
-
+    
     atexit(f);
 	data.cu_map = fetch__();
 	if (!data.cu_map)

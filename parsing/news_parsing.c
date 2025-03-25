@@ -34,8 +34,12 @@ int parse_fc(t_parsed_data *data_set, char *str, t_cu *cu)
     return (1);
 }
 
+
 int parse_news(t_parsed_data *data_set, char **news, char *str)
 {
+    int f;
+
+    f = 0;
     if (str[data_set->i] == 'N')
     {
         if (str[data_set->i + 1] != 'O' || !set_news__(str, 'N', 0, data_set, news))
@@ -59,6 +63,22 @@ int parse_news(t_parsed_data *data_set, char **news, char *str)
     return (1);
 }
 
+
+
+void free_news(t_parsed_data *data_set, char **n)
+{
+    int i;
+
+    i = 0;
+    while (i < 4)
+    {
+        if (data_set->nb[i] == '1')
+            free(n[i]);
+        i++;
+    }
+    free(n);
+}
+
 int check_map__cf_news(t_parsed_data *data_set, char **news, char *str, t_cu *cu)
 {
     
@@ -69,16 +89,17 @@ int check_map__cf_news(t_parsed_data *data_set, char **news, char *str, t_cu *cu
         if (str[data_set->i] == 'F' || str[data_set->i] == 'C')
         {
             if (!parse_fc(data_set, str, cu))
-                {
-                    return (0);
-                }
+            {
+                return (0);
+            }
         }
         else
         {
             if (!parse_news(data_set , news, str))
-                {
-                    return (0);
-                }
+            {
+                free_news(data_set, news);
+                return (0);
+            }
         }
     }
     else if (str[data_set->i] == '1')
@@ -97,6 +118,10 @@ char **set_parsed_data(t_parsed_data *data_set, int *map_check_ret)
     news = (char **)malloc(sizeof(char *) * 5);
     if (!news)
         return (NULL);
+    news[0] = NULL;
+    news[1] = NULL;
+    news[2] = NULL;
+    news[3] = NULL;
     news[4] = NULL;
     data_set->i = 0;
     data_set->c = 0;
