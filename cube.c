@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 13:12:50 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/25 17:42:17 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/25 17:42:50 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,4 @@ int	main(void)
 	mlx_loop_hook(data.mlx.connection, ultimate_hook, &data);
 	mlx_hook(data.mlx.window, 17, 0, close_btn, &data);
 	mlx_loop(data.mlx.connection);
-    atexit(f);
-
 }
