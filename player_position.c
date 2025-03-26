@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 22:11:21 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/24 16:02:00 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/26 18:16:30 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ static void	set_player_infos(t_all_data *data, int direction, int x, int y)
 	if (direction)
 	{
 		data->player.direction = direction;
-		data->player.x = x;
-		data->player.y = y;
+		data->player.x = x + data->minimap.tile / 2;
+		data->player.y = y + data->minimap.tile / 2;
 	}
 }
 

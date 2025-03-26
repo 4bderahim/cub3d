@@ -6,17 +6,28 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:54:12 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/25 17:18:09 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/26 18:12:58 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 
-#define MOVE_FACTOR 1.5
+#define MOVE_FACTOR 4
 
 static int	check_collision(t_all_data *data, int pos_x, int pos_y)
 {
-	return (data->cu_map->map[pos_y][pos_x] == '1');
+	// if (data->cu_map->map[pos_y][pos_x] == '1' || 
+	// 	data->cu_map->map[pos_y - 1][pos_x] == '1' || 
+	// 	data->cu_map->map[pos_y][pos_x - 1] == '1'  || 
+	// 	data->cu_map->map[pos_y + 1][pos_x] == '1' ||
+	// 	data->cu_map->map[pos_y ][pos_x+1] == '1')
+	if (data->cu_map->map[pos_y][pos_x] == '1') 
+	{
+		return 1;
+	}
+	// || // data->cu_map->map[pos_y - 1][pos_x] == '1' || 
+		// data->cu_map->map[pos_y][pos_x - 1] == '1' )
+	return 0;	
 }
 
 static int	get_position_x(t_all_data *data)

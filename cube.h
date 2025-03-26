@@ -19,8 +19,6 @@
 #define TILE 16
 #define WIDTH 1920
 #define HEIGHT 1080
-#define MINIMAP_WIDTH 426
-#define MINIMAP_HEIGHT 240
 #define ESC 53
 #define RA 124
 #define LA 123
