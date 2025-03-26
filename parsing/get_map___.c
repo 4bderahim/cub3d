@@ -34,7 +34,7 @@ char *fill_(char *s, int index, int max )
     }
     while (i < max)
     {
-        new[i] = '\0';
+        new[i] = 0;
         i++;
     }
     return (new);

@@ -42,7 +42,7 @@ int max_len(char *s)
     int i;
     int x;
     i = 0;
-    x = 0;
+    x = -1;
     
     while (s[i])
     {
@@ -57,7 +57,7 @@ int max_len(char *s)
         }
         i++;
     }
-    return (x);
+    return (x+1);
 }
 char **alloc_map(char *str)
 {
@@ -75,10 +75,13 @@ char **alloc_map(char *str)
     {
         if (str[i] == '\n' || str[i + 1] == 0)
         {
+            // printf("<<%d<<", i);
+            // printf("\t\t\t {{{{{%s}}}}}\n", str);
             if (str[i + 1] == 0)
                 map[j] = fill_(str, i + 1, max_size);
             else
                 map[j] = fill_(str, i, max_size);
+            // printf("((((((((%s|%d))))))))\n",map[j], i );
             if (str[i + 1] == 0)
                 break;
             j++;
@@ -87,6 +90,24 @@ char **alloc_map(char *str)
         }
         i++;
     }
+    //  int k,l;
+    // k = 0;
+    // l = 0;
+    // printf("@@@@[[[[\n");
+    // while (map[k])
+    // {
+    //     l = 0;
+    //     while (map[k][l])
+    //     {
+    //         printf("%c", map[k][l]);
+    //         l++;
+
+    //     }
+    //     printf("\n");
+    //     k++;
+    // }
+    // write(1, "]]]]]@@@@", 12);
+    
     return (map);
 }
 
@@ -133,6 +154,25 @@ char **get_map(int fd, t_cu *cu)
     map = get_map__(str);
     if (!map)
         return (NULL);
+
+    // int k,l;
+    // k = 0;
+    // l = 0;
+    // printf("@@@@[[[[");
+    // while (map[k])
+    // {
+    //     l = 0;
+    //     while (map[k][l])
+    //     {
+    //         printf("%c", map[k][l]);
+    //         l++;
+
+    //     }
+    //     printf("\n");
+    //     k++;
+    // }
+    // write(1, "]]]]]@@@@", 12);
+    
     while (map[i])
     {
         j = 0;
@@ -140,9 +180,12 @@ char **get_map(int fd, t_cu *cu)
         {
             if (map[i][j] != '0' && map[i][j] != ' ' && map[i][j] != '1' && map[i][j] != 'N' && map[i][j] != 'S' && map[i][j] != 'E' && map[i][j] != 'W')
                 {
+                    // printf("\t\t\t###ss#####[%c]###########\n", map[i][j]);
+
                     cu->map = map;
                     free___(cu, 13);
                     free(cu->map);
+
                     return (NULL);
                 }
             j++;

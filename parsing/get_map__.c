@@ -92,7 +92,6 @@ void check_not_walled_map(t_cu *cu)
 {
     if (!cu->map)
     {
-
         free___(cu, 2);
         exit(1);
     }

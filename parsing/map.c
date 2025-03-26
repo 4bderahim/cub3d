@@ -110,7 +110,6 @@ t_cu *fetch__()
     fd = open("./x.cube", O_RDWR);
     cu->map = get_map(fd, cu);
     // if (!cu->map)
-    //     free___(cu, 25);
     check_not_walled_map(cu);
     return (cu);
 }
