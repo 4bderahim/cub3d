@@ -89,15 +89,15 @@ typedef struct s_minimap
 
 typedef struct s_player
 {
-    float x;
-    float y;
-    float factor_x;
-    float factor_y;
-    float steps;
-    float player_angle_rad;
+    double x;
+    double y;
+    double factor_x;
+    double factor_y;
+    double steps;
+    double player_angle_rad;
     int player_angle_degree;
     int direction;
-    float fov_angle;
+    double fov_angle;
 } t_player;
 
 typedef struct s_parsed_data
@@ -118,10 +118,10 @@ typedef struct s_direction
 
 typedef struct s_ray
 {
-    float ray_angle;
-    float wall_x;
-    float wall_y;
-    float distance;
+    double ray_angle;
+    double wall_x;
+    double wall_y;
+    double distance;
     int verical_hit;
     t_direction direction;
 } t_ray;
@@ -162,18 +162,18 @@ typedef struct s_all_data
 
 typedef struct s_triangle
 {
-    float adjacent;
-    float opposite;
-    float hypo;
+    double adjacent;
+    double opposite;
+    double hypo;
 } t_triangle;
 
 typedef struct s_rays_utils
 {
-    float x_hit;
-    float y_hit;
-    float x_step;
-    float y_step;
-    float distance;
+    double x_hit;
+    double y_hit;
+    double x_step;
+    double y_step;
+    double distance;
     t_triangle triangle;
 } t_rays_utils;
 
@@ -239,14 +239,14 @@ void print_player(t_data *minimap_img, int tile_x, int tile_y);
 
 // custom pixel put
 void custom_mlx_pixel_put(t_data *data, int x, int y, int color);
-void set_direction(t_direction *direction, float ray_angle);
+void set_direction(t_direction *direction, double ray_angle);
 
 // hooks utils
 void up_down(t_all_data *data, int direction);
 void right_left(t_all_data *data, int direction);
 
 // render wall
-void print_wall(t_all_data *data, float wall_height, int starting_x,
+void print_wall(t_all_data *data, double wall_height, int starting_x,
                 int starting_y);
 
 // celine and floor
@@ -261,14 +261,14 @@ void minimap_calcs(t_all_data *data, t_cu *cu_map);
 
 void cast_rays(t_all_data *data);
 void horizontal_intersection(t_all_data *data, t_direction direction,
-                             t_rays_utils *horizontal, float ray_angle);
+                             t_rays_utils *horizontal, double ray_angle);
 void vertical_intersection(t_all_data *data, t_direction direction,
-                           t_rays_utils *vertical, float ray_angle);
+                           t_rays_utils *vertical, double ray_angle);
 
 // ray casting utils
-float angle_fix(float angle);
-float calculate__(float px, float py, float px_hit, float py_hit);
-void set_direction(t_direction *direction, float ray_angle);
+double angle_fix(double angle);
+double calculate__(double px, double py, double px_hit, double py_hit);
+void set_direction(t_direction *direction, double ray_angle);
 
 int check_wall(t_all_data *data, int x, int y);
 

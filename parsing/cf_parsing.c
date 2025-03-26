@@ -9,6 +9,15 @@ int get_index(char *s)
     i = 0;
     while (s[i] && s[i] != ',')
         i++;
+    j = i;
+    while (j != 0)
+        {
+            if (s[j] >= '0' && s[j] <= '9')
+                break;
+            j--;
+        }
+    if (j == 0)
+        return (-1);
     if (s[i] == ',')
     {
         j = i+1;
@@ -72,6 +81,29 @@ int len_(char *s)
         return (1);
     return (0);
 }
+
+int color_error(char *str)
+{
+    int i;
+
+    i = 0;
+    while (str[i] )
+    {
+        
+        while (str[i])
+        {
+
+
+            i++;
+        }
+        
+        if ((str[i] < '0' || str[i] > '9') && str[i] == ',')
+            return (color_error(str+i+1));
+        i++;
+    }
+    return (0);
+}
+
 int cf_color_not_valid(char *str)
 {
     int i;
@@ -81,6 +113,8 @@ int cf_color_not_valid(char *str)
     {
         if (str[i] < '0' || str[i] > '9')
         {
+            // if (color_error(str))
+            //     return (1);
             if (!(str[i] >= 9 && str[i] <= 13) && str[i] != 32 && str[i] != '-' && str[i] != ',')
                 return (1);
         }
@@ -93,6 +127,7 @@ int cf_color_not_valid(char *str)
     }
     return (0);
 }
+
 int set_fc__(t_parsed_data *data_set, char *str , t_cu *cu, char c)
 {
     if (str[data_set->i + 1] != ' ' || str[data_set->i + 2] == 0 || !len_(str + 2))

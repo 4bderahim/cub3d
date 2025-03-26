@@ -29,7 +29,9 @@ char **alloc_full_map(char *str)
 
     cnt = count_len(str);
     if (cnt == -1)
-        return (NULL);
+        {
+            return (NULL);
+        }
     map = (char **)malloc(sizeof(char *) * (cnt + 1));
     map[cnt] = NULL;
     if (!map)
@@ -42,7 +44,7 @@ int max_len(char *s)
     int i;
     int x;
     i = 0;
-    x = 0;
+    x = -1;
     
     while (s[i])
     {
@@ -57,7 +59,7 @@ int max_len(char *s)
         }
         i++;
     }
-    return (x);
+    return (x+1);
 }
 char **alloc_map(char *str)
 {
@@ -66,15 +68,30 @@ char **alloc_map(char *str)
     char **map = NULL;
     int max_size;
 
-    str = str + get_i_index(map, str);
-    map = alloc_full_map(str);
-    max_size = max_len(str);
     j = 0;
     i = 0;
+    str = str + get_i_index(map, str);
+    while (str[i])
+    {
+        if (str[i] == '\n')
+        {
+            if (str[i+1] == '\n')
+            {
+                return (NULL);
+            }
+        }
+        i++;
+    }
+    i = 0;
+    map = alloc_full_map(str);
+    max_size = max_len(str);
     while (str[i])
     {
         if (str[i] == '\n' || str[i + 1] == 0)
         {
+
+            if (str[i+1] == '\n')
+                return (NULL);
             if (str[i + 1] == 0)
                 map[j] = fill_(str, i + 1, max_size);
             else
@@ -133,6 +150,7 @@ char **get_map(int fd, t_cu *cu)
     map = get_map__(str);
     if (!map)
         return (NULL);
+
     while (map[i])
     {
         j = 0;
@@ -143,6 +161,7 @@ char **get_map(int fd, t_cu *cu)
                     cu->map = map;
                     free___(cu, 13);
                     free(cu->map);
+
                     return (NULL);
                 }
             j++;

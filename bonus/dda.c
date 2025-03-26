@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 20:50:48 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/25 20:52:07 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/26 18:27:51 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	dda(t_all_data *data, int padding)
 {
 	t_coords	start;
 	t_coords	end;
-	float		ray_angle;
+	double		ray_angle;
 
 	start.x = data->minimap.tile * padding + 2;
 	start.y = start.x;

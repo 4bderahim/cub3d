@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 13:41:34 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/24 16:02:00 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/26 18:27:51 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 static void	check_horizontal_intersection(t_all_data *data,
 		t_rays_utils *horizontal, t_direction direction)
 {
-	float	x_check;
-	float	y_check;
+	double	x_check;
+	double	y_check;
 
 	while (horizontal->x_hit >= 0 && horizontal->x_hit < data->minimap.width
 		&& horizontal->y_hit >= 0 && horizontal->y_hit < data->minimap.height)
@@ -33,7 +33,7 @@ static void	check_horizontal_intersection(t_all_data *data,
 }
 
 void	horizontal_intersection(t_all_data *data, t_direction direction,
-		t_rays_utils *horizontal, float ray_angle)
+		t_rays_utils *horizontal, double ray_angle)
 {
 	horizontal->y_hit = (int)(data->player.y / data->minimap.tile)
 		* data->minimap.tile;

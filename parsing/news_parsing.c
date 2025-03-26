@@ -112,6 +112,7 @@ int check_map__cf_news(t_parsed_data *data_set, char **news, char *str, t_cu *cu
     }
     return (1);
 }
+
 char **set_parsed_data(t_parsed_data *data_set, int *map_check_ret)
 {
     char **news;

@@ -26,8 +26,20 @@ int not_valid(int i, int j, int map_len , char **map)
 
 int free_all(t_cu *map)
 {
-    free___(map, 3);
-    free___(map, 2);
+    int i;
+    i = 0;
+
+    free(map->news[0]);
+    free(map->news[1]);
+    free(map->news[2]);
+    free(map->news[3]);
+    while (map->map[i])
+    {
+        free(map->map[i]);
+        i++;
+    }
+    free(map->map);
+    free(map->news);
     free___(map, 1);
     return (1);
 }
@@ -92,7 +104,6 @@ void check_not_walled_map(t_cu *cu)
 {
     if (!cu->map)
     {
-
         free___(cu, 2);
         exit(1);
     }

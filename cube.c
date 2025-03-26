@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 13:12:50 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/25 17:42:50 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/26 19:25:16 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	close_btn(t_all_data *data)
 	exit(0);
 }
 
+
 int	main(void)
 {
 	t_all_data	data;
@@ -26,7 +27,7 @@ int	main(void)
 	data.cu_map = fetch__();
 	if (!data.cu_map)
 		return (0);
-	initialize_keys_state(&data);
+    initialize_keys_state(&data);
 	height_width(data.cu_map);
 	minimap_calcs(&data, data.cu_map);
 	mlx_initial(&data.mlx, &data.game_img);
