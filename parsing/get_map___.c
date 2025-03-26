@@ -22,11 +22,13 @@ char *fill_(char *s, int index, int max )
     int i;
     char *new;
 
+
     new = (char *)malloc(sizeof(char) * (max + 1));
     if (!new)
         exit(1);
     new[max] = 0;
     i = 0;
+
     while (i < index)
     {
         new[i] = s[i];

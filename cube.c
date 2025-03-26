@@ -19,10 +19,15 @@ int	close_btn(t_all_data *data)
 	exit(0);
 }
 
+void f()
+{
+	system("leaks -q cub3D");
+}
 int	main(void)
 {
 	t_all_data	data;
 
+	atexit(f);
 	data.cu_map = fetch__();
 	if (!data.cu_map)
 		return (0);
@@ -40,7 +45,6 @@ int	main(void)
         printf("\n");
         k++;
     }
-    write(1, "]]]]]\n\n\n\n", 8);
     initialize_keys_state(&data);
 	height_width(data.cu_map);
 	minimap_calcs(&data, data.cu_map);
