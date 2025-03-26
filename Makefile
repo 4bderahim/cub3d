@@ -6,7 +6,7 @@
 #    By: recherra <recherra@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/05 17:42:36 by recherra          #+#    #+#              #
-#    Updated: 2025/03/25 15:32:56 by recherra         ###   ########.fr        #
+#    Updated: 2025/03/26 00:07:23 by recherra         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ GENERAL= parsing/get_map___.c parsing/get_map__.c parsing/get_map.c parsing/news
 		init_textures.c keys_hook.c hooks_utils.c render_wall.c celine_floor.c game.c mlx_utils.c ray_casting.c rays.c horizontal_inters.c vertical_inters.c \
 		ray_casting_utils.c
 SRC= ${GENERAL} cube.c  minimap.c  hooks_utils_utils.c 
-SRC_BONUS= ${GENERAL} bonus/cube_bonus.c bonus/minimap_bonus.c bonus/mouse_hook_bonus.c  bonus/hooks_utils_utils_bonus.c 
+SRC_BONUS= ${GENERAL} bonus/cube_bonus.c bonus/minimap_bonus.c bonus/mouse_hook_bonus.c  bonus/hooks_utils_utils_bonus.c bonus/dda.c
 OBJS=${SRC:.c=.o}
 OBJS_BONUS=${SRC_BONUS:.c=.o}
 LIBFT=libft/libft.a

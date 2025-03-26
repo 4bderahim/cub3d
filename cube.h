@@ -12,12 +12,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define to_rad M_PI / 180
-#define to_deg 180 / M_PI
-#define N_RAYS WIDTH
-
 #define MODE 1
+
 #if MODE == 1
+
 #define TILE 16
 #define WIDTH 1920
 #define HEIGHT 1080
@@ -50,6 +48,9 @@
 #endif
 
 
+#define to_rad M_PI / 180
+#define to_deg 180 / M_PI
+#define N_RAYS WIDTH
 
 typedef struct cu
 {
@@ -100,6 +101,7 @@ typedef struct s_player
     int direction;
     float fov_angle;
 } t_player;
+
 typedef struct s_parsed_data
 {
     int f;
@@ -177,18 +179,6 @@ typedef struct s_rays_utils
     t_triangle triangle;
 } t_rays_utils;
 
-typedef struct s_dda_data
-{
-    float dx;
-    float dy;
-    float steps;
-
-    float factor_x;
-    float factor_y;
-
-    float increment_x;
-    float increment_y;
-} t_dda_data;
 
 typedef struct s_wall_data
 {
@@ -202,16 +192,6 @@ typedef struct s_wall_data
     int y;
     unsigned int color;
 } t_wall_data;
-
-
-typedef struct s_minimap_utils 
-{	
-	int		i;
-	int		j;
-	double	starting_x;
-	double	starting_y;
-	int		padding;
-} t_minimap_utils;
 
 
 void free_news(t_parsed_data *data_set, char **n);
@@ -303,8 +283,6 @@ int     key_release(int keycode, t_all_data *data);
 void    set_state(t_all_data *data, int keycode, int state);
 int     ultimate_hook(t_all_data *data);
 
-// //mouse hook
-// int     mouse_hook(int x, int y, t_all_data *data);
 
 // hooks utils utils
 void    re_render(t_all_data *data);

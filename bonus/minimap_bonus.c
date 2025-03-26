@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 21:03:04 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/24 22:20:17 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/25 20:50:35 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,12 @@ static void	check_and_draw(t_all_data *data, t_minimap_utils utils)
 void	mini_map(t_all_data *data)
 {
 	t_minimap_utils	utils;
+	int				center;
 
 	utils.i = 0;
 	utils.j = 0;
 	utils.padding = 8;
+	center = utils.padding * data->minimap.tile;
 	utils.starting_y = data->player.y - utils.padding * data->minimap.tile;
 	while (utils.j < data->minimap.tile * (utils.padding * 2))
 	{
@@ -65,6 +67,6 @@ void	mini_map(t_all_data *data)
 		utils.j++;
 		utils.starting_y++;
 	}
-	print_player(&data->game_img, utils.padding * data->minimap.tile,
-		utils.padding * data->minimap.tile);
+	print_player(&data->game_img, center, center);
+	dda(data, utils.padding);
 }
