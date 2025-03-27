@@ -7,21 +7,21 @@
 
 typedef struct s_coords
 {
-	float	x;
-	float	y;
+	double	x;
+	double	y;
 }			t_coords;
 
 typedef struct s_dda_data
 {
-    float dx;
-    float dy;
-    float steps;
+    double dx;
+    double dy;
+    double steps;
 
-    float factor_x;
-    float factor_y;
+    double factor_x;
+    double factor_y;
 
-    float increment_x;
-    float increment_y;
+    double increment_x;
+    double increment_y;
 } t_dda_data;
 
 typedef struct s_minimap_utils 

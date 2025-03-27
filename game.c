@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 21:09:34 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/26 00:21:08 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/26 18:27:51 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void	game(t_all_data *data)
 {
 	int		i;
-	float	sanitized_distance;
-	float	wall_height;
+	double	sanitized_distance;
+	double	wall_height;
 
 	celine_and_floor(data);
 	i = 0;

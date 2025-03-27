@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 20:54:32 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/24 16:02:00 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/26 18:27:51 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	horizontal_hit(int i, t_rays_utils horizontal, t_all_data *data)
 	data->rays[i].distance = horizontal.distance;
 }
 
-void	cast_ray(float ray_angle, int i, t_all_data *data)
+void	cast_ray(double ray_angle, int i, t_all_data *data)
 {
 	t_direction		direction;
 	t_rays_utils	horizontal;
@@ -53,8 +53,8 @@ void	cast_ray(float ray_angle, int i, t_all_data *data)
 void	cast_rays(t_all_data *data)
 {
 	int		i;
-	float	ray_angle;
-	float	angle_factor;
+	double	ray_angle;
+	double	angle_factor;
 
 	i = 0;
 	ray_angle = data->player.player_angle_rad - (data->player.fov_angle / 2);

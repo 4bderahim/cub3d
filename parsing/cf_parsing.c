@@ -26,7 +26,6 @@ int color_error(char *str)
     int i;
 
     i = 0;
-    printf("\t|%s|\n", str);
     while (str[i] )
     {
         

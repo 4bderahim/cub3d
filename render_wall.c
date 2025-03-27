@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 20:45:20 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/26 00:21:16 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/26 18:27:51 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static int	get_texture(t_ray ray)
 	return (0);
 }
 
-void	print_wall(t_all_data *data, float wall_height, int starting_x,
+void	print_wall(t_all_data *data, double wall_height, int starting_x,
 		int starting_y)
 {
 	t_wall_data	wall_d;

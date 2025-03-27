@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 21:03:04 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/25 20:50:35 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/26 00:42:37 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	mini_map(t_all_data *data)
 
 	utils.i = 0;
 	utils.j = 0;
-	utils.padding = 8;
+	utils.padding = 6;
 	center = utils.padding * data->minimap.tile;
 	utils.starting_y = data->player.y - utils.padding * data->minimap.tile;
 	while (utils.j < data->minimap.tile * (utils.padding * 2))
