@@ -1,7 +1,7 @@
 #ifndef CUBE_BONUS_H
 #define CUBE_BONUS_H
 
-#include "cube.h"
+#include "../cube.h"
 
 typedef struct s_coords
 {

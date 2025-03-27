@@ -270,4 +270,8 @@ void    re_render(t_all_data *data);
 int check_state(t_all_data *data);
 void initialize_keys_state(t_all_data *data);
 
+
+//collision
+int	check_collision(t_all_data *data, float x, float y);
+
 #endif
