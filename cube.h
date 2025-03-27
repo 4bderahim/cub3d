@@ -194,6 +194,10 @@ typedef struct s_wall_data
 } t_wall_data;
 
 
+int not_valid(int i, int j, int map_len , char **map);
+int set_fr_fg_fb(t_cu *cu, char *s, int x);
+int parse_fc(t_parsed_data *data_set, char *str, t_cu *cu);
+int parse_news(t_parsed_data *data_set, char **news, char *str);
 void free_news(t_parsed_data *data_set, char **n);
 
 int map_beg(char *s, int i);

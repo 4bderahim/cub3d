@@ -95,21 +95,16 @@ t_cu *fetch__()
     f = open("./x.cube", O_RDWR);
 
     notnull = set_fc(f, cu);
-    // cu->news = set_fc(f, cu);
-    // exit(1);
-
     if (notnull == NULL)
     {
         free___(cu, 1);
         return (0);
         exit(1);
-        // free(cu);
     }
     cu->news = notnull;     
     close(f);
     fd = open("./x.cube", O_RDWR);
     cu->map = get_map(fd, cu);
-    // if (!cu->map)
     check_not_walled_map(cu);
     return (cu);
 }

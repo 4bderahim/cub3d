@@ -24,7 +24,10 @@ int parse_fc(t_parsed_data *data_set, char *str, t_cu *cu)
     if (str[data_set->i] == 'F')
     {
         if (!set_fc__(data_set, str, cu, 'F'))
-            return (0);
+            {
+
+                return (0);
+            }
     }
     else if (str[data_set->i] == 'C')
     {
@@ -77,40 +80,6 @@ void free_news(t_parsed_data *data_set, char **n)
         i++;
     }
     free(n);
-}
-
-int check_map__cf_news(t_parsed_data *data_set, char **news, char *str, t_cu *cu)
-{
-    
-    if (str[data_set->i] == 'F' || str[data_set->i] == 'C' 
-        || str[data_set->i] == 'N' || str[data_set->i] == 'E'
-        || str[data_set->i] == 'W' || str[data_set->i] == 'S')
-    {
-        if (str[data_set->i] == 'F' || str[data_set->i] == 'C')
-        {
-            if (!parse_fc(data_set, str, cu))
-            {
-                free_news(data_set, news);
-                return (0);
-            }
-        }
-        else
-        {
-            if (!parse_news(data_set , news, str))
-            {
-                free_news(data_set, news);
-                return (0);
-            }
-        }
-    }
-    else if (str[data_set->i] == '1')
-        return (-1);
-    else
-    {
-        if (*(str + data_set->i) != '\0')
-            return (0);
-    }
-    return (1);
 }
 
 char **set_parsed_data(t_parsed_data *data_set, int *map_check_ret)

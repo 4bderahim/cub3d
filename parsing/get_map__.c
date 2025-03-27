@@ -1,28 +1,6 @@
 #include "../cube.h"
 
-int not_valid(int i, int j, int map_len , char **map)
-{
-    int line_len;
 
-    line_len = 0;
-    if (map[i][j] != '1' && map[i][j] != ' ')
-            return (1);
-        line_len = ft_strlen(map[i]) - 1;
-        while (map[i][line_len] == ' ')
-            line_len--;
-        if (map[i][line_len] != '1')
-            return (1);
-    if (i == 0 || i == map_len - 1)
-    {
-        while (map[i][j])
-        {
-            if (map[i][j] != '1' && map[i][j] != ' ')
-                return (1);
-            j++;
-        }
-    }
-    return (0);
-}
 
 int free_all(t_cu *map)
 {
@@ -44,6 +22,12 @@ int free_all(t_cu *map)
     return (1);
 }
 
+int map_last_checks(char **map)
+{
+    if (!check_map(map))
+        return (1);
+    return (0);
+}
 int not_walled(char **map, t_cu *cu)
 {
     (void)cu;
@@ -69,9 +53,7 @@ int not_walled(char **map, t_cu *cu)
             return (1);
         i++;
     }
-    if (!check_map(map))
-        return (1);
-    return (0);
+    return (map_last_checks(map));
 }
 
 int correct_map(char **map)
@@ -97,6 +79,8 @@ int correct_map(char **map)
         }
         i++;
     }
+    if (!x)
+        return (0);
     return (1);
 }
 
@@ -105,12 +89,12 @@ void check_not_walled_map(t_cu *cu)
     if (!cu->map)
     {
         free___(cu, 2);
+        free(cu->news);
         exit(1);
     }
     if (not_walled(cu->map, cu) || !correct_map(cu->map))
     {
         free_all(cu);
-        // free___(cu, 3);
         exit(1);
     }
 }

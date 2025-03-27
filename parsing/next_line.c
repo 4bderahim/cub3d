@@ -34,11 +34,12 @@ int alloc_next_line(char **next_line)
     (*next_line)[0] = 0;
     return (1);
 }
-// void free_line_and_tmp(char *tmp, char *line)
-// {
-//     free(tmp);
-//     free(line);
-// }
+char *free_lines(char *line, char *next_line)
+{
+    free(next_line);
+    free(line);
+    return (NULL);
+}
 
 char *next_line(int fd, int len)
 {
@@ -55,11 +56,7 @@ char *next_line(int fd, int len)
         if (rt == -1)
             exit(1);
         if (rt == 0 && ft_strlen(next_line) == 0)
-            {
-                free(next_line);
-                free(line);
-                return (NULL);
-            }
+            return (free_lines(next_line, line));
         if (rt == 0 || (len == 1 && *line == '\n'))
         {
             free(line);

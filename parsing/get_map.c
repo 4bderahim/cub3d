@@ -29,10 +29,7 @@ char **alloc_full_map(char *str)
 
     cnt = count_len(str);
     if (cnt == -1)
-        {
-            return (NULL);
-        }
-    printf("\t\t<><%d>>>>#################hellodfoodf<><>\n\n\n", cnt);
+        return (NULL);
     map = (char **)malloc(sizeof(char *) * (cnt + 1));
     map[cnt] = NULL;
     if (!map)
@@ -77,9 +74,7 @@ char **alloc_map(char *str)
         if (str[i] == '\n')
         {
             if (str[i+1] == '\n')
-            {
                 return (NULL);
-            }
         }
         i++;
     }
@@ -130,7 +125,11 @@ char **get_map__(char *str)
         {
             map = alloc_map(str);
             if (!map)
-                return (NULL);
+                {
+                    free(str);
+                    return (NULL);
+
+                }
             free(str);
             break;
         }
