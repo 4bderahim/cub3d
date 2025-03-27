@@ -12,8 +12,6 @@
 
 #include "cube.h"
 
-
-
 void	up_down(t_all_data *data, int direction)
 {
 	float	factor_x;
