@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:09:26 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/26 18:27:51 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/27 22:08:02 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	check_wall(t_all_data *data, int x, int y)
 	return (-1);
 }
 
-double	angle_fix(double angle)
+float	angle_fix(float angle)
 {
 	angle = fmod(angle, M_PI * 2);
 	if (angle < 0)
@@ -31,12 +31,12 @@ double	angle_fix(double angle)
 	return (angle);
 }
 
-double	calculate__(double px, double py, double px_hit, double py_hit)
+float	calculate__(float px, float py, float px_hit, float py_hit)
 {
 	return (sqrt(pow(px_hit - px, 2) + pow(py_hit - py, 2)));
 }
 
-void	set_direction(t_direction *direction, double ray_angle)
+void	set_direction(t_direction *direction, float ray_angle)
 {
 	direction->up = 0;
 	if (ray_angle > 0 && ray_angle < M_PI)

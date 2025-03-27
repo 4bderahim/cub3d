@@ -19,7 +19,6 @@ int	close_btn(t_all_data *data)
 	exit(0);
 }
 
-
 int	main(void)
 {
 	t_all_data	data;
@@ -27,7 +26,7 @@ int	main(void)
 	data.cu_map = fetch__();
 	if (!data.cu_map)
 		return (0);
-    initialize_keys_state(&data);
+	initialize_keys_state(&data);
 	height_width(data.cu_map);
 	minimap_calcs(&data, data.cu_map);
 	mlx_initial(&data.mlx, &data.game_img);

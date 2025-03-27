@@ -6,11 +6,11 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 21:03:04 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/26 00:42:37 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/27 22:26:57 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cube_bonus.h"
+#include "cube_bonus.h"
 
 void	minimap_calcs(t_all_data *data, t_cu *cu_map)
 {
@@ -19,7 +19,7 @@ void	minimap_calcs(t_all_data *data, t_cu *cu_map)
 	data->minimap.height = cu_map->map_height * data->minimap.tile;
 }
 
-static int	position_check(t_all_data *data, double x, double y, t_cu *map)
+static int	position_check(t_all_data *data, float x, float y, t_cu *map)
 {
 	if (x >= 0 && x < data->minimap.width && y >= 0 && y < data->minimap.height)
 	{

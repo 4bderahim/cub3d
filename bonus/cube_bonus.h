@@ -1,35 +1,33 @@
 #ifndef CUBE_BONUS_H
 #define CUBE_BONUS_H
 
-// #include "/Users/ael-krid/minilibx_opengl_20191021/mlx.h"
-// #include "/Users/ael-krid/MLX42/include/MLX42/MLX42.h"
 #include "cube.h"
 
 typedef struct s_coords
 {
-	double	x;
-	double	y;
+	float	x;
+	float	y;
 }			t_coords;
 
 typedef struct s_dda_data
 {
-    double dx;
-    double dy;
-    double steps;
+    float dx;
+    float dy;
+    float steps;
 
-    double factor_x;
-    double factor_y;
+    float factor_x;
+    float factor_y;
 
-    double increment_x;
-    double increment_y;
+    float increment_x;
+    float increment_y;
 } t_dda_data;
 
 typedef struct s_minimap_utils 
 {	
 	int		i;
 	int		j;
-	double	starting_x;
-	double	starting_y;
+	float	starting_x;
+	float	starting_y;
 	int		padding;
 } t_minimap_utils;
 

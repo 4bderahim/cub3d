@@ -6,11 +6,11 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 15:59:39 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/25 17:19:44 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/27 22:26:42 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cube_bonus.h"
+#include "cube_bonus.h"
 
 int	close_btn(t_all_data *data)
 {
