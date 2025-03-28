@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:54:12 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/27 22:32:16 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/28 15:30:07 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	right_left(t_all_data *data, int direction)
 	float	to_add_y;
 	float	angle;
 
-	angle = data->player.player_angle_rad - (90 * to_rad);
+	angle = data->player.player_angle_rad - (90 * TO_RAD);
 	factor_x = cos(angle) * MOVE_FACTOR;
 	factor_y = sin(angle) * MOVE_FACTOR;
 	to_add_x = factor_x * direction;

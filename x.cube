@@ -4,8 +4,8 @@ NO ./textures/blue_wall.xpm
 SO ./textures/red_wall.xpm
 WE ./textures/grey_wall.xpm
 
-F       20   , 40, 60
-C       1   , 0,    300
+C       254, 7,8
+F       2, 4, 47
 
 1111111111111111111111111
 1111111111111111111111111
