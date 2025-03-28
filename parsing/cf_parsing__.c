@@ -71,7 +71,7 @@ int	set_fr_fg_fb(t_cu *cu, char *s, int x)
 	if (i < 0)
 		return (0);
 	s[i] = 0;
-	set_fr_fg_fb__(cu, x, s, 2);
+	set_fr_fg_fb__(cu, x, s, 0);
 	s = s + i + 1;
 	if (i < 0)
 		return (0);
