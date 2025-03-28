@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_map__.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ael-krid <ael-krid@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:20:41 by ael-krid          #+#    #+#             */
-/*   Updated: 2025/03/27 18:20:42 by ael-krid         ###   ########.fr       */
+/*   Updated: 2025/03/28 20:09:13 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,10 @@ void	check_not_walled_map(t_cu *cu)
 {
 	if (!cu->map)
 	{
-		free___(cu, 2);
+		free(cu->news[0]);
+		free(cu->news[1]);
+		free(cu->news[2]);
+		free(cu->news[3]);
 		free(cu->news);
 		exit(1);
 	}
