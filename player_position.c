@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 22:11:21 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/26 18:16:30 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/28 15:30:07 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	player_position(t_all_data *data, t_cu *cu_map)
 	tile_x = 0;
 	tile_y = 0;
 	direction = 0;
-	data->player.fov_angle = 60 * to_rad;
+	data->player.fov_angle = 60 * TO_RAD;
 	while (cu_map->map[i])
 	{
 		tile_y = i * data->minimap.tile;
