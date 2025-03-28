@@ -14,7 +14,7 @@
 
 int	not_valid(int i, int j, int map_len, char **map)
 {
-	int line_len;
+	int	line_len;
 
 	line_len = 0;
 	if (map[i][j] != '1' && map[i][j] != ' ')

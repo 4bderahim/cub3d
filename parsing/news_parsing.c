@@ -12,12 +12,11 @@
 
 #include "../cube.h"
 
-int	set_news__(char *str, char c, int index_num, t_parsed_data *data_set,
+int	set_news__(char *str, int index_num, t_parsed_data *data_set,
 		char **news)
 {
 	int	i;
 
-	(void)c;
 	i = data_set->i + 2;
 	while (str[i] && str[i] == ' ')
 		i++;
@@ -49,30 +48,27 @@ int	parse_fc(t_parsed_data *data_set, char *str, t_cu *cu)
 
 int	parse_news(t_parsed_data *data_set, char **news, char *str)
 {
-	int	f;
-
-	f = 0;
 	if (str[data_set->i] == 'N')
 	{
-		if (str[data_set->i + 1] != 'O' || !set_news__(str, 'N', 0, data_set,
+		if (str[data_set->i + 1] != 'O' || !set_news__(str, 0, data_set,
 				news))
 			return (0);
 	}
 	else if (str[data_set->i] == 'E')
 	{
-		if (str[data_set->i + 1] != 'A' || !set_news__(str, 'E', 1, data_set,
+		if (str[data_set->i + 1] != 'A' || !set_news__(str, 1, data_set,
 				news))
 			return (0);
 	}
 	else if (str[data_set->i] == 'W')
 	{
-		if (str[data_set->i + 1] != 'E' || !set_news__(str, 'W', 2, data_set,
+		if (str[data_set->i + 1] != 'E' || !set_news__(str, 2, data_set,
 				news))
 			return (0);
 	}
 	else if (str[data_set->i] == 'S')
 	{
-		if (!set_news__(str, 'S', 3, data_set, news))
+		if (!set_news__(str, 3, data_set, news))
 			return (0);
 	}
 	return (1);
@@ -94,7 +90,7 @@ void	free_news(t_parsed_data *data_set, char **n)
 
 char	**set_parsed_data(t_parsed_data *data_set, int *map_check_ret)
 {
-	char **news;
+	char	**news;
 
 	news = (char **)malloc(sizeof(char *) * 5);
 	if (!news)

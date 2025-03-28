@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 20:45:20 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/26 18:27:51 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/27 22:08:02 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ static void	mlx_get_color_at(t_data data, int x, int y, unsigned int *color)
 				* (data.bits_per_pixel / 8)));
 }
 
-static double	get_offset_x(t_all_data *data, int starting_x,
+static float	get_offset_x(t_all_data *data, int starting_x,
 		int texture_width)
 {
-	double	offset_x;
+	float	offset_x;
 
 	offset_x = 0;
 	if (!data->rays[starting_x].verical_hit)
@@ -56,7 +56,7 @@ static int	get_texture(t_ray ray)
 	return (0);
 }
 
-void	print_wall(t_all_data *data, double wall_height, int starting_x,
+void	print_wall(t_all_data *data, float wall_height, int starting_x,
 		int starting_y)
 {
 	t_wall_data	wall_d;

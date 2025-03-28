@@ -47,6 +47,7 @@ int	alloc_next_line(char **next_line)
 	(*next_line)[0] = 0;
 	return (1);
 }
+
 char	*free_lines(char *line, char *next_line)
 {
 	free(next_line);

@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cube.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/27 22:36:22 by recherra          #+#    #+#             */
+/*   Updated: 2025/03/27 22:36:24 by recherra         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+
 #ifndef CUBE_H
 #define CUBE_H
 
-// #include "/Users/ael-krid/minilibx_opengl_20191021/mlx.h"
-// #include "/Users/ael-krid/MLX42/include/MLX42/MLX42.h"
+
 #include "libft/libft.h"
 #include <fcntl.h>
 #include <math.h>
@@ -12,13 +24,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MODE 1
 
-#if MODE == 1
 
 #define TILE 16
 #define WIDTH 1920
 #define HEIGHT 1080
+#define HALF_HEIGHT HEIGHT / 2
 #define ESC 53
 #define RA 124
 #define LA 123
@@ -26,29 +37,10 @@
 #define AK 0
 #define SK 1
 #define DK 2
-
-#else
-
-#define M_PI 3.14159265358979323846
-#define TILE 16
-#define WIDTH 1280
-#define HEIGHT 720
-#include <X11/Xlib.h>
-#include <X11/keysym.h>
-#define ESC XK_Escape
-#define RA XK_Right
-#define LA XK_Left
-#define WK XK_z
-#define AK XK_q
-#define SK XK_s
-#define DK XK_d
-
-#endif
-
-
 #define to_rad M_PI / 180
 #define to_deg 180 / M_PI
 #define N_RAYS WIDTH
+#define MOVE_FACTOR 3
 
 typedef struct cu
 {
@@ -89,15 +81,15 @@ typedef struct s_minimap
 
 typedef struct s_player
 {
-    double x;
-    double y;
-    double factor_x;
-    double factor_y;
-    double steps;
-    double player_angle_rad;
+    float x;
+    float y;
+    float factor_x;
+    float factor_y;
+    float steps;
+    float player_angle_rad;
     int player_angle_degree;
     int direction;
-    double fov_angle;
+    float fov_angle;
 } t_player;
 
 typedef struct s_parsed_data
@@ -118,10 +110,10 @@ typedef struct s_direction
 
 typedef struct s_ray
 {
-    double ray_angle;
-    double wall_x;
-    double wall_y;
-    double distance;
+    float ray_angle;
+    float wall_x;
+    float wall_y;
+    float distance;
     int verical_hit;
     t_direction direction;
 } t_ray;
@@ -157,31 +149,31 @@ typedef struct s_all_data
     t_ray *rays;
     t_textures **news;
     t_keys_state state;
-    double prev_x;
+    float prev_x;
 } t_all_data;
 
 typedef struct s_triangle
 {
-    double adjacent;
-    double opposite;
-    double hypo;
+    float adjacent;
+    float opposite;
+    float hypo;
 } t_triangle;
 
 typedef struct s_rays_utils
 {
-    double x_hit;
-    double y_hit;
-    double x_step;
-    double y_step;
-    double distance;
+    float x_hit;
+    float y_hit;
+    float x_step;
+    float y_step;
+    float distance;
     t_triangle triangle;
 } t_rays_utils;
 
 
 typedef struct s_wall_data
 {
-    double offset_x;
-    double offset_y;
+    float offset_x;
+    float offset_y;
     int texture_num;
     int texture_width;
     int texture_height;
@@ -191,7 +183,10 @@ typedef struct s_wall_data
     unsigned int color;
 } t_wall_data;
 
+char	**free_str_null(char *str, t_cu *cu, char **map);
 
+char	**alloc_map(char *str);
+int	get_i_index(char **map, char *str);
 int not_valid(int i, int j, int map_len , char **map);
 int set_fr_fg_fb(t_cu *cu, char *s, int x);
 int parse_fc(t_parsed_data *data_set, char *str, t_cu *cu);
@@ -229,7 +224,7 @@ void initial_angle(t_all_data *data);
 void player_position(t_all_data *data, t_cu *cu_map);
 
 // rotate pov
-void rotate(t_all_data *data, int direction, bool from_mouse);
+void rotate(t_all_data *data, int direction);
 
 // re calclulate factors
 void re_calculate_factors(t_all_data *data);
@@ -243,14 +238,14 @@ void print_player(t_data *minimap_img, int tile_x, int tile_y);
 
 // custom pixel put
 void custom_mlx_pixel_put(t_data *data, int x, int y, int color);
-void set_direction(t_direction *direction, double ray_angle);
+void set_direction(t_direction *direction, float ray_angle);
 
 // hooks utils
 void up_down(t_all_data *data, int direction);
 void right_left(t_all_data *data, int direction);
 
 // render wall
-void print_wall(t_all_data *data, double wall_height, int starting_x,
+void print_wall(t_all_data *data, float wall_height, int starting_x,
                 int starting_y);
 
 // celine and floor
@@ -265,14 +260,14 @@ void minimap_calcs(t_all_data *data, t_cu *cu_map);
 
 void cast_rays(t_all_data *data);
 void horizontal_intersection(t_all_data *data, t_direction direction,
-                             t_rays_utils *horizontal, double ray_angle);
+                             t_rays_utils *horizontal, float ray_angle);
 void vertical_intersection(t_all_data *data, t_direction direction,
-                           t_rays_utils *vertical, double ray_angle);
+                           t_rays_utils *vertical, float ray_angle);
 
 // ray casting utils
-double angle_fix(double angle);
-double calculate__(double px, double py, double px_hit, double py_hit);
-void set_direction(t_direction *direction, double ray_angle);
+float angle_fix(float angle);
+float calculate__(float px, float py, float px_hit, float py_hit);
+void set_direction(t_direction *direction, float ray_angle);
 
 int check_wall(t_all_data *data, int x, int y);
 
@@ -290,5 +285,9 @@ int     ultimate_hook(t_all_data *data);
 void    re_render(t_all_data *data);
 int check_state(t_all_data *data);
 void initialize_keys_state(t_all_data *data);
+
+
+//collision
+int	check_collision(t_all_data *data, float x, float y);
 
 #endif

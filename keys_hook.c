@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 21:47:25 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/24 16:02:00 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/27 17:32:23 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ int	ultimate_hook(t_all_data *data)
 	if (data->state.d)
 		right_left(data, 1);
 	if (data->state.right_arrow)
-		rotate(data, 1, false);
+		rotate(data, 1);
 	if (data->state.left_arrow)
-		rotate(data, -1, false);
+		rotate(data, -1);
 	if (check == 1)
 		re_render(data);
 	return (0);

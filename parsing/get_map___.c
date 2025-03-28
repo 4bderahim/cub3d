@@ -12,6 +12,26 @@
 
 #include "../cube.h"
 
+int	get_i_index(char **map, char *str)
+{
+	int	i;
+
+	(void)map;
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '1' && map_beg(str, i - 1))
+		{
+			while (str[i] != '\n')
+				i--;
+			i++;
+			break ;
+		}
+		i++;
+	}
+	return (i);
+}
+
 size_t	count_len(char *s)
 {
 	int	count;

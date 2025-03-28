@@ -55,15 +55,11 @@ char	**set_fc(int fd, t_cu *cu)
 			data_set.i++;
 		map_check_ret = check_map__cf_news(&data_set, news, str, cu);
 		if (!map_check_ret)
-		{
-			free(str);
-			return (NULL);
-		}
+			return (free_str_null(str, NULL, NULL));
 		if (map_check_ret == -1)
 			break ;
 		free(str);
 	}
-	// return (NULL);
 	return (last_news_cf_checkes(data_set, str, news));
 }
 
@@ -82,7 +78,7 @@ int	player_char(char c, char *s, int i)
 		{
 			x = 1;
 			if ((s[i - 1] != '1' && s[i - 1] != '0') || (s[i + 1] != '1' && s[i
-					+ 1] != '0'))
+						+ 1] != '0'))
 				return (0);
 		}
 		ii++;
@@ -96,21 +92,21 @@ t_cu	*fetch__(void)
 {
 	t_cu	*cu;
 	char	**notnull;
+	int		fd;
+	int		f;
 
-	int fd, f;
 	cu = (t_cu *)malloc(sizeof(t_cu));
 	if (!cu)
 		return (NULL);
-	fd = open("./x.cube", O_RDWR);
-	if (!fd)
-		return (0);
 	f = open("./x.cube", O_RDWR);
+	if (!f)
+		return (0);
 	notnull = set_fc(f, cu);
 	if (notnull == NULL)
 	{
 		free___(cu, 1);
+		close(f);
 		return (0);
-		exit(1);
 	}
 	cu->news = notnull;
 	close(f);

@@ -58,9 +58,9 @@ void	set_fr_fg_fb__(t_cu *cu, int x, char *s, int to_set)
 
 int	set_fr_fg_fb(t_cu *cu, char *s, int x)
 {
-	int i;
-	i = 0;
+	int	i;
 
+	i = 0;
 	i = get_index(s);
 	if (i < 0)
 		return (0);
