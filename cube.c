@@ -6,23 +6,17 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 13:12:50 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/26 19:25:16 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/28 17:19:00 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 
-int	close_btn(t_all_data *data)
-{
-	mlx_destroy_image(data->mlx.connection, data->game_img.img);
-	mlx_destroy_window(data->mlx.connection, data->mlx.window);
-	exit(0);
-}
-
-int	main(void)
+int	main(int ac, char **av)
 {
 	t_all_data	data;
 
+	arg_checker(ac, av[1]);
 	data.cu_map = fetch__();
 	if (!data.cu_map)
 		return (0);

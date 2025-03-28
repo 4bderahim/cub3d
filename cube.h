@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 22:36:22 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/28 15:51:24 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/28 17:18:40 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,9 @@ char				*next_line(int fd, int len);
 t_cu				*fetch__(void);
 void				height_width(t_cu *cu);
 
+// map checker
+void				arg_checker(int ac, char *map);
+
 //	load textures
 void				init_textures(t_all_data *data);
 
@@ -256,6 +259,7 @@ int					key_press(int keycode, t_all_data *data);
 int					key_release(int keycode, t_all_data *data);
 void				set_state(t_all_data *data, int keycode, int state);
 int					ultimate_hook(t_all_data *data);
+int					close_btn(t_all_data *data);
 
 // hooks utils utils
 void				initialize_keys_state(t_all_data *data);
@@ -264,5 +268,8 @@ void				re_render(t_all_data *data);
 
 // collision
 int					check_collision(t_all_data *data, float x, float y);
+
+// error
+void				print_error(char *str);
 
 #endif

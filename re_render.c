@@ -1,38 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_miscs.c                                      :+:      :+:    :+:   */
+/*   re_render.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/10 21:31:29 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/28 17:04:09 by recherra         ###   ########.fr       */
+/*   Created: 2025/03/28 17:11:36 by recherra          #+#    #+#             */
+/*   Updated: 2025/03/28 17:12:16 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 
-static void	error_putstr(char *str)
+void	re_render(t_all_data *data)
 {
-	int	i;
-
-	i = 0;
-	while (str[i])
-		write(2, &str[i++], 1);
-	write(2, "\n", 1);
-}
-
-void	print_error(char *error_msg)
-{
-	error_putstr(error_msg);
-	exit(1);
-}
-
-void	init_error(void *ptr)
-{
-	if (!ptr)
-	{
-		print_error("Unknown error happened!");
-		exit(1);
-	}
+	rebuild(data);
+	free(data->rays);
+	data->rays = NULL;
+	init_rays(data);
+	cast_rays(data);
+	game(data);
+	put_images_to_window(data);
 }

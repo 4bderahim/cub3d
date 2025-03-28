@@ -6,17 +6,11 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 13:51:05 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/27 18:23:42 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/28 17:05:24 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
-
-static void	err_and_exit(void)
-{
-	write(2, "error!", 6);
-	exit(1);
-}
 
 static void	fill_texture(int i, t_all_data *data, char **res)
 {
@@ -24,7 +18,7 @@ static void	fill_texture(int i, t_all_data *data, char **res)
 	data->news[i]->img = mlx_xpm_file_to_image(data->mlx.connection,
 			data->news[i]->path, &data->news[i]->width, &data->news[i]->height);
 	if (!data->news[i]->img)
-		err_and_exit();
+		print_error("Error\nInvalid texture file");
 	data->news[i]->data.addr = mlx_get_data_addr(data->news[i]->img,
 			&data->news[i]->data.bits_per_pixel,
 			&data->news[i]->data.line_length, &data->news[i]->data.endian);
@@ -55,7 +49,7 @@ void	init_textures(t_all_data *data)
 	{
 		res = ft_split(data->cu_map->news[i], ' ');
 		if (!res || arr_len(res) != 2)
-			err_and_exit();
+			print_error("Error\nInvalid texture config");
 		data->news[i] = malloc(sizeof(t_textures));
 		if (!data->news[i])
 			exit(1);
