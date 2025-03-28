@@ -63,11 +63,6 @@ int	cf_color_not_valid(char *str)
 				&& str[i] != ',')
 				return (1);
 		}
-		if (str[i] >= '0' && str[i] <= '9')
-		{
-			if (str[i + 1] && str[i + 1] == ' ')
-				return (1);
-		}
 		i++;
 	}
 	return (0);
