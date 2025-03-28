@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   next_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ael-krid <ael-krid@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:21:32 by ael-krid          #+#    #+#             */
-/*   Updated: 2025/03/27 18:21:34 by ael-krid         ###   ########.fr       */
+/*   Updated: 2025/03/28 18:22:11 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	free___(t_cu *map, int st)
 			i++;
 		}
 	}
-	write(2, "error\ninvalid map!\n", 19);
+	write(2, "Error\nInvalid map!\n", 19);
 }
 
 int	alloc_next_line(char **next_line)

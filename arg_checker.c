@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_checker.c                                      :+:      :+:    :+:   */
+/*   arg_checker.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 17:18:04 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/28 17:18:36 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/28 18:19:42 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	arg_checker(int ac, char *map)
 {
-	int len;
+	int	len;
 
 	if (ac != 2)
 		print_error("Error\nToo many/few arguments!");

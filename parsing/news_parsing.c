@@ -12,8 +12,7 @@
 
 #include "../cube.h"
 
-int	set_news__(char *str, int index_num, t_parsed_data *data_set,
-		char **news)
+int	set_news__(char *str, int index_num, t_parsed_data *data_set, char **news)
 {
 	int	i;
 
@@ -50,20 +49,17 @@ int	parse_news(t_parsed_data *data_set, char **news, char *str)
 {
 	if (str[data_set->i] == 'N')
 	{
-		if (str[data_set->i + 1] != 'O' || !set_news__(str, 0, data_set,
-				news))
+		if (str[data_set->i + 1] != 'O' || !set_news__(str, 0, data_set, news))
 			return (0);
 	}
 	else if (str[data_set->i] == 'E')
 	{
-		if (str[data_set->i + 1] != 'A' || !set_news__(str, 1, data_set,
-				news))
+		if (str[data_set->i + 1] != 'A' || !set_news__(str, 1, data_set, news))
 			return (0);
 	}
 	else if (str[data_set->i] == 'W')
 	{
-		if (str[data_set->i + 1] != 'E' || !set_news__(str, 2, data_set,
-				news))
+		if (str[data_set->i + 1] != 'E' || !set_news__(str, 2, data_set, news))
 			return (0);
 	}
 	else if (str[data_set->i] == 'S')

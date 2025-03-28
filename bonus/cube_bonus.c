@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 15:59:39 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/28 17:19:59 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/28 18:16:17 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	main(int ac, char **av)
 	t_all_data	data;
 
 	arg_checker(ac, av[1]);
-	data.cu_map = fetch__();
+	data.cu_map = fetch__(av[1]);
 	if (!data.cu_map)
 		return (0);
 	initialize_keys_state(&data);

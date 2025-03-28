@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 20:50:31 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/28 16:13:07 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/28 18:15:49 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static int	create_rgb(int r, int g, int b)
 {
 	return (r << 16 | g << 8 | b);
 }
-#include <stdio.h>
 
 void	celine_and_floor(t_all_data *data)
 {
@@ -29,10 +28,6 @@ void	celine_and_floor(t_all_data *data)
 			data->cu_map->cb);
 	floor_color = create_rgb(data->cu_map->fr, data->cu_map->fg,
 			data->cu_map->fb);
-	printf("celeine -> %d | %d | %d\n", data->cu_map->cr, data->cu_map->cg,
-		data->cu_map->cb);
-	printf("floor -> %d | %d | %d\n", data->cu_map->fr, data->cu_map->fg,
-		data->cu_map->fb);
 	i = 0;
 	while (i < WIDTH)
 	{

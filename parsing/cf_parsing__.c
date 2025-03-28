@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   cf_parsing__.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ael-krid <ael-krid@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:19:20 by ael-krid          #+#    #+#             */
-/*   Updated: 2025/03/27 18:19:29 by ael-krid         ###   ########.fr       */
+/*   Updated: 2025/03/28 18:17:45 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cube.h"
+
+int	check_range(int color)
+{
+	if (color >= 0 && color <= 255)
+		return (1);
+	return (0);
+}
 
 int	get_index(char *s)
 {

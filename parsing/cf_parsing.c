@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cf_parsing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ael-krid <ael-krid@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:19:43 by ael-krid          #+#    #+#             */
-/*   Updated: 2025/03/27 18:19:45 by ael-krid         ###   ########.fr       */
+/*   Updated: 2025/03/28 18:12:05 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,21 @@ int	cf_color_not_valid(char *str)
 	return (0);
 }
 
+int	color_range_check(t_cu *color, int x)
+{
+	if (x)
+	{
+		if (!check_range(color->cr) || !check_range(color->cg)
+			|| !check_range(color->cb))
+			return (0);
+		return (1);
+	}
+	if (!check_range(color->fr) || !check_range(color->fg)
+		|| !check_range(color->fb))
+		return (0);
+	return (1);
+}
+
 int	set_fc__(t_parsed_data *data_set, char *str, t_cu *cu, char c)
 {
 	if (str[data_set->i + 1] != ' ' || str[data_set->i + 2] == 0 || !len_(str
@@ -79,6 +94,8 @@ int	set_fc__(t_parsed_data *data_set, char *str, t_cu *cu, char c)
 			return (0);
 		if (!set_fr_fg_fb(cu, str + data_set->i + 2, 1))
 			return (0);
+		if (!color_range_check(cu, 0))
+			return (0);
 		data_set->f = 1;
 	}
 	else
@@ -86,6 +103,8 @@ int	set_fc__(t_parsed_data *data_set, char *str, t_cu *cu, char c)
 		if (data_set->c == 1 || cf_color_not_valid(str + data_set->i + 2))
 			return (0);
 		if (!set_fr_fg_fb(cu, str + data_set->i + 2, 0))
+			return (0);
+		if (!color_range_check(cu, 1))
 			return (0);
 		data_set->c = 1;
 	}

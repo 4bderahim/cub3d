@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ael-krid <ael-krid@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:21:03 by ael-krid          #+#    #+#             */
-/*   Updated: 2025/03/27 18:21:08 by ael-krid         ###   ########.fr       */
+/*   Updated: 2025/03/28 18:19:15 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	player_char(char c, char *s, int i)
 		{
 			x = 1;
 			if ((s[i - 1] != '1' && s[i - 1] != '0') || (s[i + 1] != '1' && s[i
-						+ 1] != '0'))
+					+ 1] != '0'))
 				return (0);
 		}
 		ii++;
@@ -88,7 +88,7 @@ int	player_char(char c, char *s, int i)
 	return (1);
 }
 
-t_cu	*fetch__(void)
+t_cu	*fetch__(char *str)
 {
 	t_cu	*cu;
 	char	**notnull;
@@ -98,7 +98,7 @@ t_cu	*fetch__(void)
 	cu = (t_cu *)malloc(sizeof(t_cu));
 	if (!cu)
 		return (NULL);
-	f = open("./x.cube", O_RDWR);
+	f = open(str, O_RDWR);
 	if (!f)
 		return (0);
 	notnull = set_fc(f, cu);
@@ -110,7 +110,7 @@ t_cu	*fetch__(void)
 	}
 	cu->news = notnull;
 	close(f);
-	fd = open("./x.cube", O_RDWR);
+	fd = open(str, O_RDWR);
 	cu->map = get_map(fd, cu);
 	check_not_walled_map(cu);
 	return (cu);

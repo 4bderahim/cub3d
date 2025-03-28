@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 22:36:22 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/28 17:18:40 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/28 18:14:02 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,7 @@ typedef struct s_wall_data
 }					t_wall_data;
 
 // parsing
+int					check_range(int color);
 char				**free_str_null(char *str, t_cu *cu, char **map);
 char				**alloc_map(char *str);
 int					get_i_index(char **map, char *str);
@@ -193,7 +194,7 @@ int					set_fc__(t_parsed_data *data_set, char *str, t_cu *cu,
 						char c);
 void				free___(t_cu *map, int st);
 char				*next_line(int fd, int len);
-t_cu				*fetch__(void);
+t_cu				*fetch__(char *str);
 void				height_width(t_cu *cu);
 
 // map checker
