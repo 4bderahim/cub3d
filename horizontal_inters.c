@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 13:41:34 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/27 22:08:02 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/28 22:06:41 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,8 @@ void	horizontal_intersection(t_all_data *data, t_direction direction,
 	horizontal->y_step = data->minimap.tile;
 	if (direction.up)
 		horizontal->y_step *= -1;
-	horizontal->x_step = data->minimap.tile / tan(ray_angle);
+	horizontal->x_step = fabs(data->minimap.tile / tan(ray_angle));
 	if (direction.left && horizontal->x_step > 0)
-		horizontal->x_step *= -1;
-	else if (direction.right && horizontal->x_step < 0)
 		horizontal->x_step *= -1;
 	check_horizontal_intersection(data, horizontal, direction);
 }

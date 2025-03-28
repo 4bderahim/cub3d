@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 13:41:44 by recherra          #+#    #+#             */
-/*   Updated: 2025/03/27 22:08:02 by recherra         ###   ########.fr       */
+/*   Updated: 2025/03/28 22:06:45 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,8 @@ void	vertical_intersection(t_all_data *data, t_direction direction,
 	vertical->x_step = data->minimap.tile;
 	if (direction.left)
 		vertical->x_step *= -1;
-	vertical->y_step = data->minimap.tile * tan(ray_angle);
+	vertical->y_step = fabs(data->minimap.tile * tan(ray_angle));
 	if (direction.up && vertical->y_step > 0)
-		vertical->y_step *= -1;
-	if (direction.down && vertical->y_step < 0)
 		vertical->y_step *= -1;
 	check_vertical_intersection(data, vertical, direction);
 }
